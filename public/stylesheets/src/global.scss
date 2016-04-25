@@ -1,0 +1,121 @@
+@import "mixins.scss";
+@import "variables.scss";
+
+html, body { height: 100%; width: 100%; }
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: $color-green;
+}
+.body-content {
+	transition: opacity 0.15s ease-in-out;
+	opacity: 0;
+	height: 100%;
+}
+.show { opacity: 100 !important; }
+
+//Javscript
+.js-template {
+	display: none;
+}
+
+//Navigation
+.nav {
+	background-color: $color-primary;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	color: white;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+	a { color: white; }
+	h1 { flex-grow: 1; font-weight: 100; }
+	h1, .icon {
+		padding: 0 1rem;
+	}
+	.icon { font-size: 3rem; }
+	.logo {
+		font-family: 'Dosis', sans-serif;
+		letter-spacing: 0.5px;
+		font-size: 3.5rem;
+		transition: all 0.2s ease-in-out;
+		padding: 0.2rem 1rem 0.8rem 1rem;
+	}
+	.logo:active, .logo:focus, .logo:hover {
+		color: white;
+		// letter-spacing: 0px;
+		box-shadow: 5px 5px #68613E;
+		background-color: #7AA790;
+	}
+}
+
+.logo {
+	font-family: 'Dosis', sans-serif;
+	letter-spacing: 0.5px;
+}
+
+
+
+//Social icons
+.social-icons {
+	display: flex;
+	justify-content: space-around;
+	font-size: 5rem;
+	& > .icon { transition: all 0.2s ease-in-out; }
+	& > .icon:active, .icon:focus {
+		color: $color-tertiary !important;
+	}
+}
+.ion-social-twitter { color: #4099FF; }
+.ion-social-facebook { color: #3b5998; }
+.ion-social-google { color: #F90101; }
+.icon-disabled { color: rgba(0, 0, 0, 0.5) !important; cusror:default !important; }
+
+
+// UTILITY
+.u-fixed-center {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
+}
+
+// @include breakpoint(xs) {} // xs, sm, md, lg, xl (Size +)\
+
+.model_campaigns, .model_characters {
+	border-radius: $radius;
+	padding: 0.5rem 1rem;
+	background-color: $light;
+	color: $dark;
+	margin-bottom: 0.5rem;
+} .model_campaigns:last-child { margin-bottom: 0; }
+
+.campaign-characters {
+	display: flex;
+	flex-wrap: wrap;
+	& > .campaign-character {
+		flex-grow: 1;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+	}
+}
+
+.section-header {
+	text-transform: uppercase;
+	font-size: 1.2rem;
+	letter-spacing: 0.5px;
+	margin: 0;
+	padding: 0.7rem 1rem;
+	background-color: #68613E;
+	background-color: $color-purple;
+	font-weight: bold;
+}
+
+// LANDING PAGE
+.landing-page {
+	height: 100%;
+	// background-color: #F3F1E8;
+	.logged-in {
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+}
