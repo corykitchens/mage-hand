@@ -43,7 +43,7 @@ body {
 	.logo:active, .logo:focus, .logo:hover {
 		color: white;
 		// letter-spacing: 0px;
-		box-shadow: 5px 5px #68613E;
+		// box-shadow: 5px 5px #68613E;
 		background-color: #7AA790;
 	}
 }
@@ -81,7 +81,9 @@ body {
 
 // @include breakpoint(xs) {} // xs, sm, md, lg, xl (Size +)\
 
-.model_campaigns, .model_characters {
+.character,
+.campaign {
+	cursor: pointer;
 	border-radius: $radius;
 	padding: 0.5rem 1rem;
 	background-color: $light;
@@ -89,14 +91,11 @@ body {
 	margin-bottom: 0.5rem;
 } .model_campaigns:last-child { margin-bottom: 0; }
 
-.campaign-characters {
-	display: flex;
-	flex-wrap: wrap;
-	& > .campaign-character {
-		flex-grow: 1;
-		text-transform: uppercase;
-		font-size: 1.2rem;
-	}
+.character:hover,
+.character:focus,
+.campaign:hover,
+.campaign:focus {
+	background-color: white;
 }
 
 .section-header {
@@ -111,11 +110,7 @@ body {
 }
 
 // LANDING PAGE
-.landing-page {
+.campaigns-page {
 	height: 100%;
-	// background-color: #F3F1E8;
-	.logged-in {
-		height: 100%;
-		background-color: rgba(255, 255, 255, 0.8);
-	}
+	background-color: rgba(255, 255, 255, 0.8);
 }

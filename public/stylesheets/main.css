@@ -44,7 +44,6 @@ body {
     padding: 0.2rem 1rem 0.8rem 1rem; }
   .nav .logo:active, .nav .logo:focus, .nav .logo:hover {
     color: white;
-    box-shadow: 5px 5px #68613E;
     background-color: #7AA790; }
 
 .logo {
@@ -79,7 +78,9 @@ body {
   left: 50%;
   transform: translateY(-50%) translateX(-50%); }
 
-.model_campaigns, .model_characters {
+.character,
+.campaign {
+  cursor: pointer;
   border-radius: 0px;
   padding: 0.5rem 1rem;
   background-color: rgba(255, 255, 255, 0.85);
@@ -89,13 +90,11 @@ body {
 .model_campaigns:last-child {
   margin-bottom: 0; }
 
-.campaign-characters {
-  display: flex;
-  flex-wrap: wrap; }
-  .campaign-characters > .campaign-character {
-    flex-grow: 1;
-    text-transform: uppercase;
-    font-size: 1.2rem; }
+.character:hover,
+.character:focus,
+.campaign:hover,
+.campaign:focus {
+  background-color: white; }
 
 .section-header {
   text-transform: uppercase;
@@ -107,11 +106,9 @@ body {
   background-color: #534875;
   font-weight: bold; }
 
-.landing-page {
-  height: 100%; }
-  .landing-page .logged-in {
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8); }
+.campaigns-page {
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8); }
 
 @media (min-width: 0px) {
   .xs-p0 {

@@ -1,0 +1,13 @@
+<div class="characters-page">
+  <h2 class="section-header">Characters</h2>
+
+  <section class="characters-container" id="vue-characters">
+
+    <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
+      <h4 class="js-name">{{ character.name }}</h4>
+      <p>Currently in: Campaign name</p>
+      <h5 class="js-experience">{{ character.experience }}</h5>
+    </div>
+
+  </section>
+</div>

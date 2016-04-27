@@ -1,0 +1,16 @@
+<div class="xs-ml2 xs-mr2 xs-mt2">
+  <div id="vue-character">
+    <!-- this will be the DOM element we will mount our VueJs instance to -->
+
+    <form name="character-update">
+
+      <label for="character-name">Name</label>
+      <input type="text" v-model="character.name" v-on:keyup="updateStore" id="character-name">
+
+      <label for="character-experience">Exp</label>
+      <input type="number" v-model="character.experience" v-on:keyup="updateStore" id="character-experience" number>
+
+
+    </form>
+  </div>
+</div>

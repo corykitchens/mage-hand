@@ -5,40 +5,18 @@ const Campaigns = function Campaigns(key) {
   // eg. this.path = 'campaigns';
   // eg. this.customThing = 'omglol';
 
-  this.characters_rendered = [];
+  this.owners = [];
+  this.characters = [];
 
-  this.afterOnce = function afterOnce(){
-    var _this = this;
-    console.log(this.characters);
+  this.onUpdate = function onUpdate(){
+    const _this = this;
 
-    this.characters.forEach(function(character){
-      if (_this.characters_rendered.includes(character) === false) {
+    Object.keys(_this.latestSnap.characters).forEach(function(push_key){
+      if (push_key.split("_")[0] == "meta") { return; } // Skip meta stuff
+      const characters_id = _this.latestSnap.characters[push_key].characters_id;
 
-        const $template = $(".campaign-character.js-template");
-        var $node = $template.first().clone();
-        $node.removeClass("js-template");
-        $node.find(".character-name").text(character.name);
-
-        $(".campaign-characters").append($node);
-        _this.characters_rendered.push(character);
-      };
-
+      _this.characters.push(new Characters(characters_id))
     });
-
-
-
-    // $(".character-new").remove();
-    //
-    // var $lol = $(".campaign-character.js-template").clone();
-    // $lol.removeClass("js-template")
-    // $lol.addClass("character-new");
-    //
-    // this.characters.forEach(function(character){
-    //   debugger;
-    //   $lol.find(".character-name").text(character.name);
-    // });
-    //
-    // $(".campaign-characters").append($lol);
 
   };
 
