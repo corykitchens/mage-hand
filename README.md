@@ -7,5 +7,13 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Step 3: Profit
 
 
+# TODO
+- Make campaign view
+- Add character class/rules construct
+- Add facebook auth
+- Add google auth
+- Trim CSS (not using most of skeleton)
+- Add security rules
+
 # Security rules
 - Don't let id references be updated ever?
