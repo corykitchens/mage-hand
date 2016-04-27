@@ -2,14 +2,26 @@
   <div id="vue-character">
     <!-- this will be the DOM element we will mount our VueJs instance to -->
 
-    <form name="character-update">
+    <form name="character-view">
 
       <label for="character-name">Name</label>
-      <input type="text" v-model="character.name" v-on:keyup="updateStore" id="character-name">
+      <input type="text" v-model="character.name" v-on:keyup="updateStore" v-on:change="updateStore" id="character-name">
 
       <label for="character-experience">Exp</label>
-      <input type="number" v-model="character.experience" v-on:keyup="updateStore" id="character-experience" number>
+      <input type="number" v-model="character.experience" v-on:change="updateStore" id="character-experience" number>
 
+
+      <button type="button" class="button-primary xs-mt2 prevent-default" v-on:click="addWeapon">Add Weapon</button>
+
+      <div v-for="weapon in character.weapons">
+        <input type="text" v-model="weapon.name" v-on:keyup="updateStore" v-on:change="updateStore">
+        <input type="text" v-model="weapon.price" v-on:keyup="updateStore" v-on:change="updateStore">
+        <button type="button" class="button-secondary" v-on:click="deleteWeapon" data-weapon-id='{{ $key }}'>Delete</button>
+      </div>
+
+<!--
+      <label for="character-weapon">Exp</label>
+      <input type="text" v-model="character.weapons" v-on:change="updateStore" id="character-weapons"> -->
 
     </form>
   </div>

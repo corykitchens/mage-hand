@@ -266,6 +266,8 @@ var requiresAuth = function requiresAuth(){
 
 
 
+
+
 //// #ROOT
 if (window.location.pathname === "/"){
   if (fb.getAuth() == undefined){ // If user is logged OUT
@@ -288,13 +290,12 @@ if (window.location.pathname === "/"){
 //// #CAMPAIGNS
 if (window.location.pathname === "/campaigns"){
   requiresAuth();
-  var vm;
 
   fb.child("users/" + auth.uid + "/campaigns").on("value", function(ss) {
     const snap = ss.val(); if(snap == undefined){ return; }
 
     //debugger;
-    vm = new Vue({
+    new Vue({
       el: '#xxxkey',
       data: {
         greeting: 'lol'
@@ -311,29 +312,42 @@ if (window.location.pathname === "/campaigns"){
 
 
 
+
+
+
+
 //// #CHARACTER
 if (window.location.pathname === "/character"){
+  window.character;
   var character_id = window.location.search.replace("?", "");
   // ^ If more params are being passed in, this will need to be updated
+
+  var default_weapon = {name: 'New Weapon', price: '$1'};
 
   // Generate a vue directly from the firebase character object
   // All fb object properties will be avilable and bindable in the view
   fb.child("characters").child(character_id).on("value", function(snap){
 
-    new Vue({
-      el: '#vue-character',
-      data: {character: snap.val()},
-      methods: {
-        updateStore: function updateStore(){
-          console.log('keyup');
-          console.log(this.character);
-          // Object.keys(this.character).forEach(function(char_key){
-          //   this.character[char_key]
-          // });
-          fb.child("characters").child(character_id).update(this.character);
+    if (window.character == undefined){ // If we don't have character, make vue
+      window.character = new Vue({
+        el: '#vue-character',
+        data: {character: snap.val()},
+        methods: {
+          updateStore: function(){
+            fb.child("characters").child(character_id).update(this.character);
+          },
+          addWeapon: function(){ // Push a new weapon to fb
+            fb.child("characters").child(character_id).child("weapons").push(default_weapon);
+          },
+          deleteWeapon: function(ee){
+            var weapon_id = $(ee.target).data("weapon-id");
+            fb.child("characters").child(character_id).child("weapons").child(weapon_id).remove();
+          }
         }
-      }
-    });
+      });
+    } else { // If we do have a vue object, update it when fb sends us stuff
+      window.character.$set("character", snap.val());
+    };
 
     revealPage();
   });
