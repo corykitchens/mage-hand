@@ -17,6 +17,7 @@ router.get('/campaigns', function(req, res, next) {
   res.render('campaigns', { title: 'Campaigns' });
 });
 
+
 /* GET individual */
 router.get('/character', function(req, res, next) {
   res.render('character', { title: 'Character' });

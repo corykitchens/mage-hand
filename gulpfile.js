@@ -16,13 +16,10 @@ gulp.task("sass", function() {
         .pipe(gulp.dest("public/stylesheets/"));
 });
 
-var models_list = ["base", "campaigns", "characters", "users"] //Order is important here
-var models_directories = models_list.map(function(e){return"public/js/models/model_" + e + ".js"})
-
 // Concatenate & Minify JS
-//["public/js/**/*.js"]
+
 gulp.task("scripts", function() {
-    return gulp.src(models_directories.concat(["public/js/vendor/*.js", "public/js/core.js"]))
+    return gulp.src(["public/js/vendor/*.js", "public/js/core.js"])
         .pipe(rename("main.js"))
         .pipe(concat("main.js"))
         .pipe(gulp.dest("public/js"))

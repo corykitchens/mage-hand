@@ -1,13 +1,32 @@
 <div class="characters-page">
   <h2 class="section-header">Characters</h2>
+  <h2 class="section-header header-sticky opacity0">Characters</h2>
+
+  <button class="button-circle button-add" id="new-character"></button>
 
   <section class="characters-container" id="vue-characters">
 
     <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
-      <h4 class="js-name">{{ character.name }}</h4>
+      <h4>{{ character.name }}</h4>
       <p>Currently in: Campaign name</p>
-      <h5 class="js-experience">{{ character.experience }}</h5>
+      <h5>{{ character.experience }}</h5>
     </div>
 
   </section>
+
+
+  <div class="modal">
+    <div id="game-selection">
+      <h3 class="section-header">What world will this character live in?</h3>
+      <section class="modal-body">
+        <ul>
+          <li v-for="game in game_types" class="button button-primary u-full-width" v-on:click="createNewCharacter" id="{{ game.key_name }}">
+            {{ game.short_name }}
+          </li>
+        </ul>
+
+      </section>
+    </div>
+  </div>
+
 </div>

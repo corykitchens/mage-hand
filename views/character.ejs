@@ -2,14 +2,33 @@
   <div id="vue-character">
     <!-- this will be the DOM element we will mount our VueJs instance to -->
 
-    <form name="character-view">
+    <form name="character-view" id="character-form">
 
-      <label for="character-name">Name</label>
+      <!-- <label for="character-name">Name</label>
       <input type="text" v-model="character.name" v-on:keyup="updateStore" v-on:change="updateStore" id="character-name">
 
-      <label for="character-experience">Exp</label>
+      <label for="character-name">Age</label>
+      <input type="text" v-model="character.age" v-on:keyup="updateStore" v-on:change="updateStore" id="character-age">
+
+      <label for="character-name">Height</label>
+      <input type="text" v-model="character.height" v-on:keyup="updateStore" v-on:change="updateStore" id="character-height">
+
+      <label for="character-name">Weight</label>
+      <input type="text" v-model="character.weight" v-on:keyup="updateStore" v-on:change="updateStore" id="character-weight">
+
+      <label for="character-experience">Experience Points</label>
       <input type="number" v-model="character.experience" v-on:change="updateStore" id="character-experience" number>
 
+      <label for="character-race">Race/Species</label>
+      <label for="race-human">Human</label>
+      <input type="radio" name="race" value="Human" id="race-human" v-model="character.race" v-on:change="updateStore">
+      <label for="race-dwarf">Dwarf</label>
+      <input type="radio" name="race" value="Dwarf" id="race-dwarf" v-model="character.race" v-on:change="updateStore">
+      <label for="race-elf">Elf</label>
+      <input type="radio" name="race" value="Elf" id="race-elf" v-model="character.race" v-on:change="updateStore">
+      <label for="race-halfling">Halfling</label>
+      <input type="radio" name="race" value="Halfling" id="race-halfling" v-model="character.race" v-on:change="updateStore">
+      <label for="race-other">Other</label> -->
 
       <button type="button" class="button-primary xs-mt2 prevent-default" v-on:click="addWeapon">Add Weapon</button>
 

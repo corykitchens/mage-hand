@@ -7,17 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="spenser.xyz">
-    <title>Magehand ✋ <%- title %></title>
-    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <title>Magehand ✋ </title>
     <link href='https://fonts.googleapis.com/css?family=Dosis:800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css' rel='stylesheet' type='text/css'>
     <link href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel='stylesheet' type='text/css'>
+    <link href='stylesheets/main.css' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
     <div class="nav">
-      <h1 class="xs-ml2"><a href="/" class="logo">magehand</a></h1>
+      <h1 class="xs-mb3 xs-mt1 xs-ml2">
+        <a href="/" class="logo">magehand</a>
+      </h1>
+
       <a href="/login">
         <i class="icon ion-android-person xs-mr2"></i>
       </a>
@@ -30,14 +33,9 @@
     <div class="body-content">
       <%- body %>
     </div>
-
-
-    <script src="http://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
+    <div class="overlay"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <script src="js/main.js"></script>
-
-
   </body>
 
 </html>
