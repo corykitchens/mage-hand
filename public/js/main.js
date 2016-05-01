@@ -10535,7 +10535,7 @@
 
 	// Only let authorized users into these pages
 	module.exports.requiresAuth = function requiresAuth(){
-	  if (!window.auth) { debugger; window.location.replace("/login"); }
+	  if (!window.auth) { window.location.replace("/login"); }
 	};
 
 
@@ -10602,23 +10602,26 @@
 	    $(".modal").hide();
 	  });
 
+	  $(document).keyup(function(e){ // Escape key
+	    if (e.keyCode === 27) $('.overlay').click();
+	  });
 
-	  // Clicking on the new button adds a new (empty) character
+
+	  // Clicking on the new button adds a new (mostly-empty) character
 	  $(document).on("click", "#new-character", function(ee){
 	    showGameTypeModal();
 	  });
 
 
-
 	  var showGameTypeModal = function(){
-	      new Vue({
-	        el: '#game-selection',
-	        data: { game_types: gameTypes() },
-	        methods: {
-	          createNewCharacter: createNewCharacter
-	        }
-	      });
-	      $(".modal").show(); $(".overlay").show();
+	    new Vue({
+	      el: '#game-selection',
+	      data: { game_types: gameTypes() },
+	      methods: {
+	        createNewCharacter: createNewCharacter
+	      }
+	    });
+	    $(".modal").show(); $(".overlay").show();
 	  };
 
 
@@ -10665,17 +10668,17 @@
 
 	// Returns array of supported game types
 	module.exports.gameTypes = function(name_type){
-	  // var game_types = ['dnd_5e', 'dungeon_world'];
-	  var game_types = Object.keys(game_meta);
+	  var game_types = Object.keys(game_meta).map(function(key){
+	    if (game_meta[key].active == true){
+	      return {
 
-	  var gt = game_types.map(function(game_type){
-	    return {
-	      key_name: game_type,
-	      short_name: game_meta[game_type].short_name,
-	      long_name: game_meta[game_type].long_name
-	    }
+	        key_name: key,
+	        short_name: game_meta[key].short_name,
+	        long_name: game_meta[key].long_name
+	      }
+	    };
 	  });
-	  return gt;
+	  return game_types.filter(Boolean); // Remove empties - might be a way to use filter above?
 	};
 
 
@@ -10683,10 +10686,13 @@
 	  return game_meta[game_key];
 	};
 
-
+	// Character forms are built out using :below meta information
+	// To add a new game type, a meta structure will need to be built out, in addition
+	// to a view cooresponding wi:that structure.
 	var game_meta = {
 	  dnd_5e: {
-	    long_name: 'Dungeons and Dragons: 5th Edition',
+	    active: true,
+	    long_name: 'Dungeons and Dragons: 5:Edition',
 	    short_name: 'D&D 5E',
 
 	    character_structure: {
@@ -10697,18 +10703,6 @@
 	      hit_points: 'number',
 	      sex: 'text',
 
-	      alignment: [
-	        'Lawful Good',
-	        'Neutral Good',
-	        'Chaotic Good',
-	        'Lawful Neutral',
-	        'Neutral',
-	        'Chaotic Neutral',
-	        'Lawful Evil',
-	        'Neutral Evil',
-	        'Chaotic Evil'
-	      ],
-
 	      str: 'number',
 	      dex: 'number',
 	      con: 'number',
@@ -10716,10 +10710,91 @@
 	      wis: 'number',
 	      cha: 'number',
 
+	      alignment: {
+	        options: [
+	        'Lawful Good', 'Neutral Good', 'Chaotic Good',
+	        'Lawful Neutral', 'Neutral', 'Chaotic Neutral',
+	        'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
+	      ]},
+
+	      skills: {
+	        acrobatics: {
+	          name: 'Acrobatics' ,
+	          stat: 'dex'
+	        },
+	        animal_hanling: {
+	          name: 'Animal Handling',
+	          stat: 'wis'
+	        },
+	        arcana: {
+	          name: 'Arcana',
+	          stat: 'wis'
+	        },
+	        athletics: {
+	          name: 'Athletics',
+	          stat: 'wis'
+	        },
+	        deception: {
+	          name: 'Deception',
+	          stat: 'wis'
+	        },
+	        history: {
+	          name: 'History',
+	          stat: 'wis'
+	        },
+	        insight: {
+	          name: 'Insight',
+	          stat: 'wis'
+	        },
+	        intimidation: {
+	          name: 'Intimidation',
+	          stat: 'wis'
+	        },
+	        investigation: {
+	          name: 'Investigation',
+	          stat: 'wis'
+	        },
+	        medicine: {
+	          name: 'Medicine',
+	          stat: 'wis'
+	        },
+	        nature: {
+	          name: 'Nature',
+	          stat: 'wis'
+	        },
+	        perception: {
+	          name: 'Perception',
+	          stat: 'wis'
+	        },
+	        performance: {
+	          name: 'Performance',
+	          stat: 'wis'
+	        },
+	        persuasion: {
+	          name: 'Persuasion',
+	          stat: 'wis'
+	        },
+	        religion: {
+	          name: 'Religion',
+	          stat: 'wis'
+	        },
+	        sleight_of_hand: {
+	          name: 'Sleight of Hand',
+	          stat: 'wis'
+	        },
+	        stealth: {
+	          name: 'Stealth',
+	          stat: 'wis'
+	        },
+	        survival: {
+	          name: 'Survival',
+	          stat: 'wis'
+	        }
+	      },
 
 	      classes: {
 	        fighter: {
-	          hit_die: "1d10",
+	          hit_die: "1d10 per fighter level",
 	          hit_points_starting: "10+con",
 	          hit_points_after: "1d10 (or 6) + your Constitution modifier per fighter level after 1st",
 	          proficiencies: {
@@ -10728,7 +10803,21 @@
 	            tools: 'None',
 	            saving_throws: 'Strength, Constitution',
 	          },
+	          skill_count: 2,
 	          skills: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Perception', 'Survival']
+	        },
+	        cleric: {
+	          hit_die: "1d8 per cleric level",
+	          hit_points_starting: "8+con",
+	          hit_points_after: "1d8 (or 4) + your Constitution modifier per cleric level after 1st",
+	          proficiencies: {
+	            armor: 'Light armor, medium armor, shields',
+	            weapons: 'All simple weapons',
+	            tools: 'None',
+	            saving_throws: 'Wisdom, Charisma',
+	          },
+	          skill_count: 2,
+	          skills: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion']
 	        }
 	      },
 
@@ -10744,6 +10833,28 @@
 	      },
 	    },
 
+	    level_progression: { //TODO these numbers probably aren't right
+	      1: 300,
+	      2: 600,
+	      3: 1800,
+	      4: 3800,
+	      5: 7500,
+	      6: 9000,
+	      7: 11000,
+	      8: 14000,
+	      9: 16000,
+	      10: 21000,
+	      11: 15000,
+	      12: 20000,
+	      13: 20000,
+	      14: 25000,
+	      15: 30000,
+	      16: 30000,
+	      17: 40000,
+	      18: 40000,
+	      19: 50000,
+	    }, // http://www.enworld.org/forum/showthread.php?367079-5e-XP-Chart-Progression-Question&s=b74b6ad8f6216bc7f28c90cf06fcf862#ixzz47MrhUGYY
+
 	    default_character: {
 	      name: 'New Character',
 	      experience: 0,
@@ -10758,10 +10869,10 @@
 
 
 
-	  // dungeon_world: {
-	  //   long_name: 'Dungeon World',
-	  //   short_name: 'Dungeon World',
-	  // }
+	  dungeon_world: {
+	    long_name: 'Dungeon World',
+	    short_name: 'Dungeon World',
+	  }
 
 	};
 
@@ -10781,23 +10892,21 @@
 
 	module.exports.characterPage = function characterPage(){
 
-	  window.formBuilt = false;
-
 	  var character_id = window.location.search.replace("?id=", "");
 	  var default_weapon = {name: 'New Weapon', price: '$1'};
-
 
 	  // Generate a vue directly from the firebase character object
 	  // All fb object properties will be avilable and bindable in the view
 	  fb.child("characters").child(character_id).on("value", function(snap){
-
 	    var character_data = snap.val();
 
-	    if (!window.formBuilt){ // If we don't have character, make vue
-	      generateForm(character_data);
+	    if (!window.character){ // If we don't have character, make vue
 	      window.character = new Vue({
 	        el: '#vue-character',
-	        data: {character: character_data, gameMeta: gameMeta()},
+	        data: {
+	          character: character_data,
+	          gameMeta: gameMeta( character_data.type )
+	        },
 	        methods: {
 	          updateStore: function(){
 	            fb.child("characters").child(character_id).update(this.character);
@@ -10817,30 +10926,6 @@
 
 	    revealPage();
 	  });
-
-
-
-	  var generateForm = function(character_data){
-	    var game_meta = gameMeta(character_data.type);
-
-	    Object.keys(game_meta.character_structure).forEach(function(char_key){
-	      // If value is string, it's either text or number
-	      var $label = $('<label for='+ char_key +'/>').text(char_key.capitalize());
-	      var $input = $('<input/>').attr({ id:char_key});
-
-	      if (typeof game_meta.character_structure[char_key] == "string"){
-	        $input.attr("type", game_meta.character_structure[char_key])
-	      }
-
-	      // Add change handlers to input so it can sync with vue/firebase
-	      $input.attr({"v-on:keyup":"updateStore", "v-on:change":"updateStore", "v-model":"character."+char_key})
-	      $label.appendTo("#character-form")
-	      $input.appendTo("#character-form")
-	    });
-
-	    window.formBuilt = true;
-	  };
-
 
 	};
 

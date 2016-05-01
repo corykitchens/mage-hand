@@ -16,7 +16,7 @@ module.exports.setupUser = function setupUser(authData){
 
 // Only let authorized users into these pages
 module.exports.requiresAuth = function requiresAuth(){
-  if (!window.auth) { debugger; window.location.replace("/login"); }
+  if (!window.auth) { window.location.replace("/login"); }
 };
 
 

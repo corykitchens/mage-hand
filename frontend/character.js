@@ -9,23 +9,21 @@ String.prototype.capitalize = function() {
 
 module.exports.characterPage = function characterPage(){
 
-  window.formBuilt = false;
-
   var character_id = window.location.search.replace("?id=", "");
   var default_weapon = {name: 'New Weapon', price: '$1'};
-
 
   // Generate a vue directly from the firebase character object
   // All fb object properties will be avilable and bindable in the view
   fb.child("characters").child(character_id).on("value", function(snap){
-
     var character_data = snap.val();
 
-    if (!window.formBuilt){ // If we don't have character, make vue
-      generateForm(character_data);
+    if (!window.character){ // If we don't have character, make vue
       window.character = new Vue({
         el: '#vue-character',
-        data: {character: character_data, gameMeta: gameMeta()},
+        data: {
+          character: character_data,
+          gameMeta: gameMeta( character_data.type )
+        },
         methods: {
           updateStore: function(){
             fb.child("characters").child(character_id).update(this.character);
@@ -45,29 +43,5 @@ module.exports.characterPage = function characterPage(){
 
     revealPage();
   });
-
-
-
-  var generateForm = function(character_data){
-    var game_meta = gameMeta(character_data.type);
-
-    Object.keys(game_meta.character_structure).forEach(function(char_key){
-      // If value is string, it's either text or number
-      var $label = $('<label for='+ char_key +'/>').text(char_key.capitalize());
-      var $input = $('<input/>').attr({ id:char_key});
-
-      if (typeof game_meta.character_structure[char_key] == "string"){
-        $input.attr("type", game_meta.character_structure[char_key])
-      }
-
-      // Add change handlers to input so it can sync with vue/firebase
-      $input.attr({"v-on:keyup":"updateStore", "v-on:change":"updateStore", "v-model":"character."+char_key})
-      $label.appendTo("#character-form")
-      $input.appendTo("#character-form")
-    });
-
-    window.formBuilt = true;
-  };
-
 
 };

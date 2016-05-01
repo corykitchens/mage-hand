@@ -44,23 +44,26 @@ module.exports.charactersPage = function charactersPage(){
     $(".modal").hide();
   });
 
+  $(document).keyup(function(e){ // Escape key
+    if (e.keyCode === 27) $('.overlay').click();
+  });
 
-  // Clicking on the new button adds a new (empty) character
+
+  // Clicking on the new button adds a new (mostly-empty) character
   $(document).on("click", "#new-character", function(ee){
     showGameTypeModal();
   });
 
 
-
   var showGameTypeModal = function(){
-      new Vue({
-        el: '#game-selection',
-        data: { game_types: gameTypes() },
-        methods: {
-          createNewCharacter: createNewCharacter
-        }
-      });
-      $(".modal").show(); $(".overlay").show();
+    new Vue({
+      el: '#game-selection',
+      data: { game_types: gameTypes() },
+      methods: {
+        createNewCharacter: createNewCharacter
+      }
+    });
+    $(".modal").show(); $(".overlay").show();
   };
 
 

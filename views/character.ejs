@@ -4,7 +4,7 @@
 
     <form name="character-view" id="character-form">
 
-      <!-- <label for="character-name">Name</label>
+      <label for="character-name">Name</label>
       <input type="text" v-model="character.name" v-on:keyup="updateStore" v-on:change="updateStore" id="character-name">
 
       <label for="character-name">Age</label>
@@ -19,17 +19,40 @@
       <label for="character-experience">Experience Points</label>
       <input type="number" v-model="character.experience" v-on:change="updateStore" id="character-experience" number>
 
-      <label for="character-race">Race/Species</label>
-      <label for="race-human">Human</label>
-      <input type="radio" name="race" value="Human" id="race-human" v-model="character.race" v-on:change="updateStore">
-      <label for="race-dwarf">Dwarf</label>
-      <input type="radio" name="race" value="Dwarf" id="race-dwarf" v-model="character.race" v-on:change="updateStore">
-      <label for="race-elf">Elf</label>
-      <input type="radio" name="race" value="Elf" id="race-elf" v-model="character.race" v-on:change="updateStore">
-      <label for="race-halfling">Halfling</label>
-      <input type="radio" name="race" value="Halfling" id="race-halfling" v-model="character.race" v-on:change="updateStore">
-      <label for="race-other">Other</label> -->
+      <label for="character-alignment">Alignment</label>
+      <div v-for="alignment in gameMeta.character_structure.alignment.options">
+        <label for="{{alignment}}">{{alignment}}</label>
+        <input type="radio" value="{{alignment}}"
+          v-model="character.alignment"
+          v-on:keyup="updateStore"
+          v-on:change="updateStore"
+          id="{{alignment}}">
+      </div>
 
+      <label for="character-class">Class</label>
+        <!-- TODO when class selection is made, update starting HP -->
+      <div v-for="class in gameMeta.character_structure.classes">
+        <label for="class-{{$key}}"> {{ $key }} </label>
+        <input type="radio" value="{{$key}}"
+          v-model="character.class"
+          v-on:keyup="updateStore"
+          v-on:change="updateStore"
+          id="class{{$key}}">
+          <ul class="class-details">
+            <li>Hit Die: {{ class.hit_die }}</li>
+            <li>Hit Points aftere level 1: {{ class.hit_points_after }}</li>
+          </ul>
+      </div>
+
+      <!-- TODO skills aren't saving, can't store arrays, need to store like equiptment -->
+      <label for="character-skills">Skill Proficiencies</label>
+      <div v-for="skill in gameMeta.character_structure.skills">
+        <label for="skill-{{ $key }}">{{ skill.name }}</label>
+        <input type="checkbox" value="{{ skill }}" id="skill-{{ $key }}">
+      </div>
+
+
+      <label for="character-equipment">Equipment</label>
       <button type="button" class="button-primary xs-mt2 prevent-default" v-on:click="addWeapon">Add Weapon</button>
 
       <div v-for="weapon in character.weapons">
@@ -38,9 +61,6 @@
         <button type="button" class="button-secondary" v-on:click="deleteWeapon" data-weapon-id='{{ $key }}'>Delete</button>
       </div>
 
-<!--
-      <label for="character-weapon">Exp</label>
-      <input type="text" v-model="character.weapons" v-on:change="updateStore" id="character-weapons"> -->
 
     </form>
   </div>
