@@ -2,8 +2,9 @@
 A real-time campaign and character management tool for table-top roleplaying games.
 
 # Usage
+- Install: npm install
 - Step 1: DEBUG=myapp:* npm start
-- Step 2: gulp
+- Step 2: webpack --watch
 - Step 3: Profit
 
 
