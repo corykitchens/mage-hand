@@ -26,7 +26,7 @@ module.exports.gameMeta = function(game_key){
 var game_meta = {
   dnd_5e: {
     active: true,
-    long_name: 'Dungeons and Dragons: 5:Edition',
+    long_name: 'Dungeons and Dragons: 5th Edition',
     short_name: 'D&D 5E',
 
     character_structure: {
@@ -50,6 +50,58 @@ var game_meta = {
         'Lawful Neutral', 'Neutral', 'Chaotic Neutral',
         'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
       ]},
+
+      classes: {
+        fighter: {
+          hit_die: "1d10 per fighter level",
+          hit_points_starting: "10+con",
+          hit_points_after: "1d10 (or 6) + your Constitution modifier per fighter level after 1st",
+          proficiencies: {
+            armor: 'All armor, shields',
+            weapons: 'Simple weapons and martial weapons',
+            tools: 'None',
+            saving_throws: 'Strength, Constitution',
+          },
+          skill_count: 2,
+          skills: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Perception', 'Survival']
+        },
+        cleric: {
+          hit_die: "1d8 per cleric level",
+          hit_points_starting: "8+con",
+          hit_points_after: "1d8 (or 4) + your Constitution modifier per cleric level after 1st",
+          proficiencies: {
+            armor: 'Light armor, medium armor, shields',
+            weapons: 'All simple weapons',
+            tools: 'None',
+            saving_throws: 'Wisdom, Charisma',
+          },
+          skill_count: 2,
+          skills: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion']
+        }
+      },
+
+      races: {
+        dwarf: {
+          description: "Dwarfs are small",
+          traits: [
+            {label: "Ability Score Increase", description: "Your Constitution score increases by 2"},
+            {label: "Darkvision", description: "You can see in dim light. Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can’t discern color in darkness, only shades of gray."},
+            {label: "Dwarven Resilience", description: "You have advantage on saving throws against poison and resistance against poison damage."},
+            {label: "Dwarven Combat Training", description: "You have proficiency with the battleaxe, handaxe, throwing hammer, and warhammer."},
+            {label: "Stonecunning", description: "Double your proficiency bonus when making history skill checks related to the origin of stonework and you are considered proficient in history for such checks."},
+            {label: "Speed", description: "Your speed is not reduced by heavy armor."}
+          ],
+          facts: [
+            {label: "Age", description: "Dwarves mature at the same rate as humans, but they’re considered young until they reach the age of 50. On average, they live about 350 years."},
+            {label: "Alignment", description: "Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order."},
+            {label: "Size", description: "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium."},
+          ]
+        },
+        human: {
+          description: "Humans are boring",
+          traits: ["Human traits go here.", "another trait"],
+        },
+      },
 
       skills: {
         acrobatics: {
@@ -126,45 +178,6 @@ var game_meta = {
         }
       },
 
-      classes: {
-        fighter: {
-          hit_die: "1d10 per fighter level",
-          hit_points_starting: "10+con",
-          hit_points_after: "1d10 (or 6) + your Constitution modifier per fighter level after 1st",
-          proficiencies: {
-            armor: 'All armor, shields',
-            weapons: 'Simple weapons and martial weapons',
-            tools: 'None',
-            saving_throws: 'Strength, Constitution',
-          },
-          skill_count: 2,
-          skills: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Perception', 'Survival']
-        },
-        cleric: {
-          hit_die: "1d8 per cleric level",
-          hit_points_starting: "8+con",
-          hit_points_after: "1d8 (or 4) + your Constitution modifier per cleric level after 1st",
-          proficiencies: {
-            armor: 'Light armor, medium armor, shields',
-            weapons: 'All simple weapons',
-            tools: 'None',
-            saving_throws: 'Wisdom, Charisma',
-          },
-          skill_count: 2,
-          skills: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion']
-        }
-      },
-
-      races: {
-        dwarf: {
-          description: "Dwarfs are small",
-          traits: ["Dwarfs get +1 on a thing.", "Another trait"],
-        },
-        human: {
-          description: "Humans are boring",
-          traits: ["Human traits go here.", "another trait"],
-        },
-      },
     },
 
     level_progression: { //TODO these numbers probably aren't right

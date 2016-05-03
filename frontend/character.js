@@ -10,7 +10,7 @@ String.prototype.capitalize = function() {
 module.exports.characterPage = function characterPage(){
 
   var character_id = window.location.search.replace("?id=", "");
-  var default_weapon = {name: 'New Weapon', price: '$1'};
+  var default_equipment = {name: 'New Thing', price: '$1'};
 
   // Generate a vue directly from the firebase character object
   // All fb object properties will be avilable and bindable in the view
@@ -28,12 +28,12 @@ module.exports.characterPage = function characterPage(){
           updateStore: function(){
             fb.child("characters").child(character_id).update(this.character);
           },
-          addWeapon: function(){ // Push a new weapon to fb
-            fb.child("characters").child(character_id).child("weapons").push(default_weapon);
+          addEquipment: function(){ // Push a new weapon to fb
+            fb.child("characters").child(character_id).child("equipment").push(default_equipment);
           },
-          deleteWeapon: function(ee){
-            var weapon_id = $(ee.target).data("weapon-id");
-            fb.child("characters").child(character_id).child("weapons").child(weapon_id).remove();
+          deleteEquipment: function(ee){
+            var equipment_id = $(ee.target).data("equipment-id");
+            fb.child("characters").child(character_id).child("equipment").child(equipment_id).remove();
           }
         }
       });

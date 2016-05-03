@@ -29,8 +29,32 @@
           id="{{alignment}}">
       </div>
 
+      <label for="character-race">Race/Species</label>
+        <!-- TODO when race selection is made, what needs to be updated? -->
+      <div v-for="race in gameMeta.character_structure.races">
+        <label for="race-{{$key}}"> {{ $key }} </label>
+        <input type="radio" value="{{$key}}"
+          v-model="character.race"
+          v-on:keyup="updateStore"
+          v-on:change="updateStore"
+          id="race{{$key}}">
+
+          <h4>Description: {{ race.description }}</h4>
+
+          <label>{{ $key }} Traits</label>
+          <ul class="race-traits" v-for="trait in race.traits">
+            <li>{{ trait.label }}: {{ trait.description }}</li>
+          </ul>
+
+          <label>{{ $key }} Facts</label>
+          <ul class="race-facts" v-for="trait in race.facts">
+            <li>{{ trait.label }}: {{ trait.description }}</li>
+          </ul>
+
+      </div>
+
       <label for="character-class">Class</label>
-        <!-- TODO when class selection is made, update starting HP -->
+        <!-- TODO when class selection is made, update starting HP + skill selection -->
       <div v-for="class in gameMeta.character_structure.classes">
         <label for="class-{{$key}}"> {{ $key }} </label>
         <input type="radio" value="{{$key}}"
@@ -44,6 +68,10 @@
           </ul>
       </div>
 
+
+
+
+
       <!-- TODO skills aren't saving, can't store arrays, need to store like equiptment -->
       <label for="character-skills">Skill Proficiencies</label>
       <div v-for="skill in gameMeta.character_structure.skills">
@@ -53,12 +81,12 @@
 
 
       <label for="character-equipment">Equipment</label>
-      <button type="button" class="button-primary xs-mt2 prevent-default" v-on:click="addWeapon">Add Weapon</button>
+      <button type="button" class="button-primary xs-mt2 prevent-default" v-on:click="addEquipment">Add Equipment</button>
 
-      <div v-for="weapon in character.weapons">
-        <input type="text" v-model="weapon.name" v-on:keyup="updateStore" v-on:change="updateStore">
-        <input type="text" v-model="weapon.price" v-on:keyup="updateStore" v-on:change="updateStore">
-        <button type="button" class="button-secondary" v-on:click="deleteWeapon" data-weapon-id='{{ $key }}'>Delete</button>
+      <div v-for="item in character.equipment">
+        <input type="text" v-model="item.name" v-on:keyup="updateStore" v-on:change="updateStore">
+        <input type="text" v-model="item.price" v-on:keyup="updateStore" v-on:change="updateStore">
+        <button type="button" class="button-secondary" v-on:click="deleteEquipment" data-equipment-id='{{ $key }}'>Delete</button>
       </div>
 
 
