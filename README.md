@@ -1,14 +1,14 @@
 #Magehand
 A real-time campaign and character management tool for table-top roleplaying games.
 
-# Usage
+## Usage
 - Install: `npm install`
-- Step 1: `DEBUG=myapp:* npm start`
-- Step 2: `webpack --watch`
-- Step 3: Profit
+- Step 1: Start server with `DEBUG=myapp:* npm start`
+- Step 2: Have `webpack --watch` running
+- Step 3: Profit?
 
 
-# TODO
+## TODO
 - Move game rule meta to seperate files
 - Make campaign view
 - Add character class/rules construct
@@ -18,11 +18,11 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Add security rules
 - Add all spells
 
-# Security rules
+### Security rules
 - Don't let id references be updated ever?
 
 
-# Rad possible features
+### Rad possible features
 - Quick build characters
 - Racial name suggestions
 - Accurate level up mechanism
