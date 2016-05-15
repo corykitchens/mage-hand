@@ -23,6 +23,7 @@ A real-time campaign and character management tool for table-top roleplaying gam
 
 
 ### Rad possible features
+- Initiative roll/track thing
 - Quick build characters
 - Racial name suggestions
 - Accurate level up mechanism
