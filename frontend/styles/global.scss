@@ -1,5 +1,8 @@
 html, body { height: 100%; width: 100%; }
 
+* {
+	box-sizing: border-box;
+}
 body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -144,8 +147,200 @@ body {
 }
 
 
+
+
+
+// CHARACTER PAGE
+
+#character-lock-fields { // Lock icon that triggers disabled fields
+	color: rgba(0, 0, 0, 0.5);
+	margin-bottom: 2rem;
+	align-self: center;
+	min-width: 20px;
+	text-align: center;
+	cursor: pointer;
+}
+
+// Field specific styles
+#character-name {
+	font-weight: bold;
+	color: $light;
+	border: 1px solid transparent;
+	&:focus {
+		color: black;
+	}
+}
+
+input[type="text"],
+input[type="number"]{
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.field-large {
+	font-size: 3rem;
+	width: 100%;
+}
+
+.field-small {
+
+}
+.field-large:focus, .field-small:focus {
+	color: black;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.character-other-stats { // AC, HP, etc.
+	display: flex;
+	margin-bottom: $base-field-spacing/2;
+
+	& > * {
+		margin-right: 1rem;
+	}
+	& > *:last-child {
+		margin-right: 0;
+	}
+}
+
+.box-field {
+	& > input, label { width: 100%;}
+	& > input {
+		text-align: center;
+		background-color: rgba(255, 255, 255, 0.2);
+		margin: 0;
+		border-radius: $radius;
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+		color: white;
+		font-weight: bold;
+		border: 1px solid transparent;
+	}
+	& > label {
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.1);
+		padding: 0 0.5rem;
+	}
+}
+.box-field--large {
+	& > input {
+		height: 60px;
+		font-size: 3.5rem;
+	}
+}
+
+$box-field--vertical-height: 22px;
+
+.box-field--vertical {
+	display: flex;
+
+	& > input { height: $box-field--vertical-height; }
+	& > label {
+		height: $box-field--vertical-height;
+		//To center text \/
+		display: flex; align-items: center; justify-content: center;
+	}
+}
+
+
+.character-hp-fields {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: $base-field-spacing;
+
+
+
+	& > label {
+		margin: 0;
+		& > input {
+			height: 2.5rem;
+			margin: 0;
+			max-width: 100px;
+		}
+	}
+}
+
+.character-stats {
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}
+.character-stat {
+	& > label { text-align: center; letter-spacing: 1px; }
+	& > input {
+		font-weight: 100;
+		color: white;
+		font-size: 3rem;
+		max-width: 40px;
+		padding: 0;
+		text-align: center;
+		border: 0;
+		padding: $base-field-spacing 0;
+		background-color: rgba(255, 255, 255, 0.2);
+		border: 1px solid transparent; // No jolt on focus
+	}
+	& > input:focus {
+		color: black;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+}
+
+// Race will only change once - need to rethink display here
+.character-race {
+	display: flex;
+}
+.character-race-item {
+	flex-grow: 1;
+
+	& > input {
+		display: none !important;
+		&:checked + label {
+			background-color: green;
+		}
+	}
+
+
+}
+//
+// .race-details {
+// 	display: none;
+// }
+
+// Alignment slider styles
+// This works by only showing the label AFTER the selected aligntment option
+// The labels are then being floated above to only show the selected item
+// as displaying all text even in a flex element wouldn't fit on mobile
+.alignment-slider {
+	position: relative;
+	display: flex;
+	margin-bottom: $base-field-spacing;
+	justify-content: space-between;
+}
+.alignment-slider-item {
+	flex-grow: 1;
+	text-align: center;
+
+	& > label {
+	 display: none;
+	 position: absolute;
+	 top: 0;
+	 left: 50%;
+	 transform: translateX(-50%);
+	}
+	& > input {
+		position: relative;
+		top: 3rem; // Match font size of label
+	}
+	& > input[type="radio"]:checked + label {
+		display: block !important;
+	}
+}
+
+
 // UTILITY
 
+.u-flex {
+	display: flex;
+}
 .opacity0 { opacity: 0; }
 .u-fixed-center {
 	position: fixed;

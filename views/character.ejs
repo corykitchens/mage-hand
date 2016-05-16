@@ -1,46 +1,148 @@
 <div class="xs-ml2 xs-mr2 xs-mt2">
-  <div id="vue-character">
-    <!-- this will be the DOM element we will mount our VueJs instance to -->
+  <div id="vue-character"> <!-- this will be the DOM element we will mount our VueJs instance to -->
 
     <form name="character-view" id="character-form">
 
-      <label for="character-name">Name</label>
-      <input type="text" v-model="character.name" v-on:keyup="updateStore" v-on:change="updateStore" id="character-name">
+      <!-- <label for="character-name">Name</label> -->
+      <div class="u-flex">
+        <input type="text" class="field-large"
+          v-model="character.name" v-on:keyup="updateStore"
+          v-on:change="updateStore" id="character-name">
+        <i class="icon ion-locked ion-unlocked" id="character-lock-fields"></i>
+      </div>
 
-      <label for="character-name">Age</label>
-      <input type="text" v-model="character.age" v-on:keyup="updateStore" v-on:change="updateStore" id="character-age">
 
-      <label for="character-name">Height</label>
-      <input type="text" v-model="character.height" v-on:keyup="updateStore" v-on:change="updateStore" id="character-height">
+      <div class="character-other-stats">
+        <div class="box-field box-field--large">
+          <input type="number" v-model="character.current_hp"
+          v-on:keyup="updateStore" v-on:change="updateStore"
+          class="field-small" id="character-current-hp">
+          <label for="character-hp">Current HP</label>
+        </div>
 
-      <label for="character-name">Weight</label>
-      <input type="text" v-model="character.weight" v-on:keyup="updateStore" v-on:change="updateStore" id="character-weight">
+        <div class="box-field box-field--large">
+          <input type="number" v-model="character.armor_class"
+          v-on:keyup="updateStore" v-on:change="updateStore"
+          class="field-small" id="character-armor_class">
+          <label for="armor_class">AC</label>
+        </div>
+      </div>
+
+
+      <div class="u-flex">
+        <section class="character-hp-fields">
+          <div class="box-field box-field--vertical">
+            <label for="character-temp-hp">Temp HP</label>
+            <input type="number" v-model="character.temp_hp"
+            v-on:keyup="updateStore" v-on:change="updateStore"
+            class="field-small" id="character-current-temp-hp">
+          </div>
+
+          <div class="box-field box-field--vertical">
+          <label for="character-max-hp">Max HP</label>
+            <input type="number" v-model="character.max_hp"
+            v-on:keyup="updateStore" v-on:change="updateStore"
+            class="field-small" id="character-current-max-hp">
+          </div>
+        </section>
+
+        <section class="character-tertiary-stats">
+          <div class="box-field box-field--vertical">
+            <label for="character-iniative">Init</label>
+            <input type="number" v-model="character.iniative"
+            v-on:keyup="updateStore" v-on:change="updateStore"
+            class="field-small" id="character-iniative">
+          </div>
+
+          <div class="box-field box-field--vertical">
+          <label for="character-speed">Speed</label>
+            <input type="number" v-model="character.speed"
+            v-on:keyup="updateStore" v-on:change="updateStore"
+            class="field-small" id="character-speed">
+          </div>
+        </section>
+      </div>
+
+
+
+
+      <section class="character-stats">
+        <div class="character-stat">
+          <label for="character-str" class="xs-mb0">Str</label>
+          <input type="number" v-model="character.stats.str" v-on:keyup="updateStore" v-on:change="updateStore" id="character-str">
+        </div>
+        <div class="character-stat">
+          <label for="character-dex" class="xs-mb0">Dex</label>
+          <input type="number" v-model="character.stats.dex" v-on:keyup="updateStore" v-on:change="updateStore" id="character-dex">
+        </div>
+        <div class="character-stat">
+          <label for="character-con" class="xs-mb0">Con</label>
+          <input type="number" v-model="character.stats.con" v-on:keyup="updateStore" v-on:change="updateStore" id="character-con">
+        </div>
+        <div class="character-stat">
+          <label for="character-int" class="xs-mb0">Int</label>
+          <input type="number" v-model="character.stats.int" v-on:keyup="updateStore" v-on:change="updateStore" id="character-int">
+        </div>
+        <div class="character-stat">
+          <label for="character-wis" class="xs-mb0">Wis</label>
+          <input type="number" v-model="character.stats.wis" v-on:keyup="updateStore" v-on:change="updateStore" id="character-wis">
+        </div>
+        <div class="character-stat">
+          <label for="character-cha" class="xs-mb0">Cha</label>
+          <input type="number" v-model="character.stats.cha" v-on:keyup="updateStore" v-on:change="updateStore" id="character-cha">
+        </div>
+      </section>
+
+
+      <label for="character-age">Age</label>
+      <input type="text" v-model="character.age"
+      v-on:keyup="updateStore" v-on:change="updateStore"
+      class="field-small" id="character-age">
+
+      <label for="character-height">Height</label>
+      <input type="text" v-model="character.height"
+      v-on:keyup="updateStore" v-on:change="updateStore"
+      class="field-small" id="character-height">
+
+      <label for="character-weight">Weight</label>
+      <input type="text" v-model="character.weight"
+      v-on:keyup="updateStore" v-on:change="updateStore"
+      class="field-small" id="character-weight">
 
       <label for="character-experience">Experience Points</label>
       <input type="number" v-model="character.experience" v-on:change="updateStore" id="character-experience" number>
 
       <label for="character-alignment">Alignment</label>
-      <div v-for="alignment in gameMeta.character_structure.alignment.options">
-        <label for="{{alignment}}">{{alignment}}</label>
-        <input type="radio" value="{{alignment}}"
-          v-model="character.alignment"
-          v-on:keyup="updateStore"
-          v-on:change="updateStore"
-          id="{{alignment}}">
-      </div>
+
+      <section class="alignment-slider">
+        <div class="alignment-slider-item" v-for="alignment in gameMeta.character_structure.alignment.options">
+          <input type="radio" value="{{alignment}}"
+            v-model="character.alignment"
+            v-on:keyup="updateStore"
+            v-on:change="updateStore"
+            id="{{alignment}}">
+          <label for="{{alignment}}">{{alignment}}</label>
+        </div>
+      </section>
 
       <label for="character-race">Race/Species</label>
         <!-- TODO when race selection is made, what needs to be updated? -->
+      <section class="character-race">
+        <div class="character-race-item" v-for="race in gameMeta.character_structure.races">
+
+          <input class="race-selection" type="radio" value="{{$key}}"
+            v-model="character.race"
+            v-on:keyup="updateStore"
+            v-on:change="updateStore"
+            id="race{{$key}}">
+          <label for="race{{$key}}">{{$key}}</label>
+        </div>
+      </section>
+
+
       <div v-for="race in gameMeta.character_structure.races">
-        <label for="race-{{$key}}"> {{ $key }} </label>
-        <input type="radio" value="{{$key}}"
-          v-model="character.race"
-          v-on:keyup="updateStore"
-          v-on:change="updateStore"
-          id="race{{$key}}">
-
+        <div class="race-details">
           <h4>Description: {{ race.description }}</h4>
-
           <label>{{ $key }} Traits</label>
           <ul class="race-traits" v-for="trait in race.traits">
             <li>{{ trait.label }}: {{ trait.description }}</li>
@@ -50,11 +152,11 @@
           <ul class="race-facts" v-for="trait in race.facts">
             <li>{{ trait.label }}: {{ trait.description }}</li>
           </ul>
-
+        </div>
       </div>
 
       <label for="character-class">Class</label>
-        <!-- TODO when class selection is made, update starting HP + skill selection -->
+        <!-- TODO when class selection is made, update starting HP + skill selection? what if class change later on? -->
       <div v-for="class in gameMeta.character_structure.classes">
         <label for="class-{{$key}}"> {{ $key }} </label>
         <input type="radio" value="{{$key}}"
@@ -62,14 +164,13 @@
           v-on:keyup="updateStore"
           v-on:change="updateStore"
           id="class{{$key}}">
-          <ul class="class-details">
-            <li>Hit Die: {{ class.hit_die }}</li>
-            <li>Hit Points aftere level 1: {{ class.hit_points_after }}</li>
-          </ul>
+          <div class="class-details">
+            <ul>
+              <li>Hit Die: {{ class.hit_die }}</li>
+              <li>Hit Points aftere level 1: {{ class.hit_points_after }}</li>
+            </ul>
+          </div>
       </div>
-
-
-
 
 
       <!-- TODO skills aren't saving, can't store arrays, need to store like equiptment -->

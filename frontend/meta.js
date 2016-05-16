@@ -35,16 +35,20 @@ var game_meta = {
       age: 'text',
       experience: 'number',
       height: 'text',
-      hit_points: 'number',
+      current_hp: 'number',
+      temporary_hp: 'number',
+      max_hp: 'number',
       sex: 'text',
       languages: 'text',
 
-      str: 'number',
-      dex: 'number',
-      con: 'number',
-      int: 'number',
-      wis: 'number',
-      cha: 'number',
+      stats: {
+        str: 'number',
+        dex: 'number',
+        con: 'number',
+        int: 'number',
+        wis: 'number',
+        cha: 'number',
+      },
 
       alignment: {
         options: [
@@ -179,7 +183,7 @@ var game_meta = {
 
       skills: {
         acrobatics: {
-          name: 'Acrobatics' ,
+          name: 'Acrobatics',
           stat: 'dex'
         },
         animal_hanling: {
@@ -279,12 +283,15 @@ var game_meta = {
     default_character: {
       name: 'New Character',
       experience: 0,
-      str: 15,
-      dex: 14,
-      con: 13,
-      int: 12,
-      wis: 10,
-      cha: 8,
+      stats: {
+        str: 15,
+        dex: 14,
+        con: 13,
+        int: 12,
+        wis: 10,
+        cha: 8,
+      }
+
     }
   },
 
