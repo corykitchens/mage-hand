@@ -83,9 +83,9 @@
 	  var scroll_pos = $(window).scrollTop();
 
 	  if (scroll_pos > nav_height) {
-	    $head.removeClass("opacity0");
+	    $head.removeClass("u-opacity0");
 	  } else {
-	    $head.addClass("opacity0");
+	    $head.addClass("u-opacity0");
 	   }
 	});
 
@@ -11264,7 +11264,31 @@
 	      $(e.currentTarget).removeClass("ion-locked");
 	      $("input").prop( "disabled", false );
 	    };
+	  });
 
+
+	  var showRaceDetails = function(raceName){
+	    var $raceTabs = $(".character-race-tabs");
+	    var $racePane = $("#" + raceName + "-info");
+
+	    $(".character-race-details").addClass("off-screen"); // Hide all detail panes
+
+	    $(".character-race-tab").removeClass("selected"); // Remove selected highlight style
+
+	    if (!$raceTabs.hasClass("u-opacity1")) $raceTabs.addClass("u-opacity1");
+
+	    $raceTabs.find($("#"+ raceName +"-tab")).addClass("selected");
+	    $racePane.removeClass("off-screen");
+	    // $racePane.addClass("animated bounceInUp");
+	  };
+
+	  $("#race-change-click").on("click", function(){
+	    var $raceInputVal = $("#character-race").val();
+	    showRaceDetails($raceInputVal);
+	  });
+
+	  $("body").on("click", ".character-race-tab", function(e){
+	    showRaceDetails( $(e.target).data("race") );
 	  });
 
 	};

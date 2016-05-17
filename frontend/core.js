@@ -37,9 +37,9 @@ $( window ).scroll(function() {
   var scroll_pos = $(window).scrollTop();
 
   if (scroll_pos > nav_height) {
-    $head.removeClass("opacity0");
+    $head.removeClass("u-opacity0");
   } else {
-    $head.addClass("opacity0");
+    $head.addClass("u-opacity0");
    }
 });
 

@@ -131,7 +131,7 @@
         class="field-small" id="character-alignment">
       </div>
 
-      <div class="box-field box-field--vertical">
+      <div class="box-field box-field--vertical" id="race-change-click">
         <label for="character-race">Race/Species</label>
         <input type="text" v-model="character.race"
         v-on:keyup="updateStore" v-on:change="updateStore"
@@ -151,9 +151,18 @@
       </section> -->
 
       <section>
-        <div id="{{$key}}-info" class="character-race-details" v-for="race in gameMeta.character_structure.races">
+        <ul class="character-race-tabs">
+          <li class="character-race-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-race="{{$key}}">
+            {{$key}}
+          </li>
+          <li class="character-race-tab" id="other-tab" data-race="other">Other</li>
+        </ul>
+        <div id="{{$key}}-info" class="character-race-details off-screen" v-for="race in gameMeta.character_structure.races">
           <div class="race-details">
-            <h5 class="block-header">{{ $key }}</h5>
+            <div class="u-flex u-flex--center">
+              <h5 class="block-header u-flex--grow xs-m0">{{ $key }}</h5>
+              <button class="button-small button-primary xs-m0 race-selector" data-race-select={{$key}}>Select</button>
+            </div>
             <label>{{ $key }} Traits</label>
             <ul class="race-traits" v-for="trait in race.traits">
               <li>{{ trait.label }}: {{ trait.description }}</li>
@@ -163,6 +172,7 @@
             <ul class="race-facts" v-for="trait in race.facts">
               <li>{{ trait.label }}: {{ trait.description }}</li>
             </ul>
+            <button class="button-primary u-full-width xs-mb1 xs-mt2 race-selector" data-race-select={{$key}}>Select</button>
           </div>
         </div>
       </section>
