@@ -2,6 +2,6 @@
 module.exports.revealPage  = function revealPage(){
   if (window.revealed == false){
     $(".loading-message").hide();
-    $(".body-content").addClass("show");
+    $(".body-content").addClass("u-opacity1");
   };
 };

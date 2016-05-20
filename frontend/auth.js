@@ -1,5 +1,7 @@
 var fb = require('./fb');
 window.auth = fb.getAuth();
+//TODO remove
+window.fb = fb;
 
 // Set up user when the log in
 module.exports.setupUser = function setupUser(authData){

@@ -65,24 +65,44 @@ module.exports.characterPage = function characterPage(){
     var $raceTabs = $(".character-race-tabs");
     var $racePane = $("#" + raceName + "-info");
 
-    $(".character-race-details").addClass("off-screen"); // Hide all detail panes
+    // Show overlay
+    var $overlay = $(".overlay");
+    $overlay.css('z-index', '1');
+    $overlay.show();
 
+    $(".character-race-details").addClass("off-screen"); // Hide all detail panes
     $(".character-race-tab").removeClass("selected"); // Remove selected highlight style
 
-    if (!$raceTabs.hasClass("u-opacity1")) $raceTabs.addClass("u-opacity1");
-
+    $raceTabs.removeClass("off-screen"); // Show race tabs
     $raceTabs.find($("#"+ raceName +"-tab")).addClass("selected");
-    $racePane.removeClass("off-screen");
-    // $racePane.addClass("animated bounceInUp");
+    $racePane.removeClass("off-screen"); // Show the selected race pane
   };
 
+  var hideRaceDetails = function(raceName){
+    $(".overlay").hide();
+    // $(".character-race-tabs").removeClass("u-opacity1");
+    $(".character-race-tabs").addClass("off-screen");
+    $(".character-race-details").addClass("off-screen"); // Hide detail panes
+  };
+
+
+
+  // Click events
+  //////
+
+  // Race selection
   $("#race-change-click").on("click", function(){
     var $raceInputVal = $("#character-race").val();
     showRaceDetails($raceInputVal);
   });
-
   $("body").on("click", ".character-race-tab", function(e){
     showRaceDetails( $(e.target).data("race") );
+  });
+
+
+  // Overlay clickity clicker
+  $(".overlay").on("click", function(){
+    hideRaceDetails();
   });
 
 };

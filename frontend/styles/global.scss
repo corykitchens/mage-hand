@@ -34,7 +34,7 @@ body {
 		font-family: 'Dosis', sans-serif;
 		letter-spacing: 0.5px;
 		font-size: 3.5rem;
-		transition: all 0.2s ease-in-out;
+		transition: all $transition-normal ease-in-out;
 	}
 }
 
@@ -99,15 +99,19 @@ body {
 	display: flex;
 	justify-content: space-around;
 	font-size: 5rem;
-	& > .icon { transition: all 0.2s ease-in-out; }
+	& > .icon { transition: all $transition-normal ease-in-out; }
 	& > .icon:active, .icon:focus {
 		color: $color-tertiary !important;
 	}
 }
-.ion-social-twitter { color: #4099FF; }
-.ion-social-facebook { color: #3b5998; }
-.ion-social-google { color: #F90101; }
-.icon-disabled { color: rgba(0, 0, 0, 0.5) !important; cusror:default !important; }
+.ion-social-twitter:hover,
+.ion-social-twitter:focus { color: #4099FF; }
+.ion-social-facebook:hover,
+.ion-social-facebook:focus { color: #3b5998; }
+.ion-social-google:hover,
+.ion-social-google:focus { color: #F90101; }
+
+.icon-social { color: rgba(0, 0, 0, 0.5); cursor:pointer; }
 
 
 // @include breakpoint(xs) {} // xs, sm, md, lg, xl (Size +)\
@@ -151,7 +155,6 @@ body {
 
 
 // CHARACTER PAGE
-
 #character-lock-fields { // Lock icon that triggers disabled fields
 	color: rgba(0, 0, 0, 0.5);
 	margin-bottom: 2rem;
@@ -166,11 +169,14 @@ body {
 	font-weight: bold;
 	color: $light;
 	border: 1px solid transparent;
-	&:focus {
-		color: black;
-	}
+	&:focus { color: black; }
 }
 #character-race {
+	text-transform: capitalize;
+	pointer-events: none;
+}
+
+#character-class {
 	text-transform: capitalize;
 	pointer-events: none;
 }
@@ -180,14 +186,13 @@ input[type="number"]{
 	background-color: transparent;
 	border: 1px solid transparent;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	color: white;
 }
+
 .field-large {
 	font-size: 3rem;
 	width: 100%;
 }
-
-.field-small { }
-
 .field-large:focus, .field-small:focus {
 	color: black;
 	background-color: rgba(255, 255, 255, 0.8);
@@ -231,7 +236,7 @@ input[type="number"]{
 	}
 }
 
-$box-field--vertical-height: 22px;
+$box-field--vertical-height: 30px;
 
 .box-field--vertical {
 	display: flex;
@@ -267,12 +272,17 @@ $box-field--vertical-height: 22px;
 	text-align: center;
 }
 .character-stat {
+	margin: 0 0.5rem;
+
+	&:last-child { margin-right: 0; }
+	&:first-child { margin-left: 0; }
+
 	& > label { text-align: center; letter-spacing: 1px; }
 	& > input {
+		width: 100%;
 		font-weight: 100;
 		color: white;
 		font-size: 3rem;
-		max-width: 40px;
 		padding: 0;
 		text-align: center;
 		border: 0;
@@ -287,19 +297,21 @@ $box-field--vertical-height: 22px;
 }
 
 
-$tab-height: 50px;
+$tab-height: 50px; // TODO This won't exactly work if there are two rows (and wrap is on)
+
 ul.character-race-tabs {
-	opacity: 0;
-	pointer-events: none;
+	z-index: 3;
 	display: flex;
 	flex-wrap: wrap;
 	position: fixed;
-	top: 0; left: 0;
-	z-index: 1;
+	top: 0;
+	left: 0;
 	width: 100%;
 	list-style: none;
 	text-transform: uppercase;
-	transition: all 0.2s ease-in-out;
+	transition: all $transition-normal ease-in-out;
+
+	&.off-screen { top: -$tab-height !important; } // Default state
 
 	li.character-race-tab {
 		margin-bottom: 0;
@@ -318,17 +330,18 @@ ul.character-race-tabs {
 
 .character-race-details {
 	position: fixed;
-	top: 0; right: 0; bottom: 0; left: 0vw;
-	width: 100%;
+	top: 0; right: 0; bottom: 0; left: 20vw;
+	width: 80vw;
 	overflow: scroll; // Be scrollable when body is not
 	background-color: $color-offwhite;
 	color: $color-offblack;
 	padding: 0.5rem;
-	margin-top: $tab-height; //Match height of .character-race-tabs
+	padding-top: $tab-height + 5px; //Match height of .character-race-tabs
 	margin-bottom: 0;
-	transition: all 0.2s ease-in-out;
+	transition: all $transition-normal ease-in-out;
+	z-index: 2;
 
-	&.off-screen { left: 101vw !important; } // Off screen to the right
+	&.off-screen { left: 101vw !important; } // Off screen to the right (default state)
 
 	ul {
 		margin-bottom: 0;
@@ -344,127 +357,4 @@ ul.character-race-tabs {
 	label {
 		margin-top: 2rem;
 	}
-}
-
-
-
-
-// Race will only change once - need to rethink display here
-// .character-race {
-// 	display: flex;
-// }
-// .character-race-item {
-// 	flex-grow: 1;
-//
-// 	& > input {
-// 		display: none !important;
-// 		&:checked + label {
-// 			background-color: green;
-// 		}
-// 	}
-//
-//
-// }
-//
-// .race-details {
-// 	display: none;
-// }
-
-// Alignment slider styles
-// This works by only showing the label AFTER the selected aligntment option
-// The labels are then being floated above to only show the selected item
-// as displaying all text even in a flex element wouldn't fit on mobile
-.alignment-slider {
-	position: relative;
-	display: flex;
-	margin-bottom: $base-field-spacing;
-	justify-content: space-between;
-}
-.alignment-slider-item {
-	flex-grow: 1;
-	text-align: center;
-
-	& > label {
-	 display: none;
-	 position: absolute;
-	 top: 0;
-	 left: 50%;
-	 transform: translateX(-50%);
-	}
-	& > input {
-		position: relative;
-		top: 3rem; // Match font size of label
-	}
-	& > input[type="radio"]:checked + label {
-		display: block !important;
-	}
-}
-
-
-// UTILITY
-
-.block-header {
-	font-weight: 600;
-	text-transform: uppercase;
-	color: rgba(0, 0, 0, 0.7);
-	font-size: 1.5rem;
-	letter-spacing: 0.5px;
-}
-.u-flex {
-	display: flex;
-}
-.u-flex--center {
-	justify-content: center;
-	align-items: center;
-}
-.u-flex--grow {
-	flex-grow: 1;
-}
-.u-opacity0 {
-	opacity: 0 !important;
-	pointer-events: none !important;
- }
- .u-opacity1 {
-	 opacity: 1 !important;
-	 pointer-events: auto !important;
- }
-.u-noscroll {
-	overflow: hidden !important;
-}
-.u-fixed-center {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translateY(-50%) translateX(-50%);
-}
-
-.overlay {
-	display: none;
-	top: 0; left: 0;
-	position: fixed; z-index: 1;
-	width: 100%; height: 100%;
-	background-color: rgba(0, 0, 0, 0.6);
-}
-.modal {
-	display: none;
-	z-index: 10;
-	color: black;
-	position: fixed;
-	top: 50%; left: 50%;
-	background-color: rgba(255, 255, 255, 0.95);
-	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-	width: 90%; max-width: 600px;
-	height: 50%; max-height: 600px;
-	transform: translateX(-50%) translateY(-50%);
-	padding-top: 0.5rem;
-	overflow: scroll;
-}
-.modal-body {
-	padding: 1rem;
-}
-
-.button-small {
-	height: 22px !important;
-	line-height: 22px !important;
-	font-size: 11px !important;
 }

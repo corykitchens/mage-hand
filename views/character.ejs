@@ -28,8 +28,8 @@
       </div>
 
 
-      <div class="u-flex">
-        <section class="character-hp-fields">
+      <div class="u-flex u-flex--fill">
+        <section class="character-hp-fields xs-mr2">
           <div class="box-field box-field--vertical">
             <label for="character-temp-hp">Temp HP</label>
             <input type="number" v-model="character.temp_hp"
@@ -92,37 +92,25 @@
         </div>
       </section>
 
-
       <label for="character-age">Age</label>
       <input type="text" v-model="character.age"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      class="field-small" id="character-age">
+        v-on:keyup="updateStore" v-on:change="updateStore"
+        class="field-small" id="character-age">
 
       <label for="character-height">Height</label>
       <input type="text" v-model="character.height"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      class="field-small" id="character-height">
+        v-on:keyup="updateStore" v-on:change="updateStore"
+        class="field-small" id="character-height">
 
       <label for="character-weight">Weight</label>
       <input type="text" v-model="character.weight"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      class="field-small" id="character-weight">
+        v-on:keyup="updateStore" v-on:change="updateStore"
+        class="field-small" id="character-weight">
 
       <label for="character-experience">Experience Points</label>
-      <input type="number" v-model="character.experience" v-on:change="updateStore" id="character-experience" number>
+      <input type="number" v-model="character.experience"
+        v-on:change="updateStore" id="character-experience" class="field-small" number>
 
-      <label for="character-alignment">Alignment</label>
-
-      <!-- <section class="alignment-slider">
-        <div class="alignment-slider-item" v-for="alignment in gameMeta.character_structure.alignment.options">
-          <input type="radio" value="{{alignment}}"
-            v-model="character.alignment"
-            v-on:keyup="updateStore"
-            v-on:change="updateStore"
-            id="{{alignment}}">
-          <label for="{{alignment}}">{{alignment}}</label>
-        </div>
-      </section> -->
 
       <div class="box-field box-field--vertical">
         <label for="character-alignment">Alignment</label>
@@ -138,20 +126,15 @@
         class="field-small" id="character-race">
       </div>
 
-      <!-- <section class="character-race">
-        <div class="character-race-item" v-for="race in gameMeta.character_structure.races">
-
-          <input class="race-selection" type="radio" value="{{$key}}"
-            v-model="character.race"
-            v-on:keyup="updateStore"
-            v-on:change="updateStore"
-            id="race{{$key}}">
-          <label for="race{{$key}}">{{$key}}</label>
-        </div>
-      </section> -->
+      <div class="box-field box-field--vertical" id="class-change-click">
+        <label for="character-race">Class</label>
+        <input type="text" v-model="character.class"
+        v-on:keyup="updateStore" v-on:change="updateStore"
+        class="field-small" id="character-class">
+      </div>
 
       <section>
-        <ul class="character-race-tabs">
+        <ul class="nav-tabs character-race-tabs off-screen">
           <li class="character-race-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-race="{{$key}}">
             {{$key}}
           </li>
