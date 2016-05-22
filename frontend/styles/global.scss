@@ -50,6 +50,9 @@ body {
 	letter-spacing: 0.5px;
 }
 
+.button-disabled {
+	pointer-events: none;
+}
 
 .button-circle {
 	padding: 0; margin: 0;
@@ -180,6 +183,10 @@ body {
 	text-transform: capitalize;
 	pointer-events: none;
 }
+#race-change-click, #class-change-click {
+	cursor: pointer;
+	& > label { pointer-events: none; } //So cursor pointers applies
+}
 
 input[type="text"],
 input[type="number"]{
@@ -203,6 +210,7 @@ input[type="number"]{
 	margin-bottom: $base-field-spacing/2;
 
 	& > * {
+		flex-grow: 1;
 		margin-right: 1rem;
 	}
 	& > *:last-child {
@@ -297,12 +305,12 @@ $box-field--vertical-height: 30px;
 }
 
 
-$tab-height: 50px; // TODO This won't exactly work if there are two rows (and wrap is on)
+$tab-height: 50px;
 
-ul.character-race-tabs {
+ul.character-detail-tabs {
 	z-index: 3;
+	overflow-x: scroll; // TODO Mobile only
 	display: flex;
-	flex-wrap: wrap;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -313,9 +321,9 @@ ul.character-race-tabs {
 
 	&.off-screen { top: -$tab-height !important; } // Default state
 
-	li.character-race-tab {
+	li.character-detail-tab {
 		margin-bottom: 0;
-		min-width: 20%;
+		min-width: 28%; // TODO Mobile only
 		font-size: 1.2rem;
 		font-weight: bold;
 		letter-spacing: 0.5px;
@@ -328,7 +336,7 @@ ul.character-race-tabs {
 	li.selected { background-color: darken($color-red, 5%); }
 }
 
-.character-race-details {
+.character-detail-panes {
 	position: fixed;
 	top: 0; right: 0; bottom: 0; left: 20vw;
 	width: 80vw;
@@ -346,7 +354,7 @@ ul.character-race-tabs {
 	ul {
 		margin-bottom: 0;
 		font-size: 1.4rem;
-		list-style: square;
+		list-style: none;
 	}
 	li {
 		border-top: 1px solid rgba(0, 0, 0, 0.1) !important;

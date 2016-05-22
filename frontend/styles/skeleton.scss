@@ -171,10 +171,10 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  color: #333;
-  border-color: #888;
-  outline: 0;
-  box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
+  // color: #333;
+  // border-color: #888;
+  // outline: 0;
+  // box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
   background-color: #7AA790;
 }
 
@@ -272,7 +272,7 @@ label > .label-body {
 
 /* Lists */
 ul {
-  list-style: square inside; }
+  list-style: none; }
 ol {
   list-style: decimal inside; }
 ol, ul {

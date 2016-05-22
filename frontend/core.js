@@ -1,19 +1,23 @@
 // var $ = require('jquery');
 var Vue = require('vue');
-var fb = require('./fb');
-var requiresAuth = require('./auth').requiresAuth;
+var fb = require('./fb').database();
 var setupUser = require('./auth').setupUser;
-var charactersPage = require('./characters').charactersPage;
-var characterPage = require('./character').characterPage;
-var revealPage = require('./globals').revealPage;
+var routeUser = require('./router').routeUser;
 
 require("./styles/core.scss");
 
-Vue.config.debug = true; console.log('!vue debug is on');
+Vue.config.debug = true; console.log('!vue debug is on'); // TODO
 
-fb.onAuth(function(authData) { // On authorizatoin
-  if (fb.getAuth()){ setupUser(fb.getAuth()); }
+// On auth state change
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    window.currentUser = firebase.auth().currentUser;
+  } else {
+    // User not logged in
+  }
+  routeUser()
 });
+
 
 // #Notice
 // var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
@@ -28,7 +32,6 @@ fb.onAuth(function(authData) { // On authorizatoin
 window.revealed = false;
 $("#loading-text").text("Don't trust the rogue."); //TODO make this random
 
-
 // Sticky section header
 var $head = $(".header-sticky");
 var nav_height = $(".nav").height();
@@ -42,106 +45,3 @@ $( window ).scroll(function() {
     $head.addClass("u-opacity0");
    }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//// #ROOT
-if (window.location.pathname === "/"){
-  if (fb.getAuth() == undefined){ // If user is logged OUT
-    $(".logged-in").hide();
-  } else {
-    $(".logged-out").hide();
-  }; revealPage();
-};
-
-
-
-
-
-
-
-//// CHARACTER
-if (window.location.pathname === "/character"){
-  requiresAuth();
-  characterPage();
-}
-//// #CHARACTERS
-if (window.location.pathname === "/characters"){
-  requiresAuth();
-  charactersPage();
-}
-
-
-
-
-
-
-//// #CAMPAIGNS
-if (window.location.pathname === "/campaigns"){
-  requiresAuth();
-
-  fb.child("users/" + auth.uid + "/campaigns").on("value", function(ss) {
-    const snap = ss.val(); if(snap == undefined){ return; }
-
-    //debugger;
-    new Vue({
-      el: '#xxxkey',
-      data: {
-        greeting: 'lol'
-      }
-    });
-
-  });
-
-  var v = new Campaigns('xxxkey');
-  revealPage();
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//// #LOGIN
-if (window.location.pathname === "/login"){
-  if (fb.getAuth()) { window.location.replace("/"); }
-  else { revealPage(); }
-
-  // #Authentication
-  var twitterAuth = function(){
-    fb.authWithOAuthPopup("twitter", function(error, authData) {
-      if (error) {
-        console.log("Login Failed!", error);
-      } else {
-        console.log("By grabthar's hammer, you shall be avenged.")
-        window.location.replace("/");
-      }
-    });
-  };
-  $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
-};

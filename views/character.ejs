@@ -1,5 +1,6 @@
 <div class="xs-ml2 xs-mr2 xs-mt2">
-  <div id="vue-character"> <!-- this will be the DOM element we will mount our VueJs instance to -->
+  <!-- this will be the DOM element we will mount our VueJs instance to -->
+  <div id="vue-character">
 
     <form name="character-view" id="character-form">
 
@@ -9,7 +10,6 @@
           v-on:change="updateStore" id="character-name">
         <i class="icon ion-locked ion-unlocked" id="character-lock-fields"></i>
       </div>
-
 
       <div class="character-other-stats">
         <div class="box-field box-field--large">
@@ -102,6 +102,12 @@
         v-on:keyup="updateStore" v-on:change="updateStore"
         class="field-small" id="character-height">
 
+      <label for="character-prof-bonus">Proficiency Bonus</label>
+      <input type="text" v-model="character.proficiency_bonus"
+        v-on:keyup="updateStore" v-on:change="updateStore"
+        class="field-small" id="character-prof-bonus">
+
+
       <label for="character-weight">Weight</label>
       <input type="text" v-model="character.weight"
         v-on:keyup="updateStore" v-on:change="updateStore"
@@ -119,6 +125,7 @@
         class="field-small" id="character-alignment">
       </div>
 
+      <!-- Race display on page -->
       <div class="box-field box-field--vertical" id="race-change-click">
         <label for="character-race">Race/Species</label>
         <input type="text" v-model="character.race"
@@ -126,42 +133,93 @@
         class="field-small" id="character-race">
       </div>
 
+      <!-- Section for selecting and viewing race details (starts off screen) -->
+      <section>
+        <ul class="nav-tabs character-detail-tabs off-screen" data-selector="race">
+          <li class="character-detail-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-race="{{$key}}">
+            {{$key}}
+          </li>
+          <li class="character-detail-tab" id="other-tab" data-race="other">Other</li>
+        </ul>
+
+        <!-- Character detail panes that show details about a race (viewable after you select a tab) -->
+        <div id="{{$key}}-info" class="character-detail-panes off-screen" v-for="race in gameMeta.character_structure.races">
+          <div class="race-details">
+            <div class="u-flex u-flex--center">
+              <h5 class="block-header u-flex--grow xs-m0">{{ $key }}</h5>
+              <button class="button-small button-primary xs-m0" data-race-select={{$key}}>Select</button>
+            </div>
+
+            <!-- Race traits -->
+            <label>{{ $key }} Traits</label>
+            <ul v-for="trait in race.traits">
+              <li>{{ trait.label }}: {{ trait.description }}</li>
+            </ul>
+
+            <!-- Race 'facts' -->
+            <label>{{ $key }} Facts</label>
+            <ul v-for="trait in race.facts">
+              <li>{{ trait.label }}: {{ trait.description }}</li>
+            </ul>
+            <button class="button-primary u-full-width xs-mb1 xs-mt2" data-race-select={{$key}}>Select</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Class display on page -->
       <div class="box-field box-field--vertical" id="class-change-click">
-        <label for="character-race">Class</label>
+        <label for="character-class">Class</label>
         <input type="text" v-model="character.class"
         v-on:keyup="updateStore" v-on:change="updateStore"
         class="field-small" id="character-class">
       </div>
 
+      <!-- Character class detail tabs selectable to view more about that class (hidden on load) -->
       <section>
-        <ul class="nav-tabs character-race-tabs off-screen">
-          <li class="character-race-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-race="{{$key}}">
+        <ul class="nav-tabs character-detail-tabs off-screen" data-selector="class">
+          <li class="character-detail-tab" id="{{$key}}-tab" v-for="class in gameMeta.character_structure.classes" data-race="{{$key}}">
             {{$key}}
           </li>
-          <li class="character-race-tab" id="other-tab" data-race="other">Other</li>
+          <li class="character-detail-tab" id="other-tab" data-race="other">Other</li>
         </ul>
-        <div id="{{$key}}-info" class="character-race-details off-screen" v-for="race in gameMeta.character_structure.races">
-          <div class="race-details">
+        <!-- Character detail panes that show details about a class (viewable after you select a tab) -->
+        <div id="{{$key}}-info" class="character-detail-panes off-screen" v-for="class in gameMeta.character_structure.classes">
+          <div class="class-details">
             <div class="u-flex u-flex--center">
               <h5 class="block-header u-flex--grow xs-m0">{{ $key }}</h5>
-              <button class="button-small button-primary xs-m0 race-selector" data-race-select={{$key}}>Select</button>
+              <button class="button-small button-primary xs-m0" data-race-select={{$key}}>Select</button>
             </div>
-            <label>{{ $key }} Traits</label>
-            <ul class="race-traits" v-for="trait in race.traits">
-              <li>{{ trait.label }}: {{ trait.description }}</li>
+
+            <!-- Class traits -->
+            <label>{{ $key }} Details</label>
+            <ul>
+              <li><b>Hit Die</b>: {{ class.hit_die }} </li>
+              <li><b>Starting Hit Points</b>: {{ class.hit_points_starting }} </li>
+              <li><b>Hit Points</b>: {{ class.hit_points_after }} </li>
+              <li><b>Hit Die</b>: {{ class.hit_die }} </li>
             </ul>
 
-            <label>{{ $key }} Facts</label>
-            <ul class="race-facts" v-for="trait in race.facts">
-              <li>{{ trait.label }}: {{ trait.description }}</li>
+            <!-- Class proficiencies -->
+            <label>{{ $key }} Proficiencies</label>
+            <ul>
+              <li v-for="prof in class.proficiencies"><b>{{ $key.replace("_", " ") }}</b>: {{ prof }}</li>
             </ul>
-            <button class="button-primary u-full-width xs-mb1 xs-mt2 race-selector" data-race-select={{$key}}>Select</button>
+
+            <!-- Class skills -->
+            <label>{{ $key }} Skills</label>
+            <p class="u-text-small xs-mb0">As a {{ $key }}, you'll choose <b>{{ class.skill_count }}</b> skills from the list below:</p>
+            <ul>
+              <li v-for="skill in class.skills">{{ skill }}</li>
+            </ul>
+
+            <button class="button-primary u-full-width xs-mb1 xs-mt2" data-race-select={{$key}}>Select</button>
           </div>
         </div>
       </section>
 
-      <label for="character-class">Class</label>
-        <!-- TODO when class selection is made, update starting HP + skill selection? what if class change later on? -->
+
+
+      <!-- <label for="character-class">Class</label>
       <div v-for="class in gameMeta.character_structure.classes">
         <label for="class-{{$key}}"> {{ $key }} </label>
         <input type="radio" value="{{$key}}"
@@ -175,7 +233,7 @@
               <li>Hit Points aftere level 1: {{ class.hit_points_after }}</li>
             </ul>
           </div>
-      </div>
+      </div> -->
 
 
       <!-- TODO skills aren't saving, can't store arrays, need to store like equiptment -->

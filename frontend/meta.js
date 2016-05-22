@@ -63,10 +63,10 @@ var game_meta = {
           hit_points_starting: "10+con",
           hit_points_after: "1d10 (or 6) + your Constitution modifier per fighter level after 1st",
           proficiencies: {
-            armor: 'All armor, shields',
-            weapons: 'Simple weapons and martial weapons',
-            tools: 'None',
-            saving_throws: 'Strength, Constitution',
+            Armor: 'All armor, shields',
+            Weapons: 'Simple weapons and martial weapons',
+            Tools: 'None',
+            Saving_Throws: 'Strength, Constitution',
           },
           skill_count: 2,
           skills: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Perception', 'Survival']
@@ -76,10 +76,10 @@ var game_meta = {
           hit_points_starting: "8+con",
           hit_points_after: "1d8 (or 5) + your Constitution modifier per rogue level after 1st",
           proficiencies: {
-            armor: 'Light armor',
-            weapons: 'Simple weapons, hand crossbows, longswords, rapiers, shortswords',
-            tools: 'Thieves’ tools',
-            saving_throws: 'Dexterity, Intelligence',
+            Armor: 'Light armor',
+            Weapons: 'Simple weapons, hand crossbows, longswords, rapiers, shortswords',
+            Tools: 'Thieves’ tools',
+            Saving_Throws: 'Dexterity, Intelligence',
           },
           skill_count: 4,
           skills: ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation',
@@ -90,10 +90,10 @@ var game_meta = {
           hit_points_starting: "8+con",
           hit_points_after: "1d8 (or 5) + your Constitution modifier per cleric level after 1st",
           proficiencies: {
-            armor: 'Light armor, medium armor, shields',
-            weapons: 'All simple weapons',
-            tools: 'None',
-            saving_throws: 'Wisdom, Charisma',
+            Armor: 'Light armor, medium armor, shields',
+            Weapons: 'All simple weapons',
+            Tools: 'None',
+            Saving_Throws: 'Wisdom, Charisma',
           },
           skill_count: 2,
           skills: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion'],
@@ -104,10 +104,10 @@ var game_meta = {
           hit_points_starting: "6+con",
           hit_points_after: "1d6 (or 4) + your Constitution modifier per wizard level after 1st",
           proficiencies: {
-            armor: 'None',
-            weapons: 'Daggers, darts, slings, quarterstaffs, light crossbows',
-            tools: 'None',
-            saving_throws: 'Wisdom, Intelligence',
+            Armor: 'None',
+            Weapons: 'Daggers, darts, slings, quarterstaffs, light crossbows',
+            Tools: 'None',
+            Saving_Throws: 'Wisdom, Intelligence',
           },
           skill_count: 2,
           skills: ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'],
@@ -256,6 +256,39 @@ var game_meta = {
         }
       },
 
+      ability_modifiers: {
+        1: "-5",
+        2: "-4",
+        3: "-4",
+        4: "-3",
+        5: "-3",
+        6: "-2",
+        7: "-2",
+        8: "-1",
+        9: "-1",
+        10: "+0",
+        11: "+0",
+        12: "-1",
+        13: "-1",
+        14: "-2",
+        15: "-2",
+        16: "-3",
+        17: "-3",
+        18: "-4",
+        19: "-4",
+        20: "-5",
+        21: "-5",
+        22: "-6",
+        23: "-6",
+        24: "-7",
+        25: "-7",
+        26: "-8",
+        27: "-8",
+        28: "-9",
+        29: "-9",
+        30: '+10'
+      }
+
     },
 
     level_progression: { //TODO these numbers probably aren't right
@@ -283,6 +316,7 @@ var game_meta = {
     default_character: {
       name: 'New Character',
       experience: 0,
+      proficiency_bonus: 2,
       stats: {
         str: 15,
         dex: 14,

@@ -227,10 +227,6 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  color: #333;
-  border-color: #888;
-  outline: 0;
-  box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
   background-color: #7AA790; }
 
 .button-primary,
@@ -333,7 +329,7 @@ label > .label-body {
 
 /* Lists */
 ul {
-  list-style: square inside; }
+  list-style: none; }
 
 ol {
   list-style: decimal inside; }
@@ -1435,6 +1431,9 @@ there.
   justify-content: center;
   align-items: center; }
 
+.u-flex--wrap {
+  flex-wrap: wrap; }
+
 .u-flex--grow {
   flex-grow: 1; }
 
@@ -1454,6 +1453,15 @@ there.
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%); }
+
+.u-text-small {
+  font-size: 1.2rem; }
+
+.u-capitalize {
+  text-transform: capitalize; }
+
+.u-uppercase {
+  text-transform: uppercase; }
 
 html, body {
   height: 100%;
@@ -1506,6 +1514,9 @@ body {
 .logo {
   font-family: 'Dosis', sans-serif;
   letter-spacing: 0.5px; }
+
+.button-disabled {
+  pointer-events: none; }
 
 .button-circle {
   padding: 0;
@@ -1629,6 +1640,11 @@ body {
   text-transform: capitalize;
   pointer-events: none; }
 
+#race-change-click, #class-change-click {
+  cursor: pointer; }
+  #race-change-click > label, #class-change-click > label {
+    pointer-events: none; }
+
 input[type="text"],
 input[type="number"] {
   background-color: transparent;
@@ -1648,6 +1664,7 @@ input[type="number"] {
   display: flex;
   margin-bottom: 1rem; }
   .character-other-stats > * {
+    flex-grow: 1;
     margin-right: 1rem; }
   .character-other-stats > *:last-child {
     margin-right: 0; }
@@ -1725,10 +1742,10 @@ input[type="number"] {
     color: black;
     background-color: rgba(255, 255, 255, 0.8); }
 
-ul.character-race-tabs {
+ul.character-detail-tabs {
   z-index: 3;
+  overflow-x: scroll;
   display: flex;
-  flex-wrap: wrap;
   position: fixed;
   top: 0;
   left: 0;
@@ -1736,11 +1753,11 @@ ul.character-race-tabs {
   list-style: none;
   text-transform: uppercase;
   transition: all 0.2s ease-in-out; }
-  ul.character-race-tabs.off-screen {
+  ul.character-detail-tabs.off-screen {
     top: -50px !important; }
-  ul.character-race-tabs li.character-race-tab {
+  ul.character-detail-tabs li.character-detail-tab {
     margin-bottom: 0;
-    min-width: 20%;
+    min-width: 28%;
     font-size: 1.2rem;
     font-weight: bold;
     letter-spacing: 0.5px;
@@ -1751,10 +1768,10 @@ ul.character-race-tabs {
     display: flex;
     justify-content: center;
     align-items: center; }
-  ul.character-race-tabs li.selected {
+  ul.character-detail-tabs li.selected {
     background-color: #9d6b6b; }
 
-.character-race-details {
+.character-detail-panes {
   position: fixed;
   top: 0;
   right: 0;
@@ -1769,16 +1786,16 @@ ul.character-race-tabs {
   margin-bottom: 0;
   transition: all 0.2s ease-in-out;
   z-index: 2; }
-  .character-race-details.off-screen {
+  .character-detail-panes.off-screen {
     left: 101vw !important; }
-  .character-race-details ul {
+  .character-detail-panes ul {
     margin-bottom: 0;
     font-size: 1.4rem;
-    list-style: square; }
-  .character-race-details li {
+    list-style: none; }
+  .character-detail-panes li {
     border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
     padding: 0.5rem;
     background-color: rgba(255, 255, 255, 0.1);
     margin: 0; }
-  .character-race-details label {
+  .character-detail-panes label {
     margin-top: 2rem; }
