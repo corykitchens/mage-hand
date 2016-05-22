@@ -4,7 +4,7 @@ var revealPage = require('./globals').revealPage;
 var gameMeta = require('./meta').gameMeta;
 
 module.exports.characterPage = function characterPage(){
-
+  window.locked = false;
   var character_id = window.location.search.replace("?id=", "");
   var default_equipment = {name: 'New Thing', price: '$1'}; // TODO
   var characterPath = "characters/" + character_id;
@@ -57,31 +57,43 @@ var attachClickHandlers = function(){
     // Can maybe put a modal up that explains realtime?
   });
 
-  // Race selection
-  // TODO race/class can prob be abstracted to pass down their name
-  if (window.locked === false){
-    $("#race-change-click").on("click", function(){
-      var $raceInputVal = $("#character-race").val();
-      showDetailPane('race', $raceInputVal);
-    });
-    $("body").on("click", ".character-detail-tab", function(e){
-      showDetailPane('race', $(e.target).data("race") );
-    });
+  // Class & Race selection
+  // When the race or class form is clicked, opn up detail pane
+  $(".detail-change-click").on("click", function(e){
+    if (window.locked == false){
+      var fieldName = $(e.currentTarget).data('field'); // 'race' or 'class'
+      var $inputVal = $("#character-" + fieldName).val();
+      showDetailPane(fieldName, $inputVal);
+    };
+  });
 
+  // Tabs inside detail panes (rogue, human, etc.)
+  $("body").on("click", ".character-detail-tab", function(e){
+    var _this = $(e.currentTarget) // this tab
+    var selectorType = _this.closest("[data-selector]").data('selector'); // 'race' or 'class' from parent selector
+    showDetailPane(selectorType, _this.data("lookup") );
+  });
 
-    $("#class-change-click").on("click", function(){
-      var $classInputVal = $("#character-class").val();
-      showDetailPane('class', $classInputVal);
-    });
-    $("body").on("click", ".character-class-tab", function(e){
-      showClassDetails( $(e.target).data("class") );
-    });
-  };
+  // When they choose a race or class
+  $("[data-detail-select]").on("click", function(e){
+    var _this = $(e.currentTarget);
+    var detailSelect = $(e.currentTarget).data('detail-select');
 
-    // Overlay clickity clicker
-    $(".overlay").on("click", function(){
-      hideDetailPane();
-    });
+    if (_this.data('lookup') === 'race'){
+      $("#character-race").val(detailSelect); // Set input
+      $("#character-race").change(); // Trigger change so vue diffing knows it's different?
+    } else {
+      $("#character-class").val(detailSelect); // Set input
+      $("#character-class").change(); // Trigger change so vue diffing knows it's different?
+    }
+    window.character.updateStore(); // Now call updateStore directly since change doesn't trigger it
+    hideDetailPane(); // Hide pane
+  });
+
+  // Overlay clickity clicker
+  $(".overlay").on("click", function(){
+    hideDetailPane();
+  });
 
   $("#character-lock-fields").on("click", function(e){
     if ($(e.currentTarget).hasClass("ion-unlocked")){
@@ -98,10 +110,14 @@ var attachClickHandlers = function(){
       window.locked = false;
     };
   });
+
+  $("#toggle-skills").on("click", function(){
+
+  });
 };
 
 var showDetailPane = function(selector, fieldValue){
-  var $detailTab = $("[data-selector="+ selector +"]"); // TODO change to use selector
+  var $detailTab = $("[data-selector="+ selector +"]");
   var $detailPane = $("#" + fieldValue + "-info");
 
   // Show overlay

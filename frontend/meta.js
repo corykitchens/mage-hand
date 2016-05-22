@@ -192,19 +192,19 @@ var game_meta = {
         },
         arcana: {
           name: 'Arcana',
-          stat: 'wis'
+          stat: 'int'
         },
         athletics: {
           name: 'Athletics',
-          stat: 'wis'
+          stat: 'str'
         },
         deception: {
           name: 'Deception',
-          stat: 'wis'
+          stat: 'cha'
         },
         history: {
           name: 'History',
-          stat: 'wis'
+          stat: 'int'
         },
         insight: {
           name: 'Insight',
@@ -212,11 +212,11 @@ var game_meta = {
         },
         intimidation: {
           name: 'Intimidation',
-          stat: 'wis'
+          stat: 'chr'
         },
         investigation: {
           name: 'Investigation',
-          stat: 'wis'
+          stat: 'int'
         },
         medicine: {
           name: 'Medicine',
@@ -224,7 +224,7 @@ var game_meta = {
         },
         nature: {
           name: 'Nature',
-          stat: 'wis'
+          stat: 'int'
         },
         perception: {
           name: 'Perception',
@@ -232,7 +232,7 @@ var game_meta = {
         },
         performance: {
           name: 'Performance',
-          stat: 'wis'
+          stat: 'cha'
         },
         persuasion: {
           name: 'Persuasion',
@@ -240,15 +240,15 @@ var game_meta = {
         },
         religion: {
           name: 'Religion',
-          stat: 'wis'
+          stat: 'int'
         },
         sleight_of_hand: {
           name: 'Sleight of Hand',
-          stat: 'wis'
+          stat: 'dex'
         },
         stealth: {
           name: 'Stealth',
-          stat: 'wis'
+          stat: 'dex'
         },
         survival: {
           name: 'Survival',

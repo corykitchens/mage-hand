@@ -1431,6 +1431,12 @@ there.
   justify-content: center;
   align-items: center; }
 
+.u-flex--align-center {
+  align-items: center; }
+
+.u-flex--column {
+  flex-direction: column; }
+
 .u-flex--wrap {
   flex-wrap: wrap; }
 
@@ -1444,6 +1450,9 @@ there.
 .u-opacity1 {
   opacity: 1 !important;
   pointer-events: auto !important; }
+
+.u-hide {
+  display: none; }
 
 .u-noscroll {
   overflow: hidden !important; }
@@ -1584,6 +1593,9 @@ body {
   color: rgba(0, 0, 0, 0.5);
   cursor: pointer; }
 
+.ion-locked {
+  color: #824343 !important; }
+
 .character,
 .campaign {
   cursor: pointer;
@@ -1619,15 +1631,18 @@ body {
 
 #character-lock-fields {
   color: rgba(0, 0, 0, 0.5);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   align-self: center;
   min-width: 20px;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0 1.5rem; }
 
 #character-name {
   font-weight: bold;
   color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem;
   border: 1px solid transparent; }
   #character-name:focus {
     color: black; }
@@ -1701,6 +1716,30 @@ input[type="number"] {
     display: flex;
     align-items: center;
     justify-content: center; }
+
+.box-skill {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer; }
+  .box-skill > input {
+    display: none; }
+  .box-skill > input:checked + .skill-name {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.85); }
+  .box-skill > .skill-name {
+    color: #596660;
+    flex-grow: 1;
+    padding: 0.25rem 0;
+    padding-left: 0.5rem;
+    margin: 0; }
+  .box-skill > .skill-stat {
+    width: 10%;
+    text-align: right;
+    font-size: 1rem;
+    margin: 0 2rem;
+    color: #596660; }
 
 .character-hp-fields {
   display: flex;

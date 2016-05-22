@@ -116,7 +116,12 @@ body {
 
 .icon-social { color: rgba(0, 0, 0, 0.5); cursor:pointer; }
 
-
+.ion-locked { color: #824343 !important; }
+// .ion-eye {
+// 	color: rgba(0, 0, 0, 0.6);
+// 	font-size: 2rem;
+// 	margin-right: 2rem;
+// }
 // @include breakpoint(xs) {} // xs, sm, md, lg, xl (Size +)\
 .character,
 .campaign {
@@ -160,17 +165,20 @@ body {
 // CHARACTER PAGE
 #character-lock-fields { // Lock icon that triggers disabled fields
 	color: rgba(0, 0, 0, 0.5);
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 	align-self: center;
 	min-width: 20px;
 	text-align: center;
 	cursor: pointer;
+	font-size: 2rem;
+	padding: 0 1.5rem;
 }
 
 // Field specific styles
 #character-name {
 	font-weight: bold;
 	color: $light;
+	margin-bottom: 1rem;
 	border: 1px solid transparent;
 	&:focus { color: black; }
 }
@@ -233,7 +241,7 @@ input[type="number"]{
 	}
 	& > label {
 		text-align: center;
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: $lightest;
 		padding: 0 0.5rem;
 	}
 }
@@ -254,6 +262,45 @@ $box-field--vertical-height: 30px;
 		height: $box-field--vertical-height;
 		//To center text \/
 		display: flex; align-items: center; justify-content: center;
+	}
+}
+
+
+.box-skill {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 0.5rem;
+	cursor: pointer;
+
+	& > input { display: none; }
+	& > input:checked + .skill-name {
+		background-color: $lightest;
+		color: $dark;
+	}
+
+	// .skill-circle {
+	// 	background-color: $color-green;
+	// 	width: 20px; height: 20px; line-height: 20px;
+	// 	display: inline-block;
+	// 	text-align: center;
+	// 	border-radius: 50%;
+	// 	margin-right: 0.5rem;
+	// }
+
+	& > .skill-name {
+		color: rgb(89, 102, 96);
+		flex-grow: 1;
+		padding: 0.25rem 0;
+		padding-left: 0.5rem;
+		margin: 0;
+	}
+	& > .skill-stat {
+		width: 10%;
+		text-align: right;
+		font-size: 1rem;
+		margin: 0 2rem;
+		color: rgb(89, 102, 96);
 	}
 }
 
