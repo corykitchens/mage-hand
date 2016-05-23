@@ -9,17 +9,21 @@ A real-time campaign and character management tool for table-top roleplaying gam
 
 
 ## TODO
+- Be able to delete characters
+- Sort out how fb3 effects user storage for lookups on /characters
+- Allow skills to be selectable from class chooser pane
 - Move game rule meta to separate files
+- 'Other' race and class
 - Make campaign view
 - Add character class/rules construct
-- Trim CSS (not using some of skeleton)
+- Trim/organize CSS
 - Add security rules
 - Add all spells
-- Allow adding of spells
-- Adding of equipment
 - Add facebook auth
 - Add google auth
 - Raw stats to bonus slider
+x Allow adding of spells
+x Adding of equipment
 
 
 ### Security rules

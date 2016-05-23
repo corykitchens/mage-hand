@@ -220,6 +220,7 @@ select {
   border: 1px solid #D1D1D1;
   border-radius: $radius;
   box-shadow: none;
+  transition: all $transition-fast ease-in-out;
   box-sizing: border-box; }
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"],

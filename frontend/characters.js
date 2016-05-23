@@ -4,14 +4,12 @@ var revealPage = require('./globals').revealPage;
 var gameTypes = require('./meta').gameTypes;
 var gameMeta = require('./meta').gameMeta;
 
-
 module.exports.charactersPage = function charactersPage(){
   var userUid = window.currentUser.uid;
   var charactersPath = "users/" + userUid + "/characters";
   var characters = []; // Used to render all characters on page through vue
 
   fb_data.ref(charactersPath).once('value').then(function(snap){
-
     if (snap.val() == null){ // If no characters exist yet
 
       $(".button-add").addClass("button-huge-middle");
@@ -75,6 +73,8 @@ var showGameTypeModal = function(){
 
 // Creates a new character, pushes it to fb, performs callback w/ character_id string
 var createNewCharacter = function(ee){
+  var userUid = window.currentUser.uid;
+  var charactersPath = "users/" + userUid + "/characters";
   var game_type = $(ee.target).attr('id'); // Game type from link id
   var new_char_template = gameMeta(game_type).default_character; // Get default from meta
   new_char_template.type = game_type; // Set game type on new character
@@ -82,9 +82,12 @@ var createNewCharacter = function(ee){
   var oo = fb_data.ref("characters").push(new_char_template); // Push new character to /characters
 
   // Add to /users node to draw referance
-  var character_id = oo.path.u[1];
+  // This might change with Firebase 3?
+  var character_id = oo.key;
   fb_data.ref(charactersPath + "/" + character_id).update(
     {created_on: (new Date).toString()}
   );
   window.location.href = "/character?id=" + character_id; // Redirect to character view
 };
+
+// Wildcat!Wildcat! Tower

@@ -29,41 +29,41 @@
 	padding-top: 0.5rem;
 	overflow: scroll;
 }
+
 .modal-body {
 	padding: 1rem;
-}
-
-.button-small {
-	height: 22px !important;
-	line-height: 22px !important;
-	font-size: 11px !important;
 }
 
 .u-flex { display: flex; }
 .u-flex--fill {
 	& > * { flex-grow: 1; }
 }
+
 .u-flex--center {
 	justify-content: center;
 	align-items: center;
 }
+
 .u-flex--align-center {
 	align-items: center;
 }
+
 .u-flex--column { flex-direction: column; }
+.u-flex--column-reverse { flex-direction: column-reverse; }
+
 .u-flex--wrap { flex-wrap: wrap; }
 .u-flex--grow { flex-grow: 1; }
 
 .u-opacity0 {
 	opacity: 0 !important;
 	pointer-events: none !important;
- }
- .u-opacity1 {
-	 opacity: 1 !important;
-	 pointer-events: auto !important;
- }
+}
+.u-opacity1 {
+ opacity: 1 !important;
+ pointer-events: auto !important;
+}
 
- .u-hide { display: none; }
+.u-hide { display: none; }
 
 .u-noscroll { overflow: hidden !important; }
 
