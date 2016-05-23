@@ -7,10 +7,16 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
 
-/* GET login listing */
+/* GET login page */
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Login' });
 });
+
+/* GET A campaigns */
+router.get('/campaign', function(req, res, next) {
+  res.render('campaign', { title: 'Campaign' });
+});
+
 
 /* GET campaigns */
 router.get('/campaigns', function(req, res, next) {
@@ -18,7 +24,7 @@ router.get('/campaigns', function(req, res, next) {
 });
 
 
-/* GET individual */
+/* GET A character */
 router.get('/character', function(req, res, next) {
   res.render('character', { title: 'Character' });
 });

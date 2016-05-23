@@ -1,12 +1,14 @@
 var requiresAuth = require('./auth').requiresAuth;
 var charactersPage = require('./characters').charactersPage;
 var characterPage = require('./character').characterPage;
+var campaignsPage = require('./campaigns').campaignsPage;
+var campaignPage = require('./campaign').campaignPage;
+
 var twitterAuth = require('./auth').twitterAuth;
 var revealPage = require('./globals').revealPage;
 
 // ROUTER
 // For routing the user around depending on their state
-
 
 module.exports.routeUser = function(){
 
@@ -35,24 +37,13 @@ module.exports.routeUser = function(){
     requiresAuth(charactersPage);
   }
 
-
   else if (window.location.pathname === "/campaigns"){
-    requiresAuth();
-
-    // TODO
-
-    fb.child("users/" + auth.uid + "/campaigns").on("value", function(ss) {
-      const snap = ss.val(); if(snap == undefined){ return; }
-
-      new Vue({
-        el: '#xxxkey',
-        data: { greeting: 'lol' }
-      });
-    });
-
-    var v = new Campaigns('xxxkey');
-    revealPage();
+    requiresAuth(campaignsPage);
   }
+  else if (window.location.pathname === "/campaign"){
+    requiresAuth(campaignPage);
+  }
+
 
 
 };

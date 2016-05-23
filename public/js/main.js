@@ -50,7 +50,7 @@
 	var setupUser = __webpack_require__(6).setupUser;
 	var routeUser = __webpack_require__(7).routeUser;
 
-	__webpack_require__(12);
+	__webpack_require__(15);
 
 	Vue.config.debug = true; console.log('!vue debug is on'); // TODO
 
@@ -10898,12 +10898,14 @@
 	var requiresAuth = __webpack_require__(6).requiresAuth;
 	var charactersPage = __webpack_require__(8).charactersPage;
 	var characterPage = __webpack_require__(11).characterPage;
+	var campaignsPage = __webpack_require__(12).campaignsPage;
+	var campaignPage = __webpack_require__(13).campaignPage;
+
 	var twitterAuth = __webpack_require__(6).twitterAuth;
 	var revealPage = __webpack_require__(9).revealPage;
 
 	// ROUTER
 	// For routing the user around depending on their state
-
 
 	module.exports.routeUser = function(){
 
@@ -10932,24 +10934,13 @@
 	    requiresAuth(charactersPage);
 	  }
 
-
 	  else if (window.location.pathname === "/campaigns"){
-	    requiresAuth();
-
-	    // TODO
-
-	    fb.child("users/" + auth.uid + "/campaigns").on("value", function(ss) {
-	      const snap = ss.val(); if(snap == undefined){ return; }
-
-	      new Vue({
-	        el: '#xxxkey',
-	        data: { greeting: 'lol' }
-	      });
-	    });
-
-	    var v = new Campaigns('xxxkey');
-	    revealPage();
+	    requiresAuth(campaignsPage);
 	  }
+	  else if (window.location.pathname === "/campaign"){
+	    requiresAuth(campaignPage);
+	  }
+
 
 
 	};
@@ -11878,6 +11869,160 @@
 
 /***/ },
 /* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(1);
+	var fb_data = __webpack_require__(4).database();
+	var revealPage = __webpack_require__(9).revealPage;
+	//var gameTypes = require('./meta').gameTypes;
+	var gameMeta = __webpack_require__(10).gameMeta;
+	var campaignKeyGenerator = __webpack_require__(14).campaignKeyGenerator;
+
+	module.exports.campaignsPage = function campaignsPage(){
+	  var userUid = window.currentUser.uid;
+	  var campaignsPath = "users/" + userUid + "/campaigns";
+	  var campaigns = []; // Used to render all characters on page through vue
+
+	  fb_data.ref(campaignsPath).once('value').then(function(snap){
+	    if (snap.val() == null){ // If no characters exist yet
+
+	      $(".button-add").addClass("button-huge-middle");
+	      revealPage(); // TODO Show a tooltip or something on how to make new
+
+	    } else { // Else, display each campaign a user has
+
+	      Object.keys(snap.val()).forEach(function(campaign_id){
+	        fb_data.ref("campaigns/" + campaign_id).once('value', function(campaign_snap){
+	          // Push each campaign to the characters array so that vue can draw them afterwards
+	          var cc = campaign_snap.val();
+	          cc.key = campaign_id;
+	          campaigns.push(cc);
+
+	          //TODO for each campaign, find the characters to display on campaigns listing page?
+
+	          revealPage();
+	        });
+	      });
+
+	    };
+	  }).then(function(){
+
+	    new Vue({ // Draw all the characters pulled from firebase above
+	      el: '#vue-campaigns',
+	      data: { campaigns: campaigns }
+	    });
+
+	    attachClickHandlers();
+	  });
+	};
+
+
+	var attachClickHandlers = function(){
+	  $(document).on("click", "#new-campaign", function(ee){ // New campaign triggers confirmation modal
+	    showConfirmationModal();
+	  });
+
+	  $(document).on("click", "#campaign-modal-yes", function(ee){ // Yes to campaign modal
+	    createNewCampaign();
+	  });
+
+	  // Things which hide modal
+	  $(document).on("click touchstart", ".overlay" , function(ee){ hideModal(); });
+	  $(document).keyup(function(e){  if (e.keyCode === 27) hideModal(); });
+	  $("#campaign-modal-no").on('click', function(){ hideModal(); })
+
+	  // Clicking on a campaign sends you to a character page
+	  $(document).on("click", ".campaign", function(ee){
+	    window.location.href = "/campaign?id=" + $(ee.currentTarget).attr("id");
+	  });
+
+	};
+
+
+	var hideModal = function(){
+	  $(".modal").hide();
+	  $(".overlay").hide();
+	};
+
+	var showConfirmationModal = function(){
+	  $(".modal").show();
+	  $(".overlay").show();
+	};
+
+
+	var createNewCampaign = function(){
+
+	  // Set user as the owner for the campaign
+	  var owners = {};
+	  owners[window.currentUser.uid] = Date.now();
+	  var campaignKey = campaignKeyGenerator();
+
+	  // Default campaign object
+	  var defaultCampaign = {
+	    name: 'New Campaign',
+	    owners: owners,
+	    campaign_key: campaignKey,
+	  };
+
+	  // Push default campaign object as new campaign
+	  var campaignPush = fb_data.ref("campaigns").push(defaultCampaign);
+
+	  // Then, reference it in user info
+	  fb_data.ref("users/" + window.currentUser.uid + "/campaigns/" + campaignPush.key).set({
+	    created_on: Date.now(),
+	    campaign_key: campaignKey,
+	  }).then(function(){
+	    console.log('Campaign created!');
+	    window.location.href = "/campaign?id=" + campaignPush.key;
+	  });
+
+	};
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(1);
+	var fb_data = __webpack_require__(3).database();
+	var revealPage = __webpack_require__(9).revealPage;
+	var gameMeta = __webpack_require__(10).gameMeta;
+
+	module.exports.campaignPage = function campaignPage(){
+	  console.log('lollerton');
+	  revealPage();
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var fb_data = __webpack_require__(4).database();
+
+	// Generates a random campaign key for other users to join to campaigns
+
+	module.exports.campaignKeyGenerator = function campaignKeyGenerator(){
+	  var words = [ "acid", "blade", "lights", "fire", "bolt", "light", "mending", "poison",
+	    "trap", "minor", "ray", "sacred", "flame", "pooky", "duck", "vicious", "mockery", "lime",
+	    "green", "blue", "black", "yellow", "purple", "maroon", "pink", "orange", "red", "white",
+	    "knight", "king", "queen", "squire", "charming", "hex", "magic", "missile", "spider", "owlbear",
+	    "deathly", "hallowed", "web", "beam", "power", "weird", "sheep", "monkey", "cow", "moose",
+	    "bear", "dragon", "serpent", "goblin", "naga", "orc", "elf", "dwarf", "halfing", "astral",
+	    "feeble", "druid", "ranger", "wizard", "cleric", "dreaming", "squirrel", "gnome", "badger",
+	    "dungeon", "priest", "skull", "mage", "cult", "bugbear", "evil", "noble", "team", "helm",
+	    "potion", "alchemy", "boots", "sword", "flying", "wand", "spark", "musical", "bard", "treasure",
+	    "dark", "ghoul", "undead", "war", "ruffian", "ambush", "pit", "tree", "forest", "cake", "ale",
+	  ];
+
+	  var w1 = words[Math.floor(Math.random()*words.length)];
+	  var w2 = words[Math.floor(Math.random()*words.length)];
+	  return (w1 + "-" + w2 + Math.floor(Math.random()*999)).toString();
+	};
+
+
+/***/ },
+/* 15 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
