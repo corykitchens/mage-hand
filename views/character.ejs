@@ -3,6 +3,33 @@
   <!-- this will be the DOM element we will mount our VueJs instance to -->
   <div id="vue-character">
 
+    <!-- <div class="join-modal" v-if="trigger == 'join'" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"> -->
+
+    <!-- If coming from join link, show join modal -->
+    <section v-if="trigger == 'join'">
+      <div class="join-overlay"></div>
+      <div class="join-modal">
+        <h3 class="section-header">Join a campaign</h3>
+        <div class="join-modal-content">
+          <input type="text" class="campaign-code-input u-full-width" placeholder="campaign-code"></input>
+          <button class="add-character-to-campaign button-primary u-full-width">Join</button>
+        </div>
+      </div>
+    </section>
+    <section v-else>
+      <div class="join-overlay" style="display: none;"></div>
+      <div class="join-modal" style="display: none;">
+        <h3 class="section-header">Join a campaign</h3>
+        <div class="join-modal-content">
+          <input type="text" class="campaign-code-input u-full-width" placeholder="campaign-code"></input>
+          <button class="add-character-to-campaign button-primary u-full-width">Join</button>
+        </div>
+      </div>
+      </section>
+    </section>
+
+
+
     <!--  # # # # # # # # # # # # # # # # # # # # # # #  -->
     <!-- 'Primary' character form containing core goods -->
     <!--  # # # # # # # # # # # # # # # # # # # # # #  -->
@@ -139,6 +166,8 @@
           <label class="skill-stat" for="skill-{{ $key }}" >{{ skill.stat }}</label>
         </div>
       </div>
+
+      <button class="join-campaign button-muted button-small u-full-width xs-mt2 xs-mb0">Join Campaign</button>
 
     </form>
 

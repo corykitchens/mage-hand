@@ -2,10 +2,12 @@ var Vue = require('vue');
 var fb_data = require('./fb').database();
 var revealPage = require('./globals').revealPage;
 var gameMeta = require('./meta').gameMeta;
+var getUrlParam = require('./globals').getUrlParam;
 
 module.exports.characterPage = function characterPage(){
-  window.locked = false;
-  var character_id = window.location.search.replace("?id=", "");
+  window.locked = false; // Lock ability to edit fields
+  var character_id = getUrlParam("id");
+  var trigger = getUrlParam("trigger");
   var default_equipment = {name: 'New Equipment' }; // TODO
   var default_ability = {name: 'New Ability', bonus: 'Bonus', type: 'Type'}
 
@@ -21,6 +23,7 @@ module.exports.characterPage = function characterPage(){
       window.character = new Vue({
         el: '#vue-character',
         data: {
+          trigger: trigger,
           character: character_data,
           gameMeta: gameMeta( character_data.type )
         },
@@ -65,7 +68,7 @@ module.exports.characterPage = function characterPage(){
               name: spellName.replace("_", " "),
               description: spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range,
               long_description: spellData.description + spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range
-            }
+            };
 
             fb_data.ref(characterPath + "/abilities").push(serializedSpell).then(function(){
               hideDetailPane();
@@ -76,26 +79,25 @@ module.exports.characterPage = function characterPage(){
           },
         }
       });
+
+      attachClickHandlers();
+      revealPage();
+
     } else { // If we do have a vue object, update it when fb sends us stuff
       window.character.$set("character", character_data);
     };
 
-    attachClickHandlers();
-    revealPage();
   });
-
 };
 
 var attachClickHandlers = function(){
   $(".button-disabled").on('click', function(e){
     e.preventDefault();
-    console.log('asdf');
   })
 
   // Prevent form submission
   $("#character-form-primary, #character-form-secondary").submit(function(e){
-    e.preventDefault();
-    // Can maybe put a modal up that explains realtime?
+    e.preventDefault(); // TODO Can maybe put a modal up that explains realtime?
   });
 
   // Class & Race selection
@@ -134,10 +136,33 @@ var attachClickHandlers = function(){
 
   // Overlay clickity clicker
   $(".overlay").on("click", function(){
+    console.log('asdf');
+    hideOverlay();
     hideDetailPane();
   });
 
+  // Join campaign button
+  $(".join-campaign").on("click", function(){
+    console.log('asdf');
+    $(".join-overlay").show();
+    $(".join-modal").show();
+  })
+  // Close join campaign overlay by clicking outside of modal
+  $(".join-overlay").on("click", function(){
+    $(".join-overlay").hide();
+    $(".join-modal").hide();
+  });
+
+  $(".add-character-to-campaign").on("click", function(e){
+    var campaignCode = $(e.currentTarget)
+      .closest(".join-modal-content")
+      .find(".campaign-code-input")
+      .val();
+    addCharacterToCampaign(campaignCode);
+  });
+
   $(".character-lock-fields").on("click", function(e){
+    console.log('qqq');
     if ($(e.currentTarget).hasClass("ion-unlocked")){
       // Lock fields down
       $lockIcons = $(".character-lock-fields");
@@ -185,12 +210,58 @@ var attachClickHandlers = function(){
 };
 
 
+var addCharacterToCampaign = function(campaignCode){
+  var characterKey = getUrlParam("id");
+
+  fb_data.ref("campaigns")
+    .orderByPriority()
+    .startAt(campaignCode)
+    .limitToFirst(1)
+    .once("value", function(snap){
+
+    // If no reference exists, exit
+    if (snap.val() === null) { console.log("NULL campaign"); return; }
+
+    // Check if campaign code matches thing, else return not found
+    if (snap.val()[Object.keys(snap.val())[0]].campaign_key == campaignCode){
+
+      // TODO add campaign to character, add character to campaign
+      // TODO show modal or something saying that they've been added (might make sense to create flash construct?)
+      console.log(snap.val());
+      
+    } else {
+      // Note: at this point something WAS returned, but priority lookups will
+      // find the closest match if the beginning letters match
+      $(".campaign-code-input").val(""); // Clear field
+      $(".join-modal").addClass("animated shake");
+      setTimeout(function(){
+        $(".join-modal").removeClass("animated shake");
+      }, 400)
+      console.log("No campaign found with that code.")
+    }
+  });
+  // ref.orderByPriority().on("child_added", function(snapshot) {
+  // console.log(snapshot.key());
+  // });
+
+  //fb_data.ref("characters/" + characterKey + "/campaigns")
+};
+
 var showSpellPane = function(){
   $(".spell-pane").removeClass("off-screen");
+  showOverlay();
+};
 
+var showOverlay = function(){
   var $overlay = $(".overlay");
   $overlay.css('z-index', '1');
   $overlay.show();
+  $("#character-bottom-nav-menu").css('z-index', 1);
+};
+
+var hideOverlay = function(){
+  $(".overlay").hide();
+  $("#character-bottom-nav-menu").css('z-index', '');
 };
 
 
@@ -198,10 +269,7 @@ var showDetailPane = function(selector, fieldValue){
   var $detailTab = $("[data-selector="+ selector +"]");
   var $detailPane = $("#" + fieldValue + "-info");
 
-  // Show overlay
-  var $overlay = $(".overlay");
-  $overlay.css('z-index', '1');
-  $overlay.show();
+  showOverlay();
 
   $(".character-detail-panes").addClass("off-screen"); // Hide all detail panes
   $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
@@ -212,7 +280,6 @@ var showDetailPane = function(selector, fieldValue){
 };
 
 var hideDetailPane = function(){
-  $(".overlay").hide();
   $(".character-detail-tabs").addClass("off-screen");
   $(".character-detail-panes").addClass("off-screen"); // Hide detail panes
 };

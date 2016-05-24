@@ -9,6 +9,7 @@ A real-time campaign and character management tool for table-top roleplaying gam
 
 
 ## TODO
+- Authenticate character views
 - Saving throws
 - Be able to delete characters
 - Sort out how fb3 effects user storage for lookups on /characters

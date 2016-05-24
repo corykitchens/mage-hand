@@ -2,7 +2,19 @@
 
   <!-- this will be the DOM element we will mount our VueJs instance to -->
   <div id="vue-campaign">
-    loller
+
+    <div class="invite-info">
+      <div class="invite-instructions">
+        <h3>Invite other to join!</h3>
+        Go to <b>magehand.xyz/join</b> and use code
+      </div>
+      <div class="invite-code">{{ campaign.campaign_key }}</div>
+      <div class="invite-hide"><i class="icon ion-minus-circled"></i></div>
+      <div class="invite-show"><i class="icon ion-plus-circled"></i></div>
+    </div>
+
+
+
   </div>
 
 </div>

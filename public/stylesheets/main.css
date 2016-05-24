@@ -227,7 +227,7 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  background-color: #7AA790; }
+  background-color: #83968D; }
 
 .button-primary,
 .button.button-primary,
@@ -1387,16 +1387,6 @@ there.
   font-size: 1.5rem;
   letter-spacing: 0.5px; }
 
-.overlay {
-  display: none;
-  top: 0;
-  left: 0;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); }
-
 .modal {
   display: none;
   z-index: 10;
@@ -1576,6 +1566,11 @@ textarea {
   border: 1px solid transparent;
   background-color: rgba(0, 0, 0, 0.6) !important; }
 
+.button-muted {
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid transparent;
+  background-color: rgba(0, 0, 0, 0.25) !important; }
+
 .button-light {
   color: #565656;
   background-color: #DEDEDE !important;
@@ -1668,6 +1663,19 @@ input[type="number"] {
     align-items: center;
     justify-content: center; }
 
+.overlay {
+  display: none;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease-in-out; }
+  .overlay.show {
+    display: block !important; }
+
 .character,
 .campaign {
   cursor: pointer;
@@ -1696,6 +1704,21 @@ input[type="number"] {
   background-color: #534875;
   color: white;
   font-weight: bold; }
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both; }
+
+@keyframes shake {
+  from, to {
+    transform: translate3d(0, 0, 0); }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0); }
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0); } }
+
+.shake {
+  animation-name: shake; }
 
 .character-lock-fields {
   color: rgba(0, 0, 0, 0.5);
@@ -1950,3 +1973,87 @@ label[for=character-prof-bonus] {
     padding: 0 1rem;
     background-color: #83968D;
     color: rgba(255, 255, 255, 0.4); }
+
+.join-modal {
+  top: 20%;
+  left: 5%;
+  z-index: 4;
+  background-color: white;
+  position: fixed;
+  color: rgba(0, 0, 0, 0.85);
+  width: 90%;
+  border-radius: 0px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.4); }
+  .join-modal input {
+    font-weight: bold;
+    color: #534875;
+    font-size: 2.5rem;
+    height: 5rem; }
+  .join-modal .join-modal-warning {
+    transition: all 0.1s ease-in-out;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    text-align: center;
+    background-color: #A77A7A;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    text-transform: uppercase; }
+  .join-modal .join-modal-content {
+    padding: 1rem; }
+
+.join-overlay {
+  display: block;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease-in-out; }
+
+.invite-info {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.85);
+  text-align: center;
+  position: fixed;
+  padding: 1rem;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  left: 0;
+  width: 100%; }
+  .invite-info h3 {
+    font-size: 2.8rem;
+    margin-bottom: 0; }
+  .invite-info .invite-show {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    color: #83968D; }
+  .invite-info .invite-hide {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    padding: 0 0.5rem;
+    color: #83968D; }
+  .invite-info .invite-instructions {
+    font-size: 1.2rem; }
+  .invite-info .invite-code {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #534875; }
+  .invite-info.shrink {
+    padding: 0.2rem;
+    opacity: 0.8;
+    box-shadow: none; }
+    .invite-info.shrink h3,
+    .invite-info.shrink .invite-hide,
+    .invite-info.shrink .invite-instructions {
+      display: none; }
+    .invite-info.shrink .invite-show {
+      display: block !important; }
+    .invite-info.shrink .invite-code {
+      font-size: 1.2rem; }

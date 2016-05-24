@@ -103,4 +103,7 @@ var createNewCampaign = function(){
     window.location.href = "/campaign?id=" + campaignPush.key;
   });
 
+  var campaignReference = fb_data.ref("campaigns/" + campaignPush.key);
+  campaignReference.setPriority(campaignKey);
+
 };

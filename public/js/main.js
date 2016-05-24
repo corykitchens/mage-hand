@@ -10899,7 +10899,8 @@
 	var charactersPage = __webpack_require__(8).charactersPage;
 	var characterPage = __webpack_require__(11).characterPage;
 	var campaignsPage = __webpack_require__(12).campaignsPage;
-	var campaignPage = __webpack_require__(13).campaignPage;
+	var campaignPage = __webpack_require__(14).campaignPage;
+	var joinPage = __webpack_require__(17).joinPage;
 
 	var twitterAuth = __webpack_require__(6).twitterAuth;
 	var revealPage = __webpack_require__(9).revealPage;
@@ -10926,22 +10927,21 @@
 	    // Enable login click handlers (Might not really belong here but whatevs #YOLO)
 	    $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
 	  }
-
-	  else if (window.location.pathname === "/character"){
+	  else if (window.location.pathname === "/character"){ // Specific character
 	    requiresAuth(characterPage);
 	  }
-	  else if (window.location.pathname === "/characters"){
+	  else if (window.location.pathname === "/characters"){ // List of characters
 	    requiresAuth(charactersPage);
 	  }
-
-	  else if (window.location.pathname === "/campaigns"){
-	    requiresAuth(campaignsPage);
+	  else if (window.location.pathname === "/join"){ // Join a campaign
+	    requiresAuth(joinPage); // TODO make this unique page to explain why to sign up?
 	  }
-	  else if (window.location.pathname === "/campaign"){
+	  else if (window.location.pathname === "/campaign"){ // Specific campaign
 	    requiresAuth(campaignPage);
 	  }
-
-
+	  else if (window.location.pathname === "/campaigns"){ // List of campaigns
+	    requiresAuth(campaignsPage);
+	  }
 
 	};
 
@@ -11050,12 +11050,22 @@
 /***/ function(module, exports) {
 
 	// Global helpers
-	module.exports.revealPage  = function revealPage(){
+	module.exports.revealPage = function(){
 	  if (window.revealed == false){
 	    $(".loading-message").hide();
 	    $(".body-content").addClass("u-opacity1");
 	  };
 	};
+
+	module.exports.getUrlParam = function(name, url) {
+	  if (!url) url = window.location.href;
+	  name = name.replace(/[\[\]]/g, "\\$&");
+	  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	      results = regex.exec(url);
+	  if (!results) return null;
+	  if (!results[2]) return '';
+	  return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 
 
 /***/ },
@@ -11646,10 +11656,12 @@
 	var fb_data = __webpack_require__(3).database();
 	var revealPage = __webpack_require__(9).revealPage;
 	var gameMeta = __webpack_require__(10).gameMeta;
+	var getUrlParam = __webpack_require__(9).getUrlParam;
 
 	module.exports.characterPage = function characterPage(){
-	  window.locked = false;
-	  var character_id = window.location.search.replace("?id=", "");
+	  window.locked = false; // Lock ability to edit fields
+	  var character_id = getUrlParam("id");
+	  var trigger = getUrlParam("trigger");
 	  var default_equipment = {name: 'New Equipment' }; // TODO
 	  var default_ability = {name: 'New Ability', bonus: 'Bonus', type: 'Type'}
 
@@ -11665,6 +11677,7 @@
 	      window.character = new Vue({
 	        el: '#vue-character',
 	        data: {
+	          trigger: trigger,
 	          character: character_data,
 	          gameMeta: gameMeta( character_data.type )
 	        },
@@ -11709,7 +11722,7 @@
 	              name: spellName.replace("_", " "),
 	              description: spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range,
 	              long_description: spellData.description + spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range
-	            }
+	            };
 
 	            fb_data.ref(characterPath + "/abilities").push(serializedSpell).then(function(){
 	              hideDetailPane();
@@ -11720,26 +11733,25 @@
 	          },
 	        }
 	      });
+
+	      attachClickHandlers();
+	      revealPage();
+
 	    } else { // If we do have a vue object, update it when fb sends us stuff
 	      window.character.$set("character", character_data);
 	    };
 
-	    attachClickHandlers();
-	    revealPage();
 	  });
-
 	};
 
 	var attachClickHandlers = function(){
 	  $(".button-disabled").on('click', function(e){
 	    e.preventDefault();
-	    console.log('asdf');
 	  })
 
 	  // Prevent form submission
 	  $("#character-form-primary, #character-form-secondary").submit(function(e){
-	    e.preventDefault();
-	    // Can maybe put a modal up that explains realtime?
+	    e.preventDefault(); // TODO Can maybe put a modal up that explains realtime?
 	  });
 
 	  // Class & Race selection
@@ -11778,10 +11790,33 @@
 
 	  // Overlay clickity clicker
 	  $(".overlay").on("click", function(){
+	    console.log('asdf');
+	    hideOverlay();
 	    hideDetailPane();
 	  });
 
+	  // Join campaign button
+	  $(".join-campaign").on("click", function(){
+	    console.log('asdf');
+	    $(".join-overlay").show();
+	    $(".join-modal").show();
+	  })
+	  // Close join campaign overlay by clicking outside of modal
+	  $(".join-overlay").on("click", function(){
+	    $(".join-overlay").hide();
+	    $(".join-modal").hide();
+	  });
+
+	  $(".add-character-to-campaign").on("click", function(e){
+	    var campaignCode = $(e.currentTarget)
+	      .closest(".join-modal-content")
+	      .find(".campaign-code-input")
+	      .val();
+	    addCharacterToCampaign(campaignCode);
+	  });
+
 	  $(".character-lock-fields").on("click", function(e){
+	    console.log('qqq');
 	    if ($(e.currentTarget).hasClass("ion-unlocked")){
 	      // Lock fields down
 	      $lockIcons = $(".character-lock-fields");
@@ -11829,12 +11864,58 @@
 	};
 
 
+	var addCharacterToCampaign = function(campaignCode){
+	  var characterKey = getUrlParam("id");
+
+	  fb_data.ref("campaigns")
+	    .orderByPriority()
+	    .startAt(campaignCode)
+	    .limitToFirst(1)
+	    .once("value", function(snap){
+
+	    // If no reference exists, exit
+	    if (snap.val() === null) { console.log("NULL campaign"); return; }
+
+	    // Check if campaign code matches thing, else return not found
+	    if (snap.val()[Object.keys(snap.val())[0]].campaign_key == campaignCode){
+
+	      // TODO add campaign to character, add character to campaign
+	      // TODO show modal or something saying that they've been added (might make sense to create flash construct?)
+	      console.log(snap.val());
+	      
+	    } else {
+	      // Note: at this point something WAS returned, but priority lookups will
+	      // find the closest match if the beginning letters match
+	      $(".campaign-code-input").val(""); // Clear field
+	      $(".join-modal").addClass("animated shake");
+	      setTimeout(function(){
+	        $(".join-modal").removeClass("animated shake");
+	      }, 400)
+	      console.log("No campaign found with that code.")
+	    }
+	  });
+	  // ref.orderByPriority().on("child_added", function(snapshot) {
+	  // console.log(snapshot.key());
+	  // });
+
+	  //fb_data.ref("characters/" + characterKey + "/campaigns")
+	};
+
 	var showSpellPane = function(){
 	  $(".spell-pane").removeClass("off-screen");
+	  showOverlay();
+	};
 
+	var showOverlay = function(){
 	  var $overlay = $(".overlay");
 	  $overlay.css('z-index', '1');
 	  $overlay.show();
+	  $("#character-bottom-nav-menu").css('z-index', 1);
+	};
+
+	var hideOverlay = function(){
+	  $(".overlay").hide();
+	  $("#character-bottom-nav-menu").css('z-index', '');
 	};
 
 
@@ -11842,10 +11923,7 @@
 	  var $detailTab = $("[data-selector="+ selector +"]");
 	  var $detailPane = $("#" + fieldValue + "-info");
 
-	  // Show overlay
-	  var $overlay = $(".overlay");
-	  $overlay.css('z-index', '1');
-	  $overlay.show();
+	  showOverlay();
 
 	  $(".character-detail-panes").addClass("off-screen"); // Hide all detail panes
 	  $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
@@ -11856,7 +11934,6 @@
 	};
 
 	var hideDetailPane = function(){
-	  $(".overlay").hide();
 	  $(".character-detail-tabs").addClass("off-screen");
 	  $(".character-detail-panes").addClass("off-screen"); // Hide detail panes
 	};
@@ -11876,7 +11953,7 @@
 	var revealPage = __webpack_require__(9).revealPage;
 	//var gameTypes = require('./meta').gameTypes;
 	var gameMeta = __webpack_require__(10).gameMeta;
-	var campaignKeyGenerator = __webpack_require__(14).campaignKeyGenerator;
+	var campaignKeyGenerator = __webpack_require__(13).campaignKeyGenerator;
 
 	module.exports.campaignsPage = function campaignsPage(){
 	  var userUid = window.currentUser.uid;
@@ -11976,26 +12053,14 @@
 	    window.location.href = "/campaign?id=" + campaignPush.key;
 	  });
 
+	  var campaignReference = fb_data.ref("campaigns/" + campaignPush.key);
+	  campaignReference.setPriority(campaignKey);
+
 	};
 
 
 /***/ },
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(9).revealPage;
-	var gameMeta = __webpack_require__(10).gameMeta;
-
-	module.exports.campaignPage = function campaignPage(){
-	  console.log('lollerton');
-	  revealPage();
-	};
-
-
-/***/ },
-/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var fb_data = __webpack_require__(4).database();
@@ -12022,10 +12087,81 @@
 
 
 /***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(1);
+	var fb_data = __webpack_require__(3).database();
+	var revealPage = __webpack_require__(9).revealPage;
+	var gameMeta = __webpack_require__(10).gameMeta;
+
+	module.exports.campaignPage = function campaignPage(){
+	  console.log('campaign js loaded');
+	  var campaign_id = window.location.search.replace("?id=", "");
+
+	  // Generate a vue directly from the firebase campaign object
+	  fb_data.ref("campaigns/" + campaign_id).on("value", function(snap){
+	    var campaign_data = snap.val();
+
+	    if (!window.campaign){ // If we don't have campaign, make vue
+
+	      window.campaign = new Vue({
+	        el: '#vue-campaign',
+	        data: {
+	          campaign: campaign_data,
+	          gameMeta: gameMeta( campaign_data.type )
+	        },
+	        methods: {
+	          updateStore: function(){
+	            fb_data.ref(campaignPath).update(this.campaign);
+	          },
+	          toggleInfo: function(ee){   // Toggle long information for abilities and spells
+	            $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
+	          },
+	        }
+	      });
+
+	      attachClickHandlers();
+	      revealPage();
+
+	    } else { // If we do have a vue object, update it when fb sends us stuff
+	      window.campaign.$set("campaign", campaign_data);
+	    };
+	  });
+
+	};
+
+
+	var attachClickHandlers = function(){
+
+	  $(".invite-info").on("click", function(ee){
+	    $inviteInfo = $(ee.currentTarget);
+	    $inviteInfo.toggleClass("shrink");
+	  });
+
+	};
+
+
+/***/ },
 /* 15 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 16 */,
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(1);
+	var fb_data = __webpack_require__(3).database();
+	var revealPage = __webpack_require__(9).revealPage;
+
+	module.exports.joinPage = function joinPage(){
+	  console.log('loller');
+	  revealPage();
+	};
+
 
 /***/ }
 /******/ ]);

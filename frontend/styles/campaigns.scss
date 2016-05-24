@@ -1,2 +1,55 @@
+// // Campaign specific styles
 
-// Campaign specific styles
+.invite-info {
+  background-color: $light;
+  color: $dark;
+  text-align: center;
+  position: fixed;
+  padding: 1rem;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+  bottom: 0; left: 0;
+  width: 100%;
+
+  h3 {
+    font-size: 2.8rem;
+    margin-bottom: 0;
+  }
+  .invite-show {
+    display: none;
+    position: absolute;
+    top: 0; right: 0.5rem;
+    color: $color-green;
+  }
+  .invite-hide {
+    position: absolute;
+    top: 0; right: 0;
+    padding: 0.5rem;
+    padding: 0 0.5rem;
+    color: $color-green;
+  }
+  .invite-instructions { font-size: 1.2rem; }
+  .invite-code {
+    font-size: 3rem;
+    font-weight: bold;
+    color: $color-purple;
+  }
+
+  &.shrink {
+    padding: 0.2rem;
+    opacity: 0.8;
+    box-shadow: none;
+
+    h3,
+    .invite-hide,
+    .invite-instructions {
+      display: none;
+    }
+    .invite-show { display: block !important; }
+    .invite-code { font-size: 1.2rem; }
+  }
+}
+
+
+
+
+// Fa - Nils Fram
