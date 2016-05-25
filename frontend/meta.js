@@ -186,7 +186,7 @@ var game_meta = {
           name: 'Acrobatics',
           stat: 'dex'
         },
-        animal_hanling: {
+        animal_handling: {
           name: 'Animal Handling',
           stat: 'wis'
         },

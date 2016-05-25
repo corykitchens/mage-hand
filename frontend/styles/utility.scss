@@ -56,6 +56,19 @@
  pointer-events: auto !important;
 }
 
+@mixin flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin block-text {
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+
 .u-hide { display: none; }
 
 .u-noscroll { overflow: hidden !important; }

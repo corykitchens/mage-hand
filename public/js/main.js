@@ -50,7 +50,7 @@
 	var setupUser = __webpack_require__(6).setupUser;
 	var routeUser = __webpack_require__(7).routeUser;
 
-	__webpack_require__(15);
+	__webpack_require__(16);
 
 	Vue.config.debug = true; console.log('!vue debug is on'); // TODO
 
@@ -10900,7 +10900,7 @@
 	var characterPage = __webpack_require__(11).characterPage;
 	var campaignsPage = __webpack_require__(12).campaignsPage;
 	var campaignPage = __webpack_require__(14).campaignPage;
-	var joinPage = __webpack_require__(17).joinPage;
+	var joinPage = __webpack_require__(15).joinPage;
 
 	var twitterAuth = __webpack_require__(6).twitterAuth;
 	var revealPage = __webpack_require__(9).revealPage;
@@ -11260,7 +11260,7 @@
 	          name: 'Acrobatics',
 	          stat: 'dex'
 	        },
-	        animal_hanling: {
+	        animal_handling: {
 	          name: 'Animal Handling',
 	          stat: 'wis'
 	        },
@@ -11679,7 +11679,8 @@
 	        data: {
 	          trigger: trigger,
 	          character: character_data,
-	          gameMeta: gameMeta( character_data.type )
+	          gameMeta: gameMeta( character_data.type ),
+	          campaigns: getCampaigns(snap.val())
 	        },
 	        methods: {
 	          updateStore: function(){
@@ -11744,6 +11745,23 @@
 	  });
 	};
 
+
+	var getCampaigns = function(character_snap){
+	  // WARNING ASYNC
+	  // var campaignIds = Object.keys(character_snap.campaigns);
+	  // var campaignData = [];
+	  //
+	  // campaignIds.forEach(function(campaignId){
+	  //   fb_data.ref("campaigns/" + campaignId).once("value", function(snap){
+	  //     campaignData.push(snap.val());
+	  //   });
+	  // }).then(function(){
+	  //   console.log(campaignData);
+	  // });
+
+	  return { 123: {lol: 'blah'}, 134: {lol: 'wtf'} };
+	};
+
 	var attachClickHandlers = function(){
 	  $(".button-disabled").on('click', function(e){
 	    e.preventDefault();
@@ -11790,7 +11808,6 @@
 
 	  // Overlay clickity clicker
 	  $(".overlay").on("click", function(){
-	    console.log('asdf');
 	    hideOverlay();
 	    hideDetailPane();
 	  });
@@ -11878,11 +11895,13 @@
 
 	    // Check if campaign code matches thing, else return not found
 	    if (snap.val()[Object.keys(snap.val())[0]].campaign_key == campaignCode){
+	      var campaignId = Object.keys(snap.val())[0];
 
-	      // TODO add campaign to character, add character to campaign
-	      // TODO show modal or something saying that they've been added (might make sense to create flash construct?)
-	      console.log(snap.val());
-	      
+	      // Add character reference to campaign
+	      fb_data.ref("campaigns/" + campaignId + "/characters/" + characterKey).set(Date.now());
+	      // Add campaign reference to characeter
+	      fb_data.ref("characters/" + characterKey + "/campaigns/" + campaignId).set(Date.now());
+
 	    } else {
 	      // Note: at this point something WAS returned, but priority lookups will
 	      // find the closest match if the beginning letters match
@@ -11890,7 +11909,7 @@
 	      $(".join-modal").addClass("animated shake");
 	      setTimeout(function(){
 	        $(".join-modal").removeClass("animated shake");
-	      }, 400)
+	      }, 400);
 	      console.log("No campaign found with that code.")
 	    }
 	  });
@@ -12093,10 +12112,10 @@
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
 	var revealPage = __webpack_require__(9).revealPage;
-	var gameMeta = __webpack_require__(10).gameMeta;
+	var gameMeta = __webpack_require__(10).gameMeta; //TODO do we need this? (see below)
+
 
 	module.exports.campaignPage = function campaignPage(){
-	  console.log('campaign js loaded');
 	  var campaign_id = window.location.search.replace("?id=", "");
 
 	  // Generate a vue directly from the firebase campaign object
@@ -12108,15 +12127,13 @@
 	      window.campaign = new Vue({
 	        el: '#vue-campaign',
 	        data: {
-	          campaign: campaign_data,
-	          gameMeta: gameMeta( campaign_data.type )
+	          campaign: campaign_data, // Stores campaign data and character references
+	          characters: {}, // Stores expanded character data
+	          gameMeta: gameMeta( campaign_data.type ) //TODO do we need gamemeta here?
 	        },
 	        methods: {
 	          updateStore: function(){
 	            fb_data.ref(campaignPath).update(this.campaign);
-	          },
-	          toggleInfo: function(ee){   // Toggle long information for abilities and spells
-	            $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
 	          },
 	        }
 	      });
@@ -12124,16 +12141,34 @@
 	      attachClickHandlers();
 	      revealPage();
 
-	    } else { // If we do have a vue object, update it when fb sends us stuff
+	    } else { // Otherwise, set existing window reference to the vue object
 	      window.campaign.$set("campaign", campaign_data);
 	    };
-	  });
 
+	    observeCharacterChanges();
+
+	  });
+	};
+
+
+	// Go through our character references stored in our campaign, and set up
+	// listeners for those individual character lookups. On chanve from firebase,
+	// they will change their character on the campaign object, thus re-rendering
+	// the vue. On subsiquent polls, it will simply add characters, etc.
+	// TODO will not remove characters in real time
+	var observeCharacterChanges = function(){
+	  var characterIds = Object.keys(window.campaign.campaign.characters);
+	  characterIds.forEach(function(character_id){
+	    fb_data.ref("characters/" + character_id).on("value", function(character_snap){
+	      Vue.set(window.campaign.characters, character_id, character_snap.val())
+	    });
+	  });
 	};
 
 
 	var attachClickHandlers = function(){
 
+	  // Invite/code drawer at bottom of page
 	  $(".invite-info").on("click", function(ee){
 	    $inviteInfo = $(ee.currentTarget);
 	    $inviteInfo.toggleClass("shrink");
@@ -12144,13 +12179,6 @@
 
 /***/ },
 /* 15 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 16 */,
-/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Vue = __webpack_require__(1);
@@ -12162,6 +12190,12 @@
 	  revealPage();
 	};
 
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

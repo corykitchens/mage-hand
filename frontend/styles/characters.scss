@@ -240,6 +240,7 @@ label[for=character-prof-bonus]{
 	border-top: 2px solid #76877F;
 	border-bottom: 2px solid #76877F;
 	color: $color-offwhite;
+	box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
 	.nav-button {
 		display: flex;
 		align-items: center;
@@ -344,4 +345,9 @@ label[for=character-prof-bonus]{
 	background-color: rgba(0, 0, 0, 0.7);
 	top: 0; left: 0;
 	transition: all $transition-slow ease-in-out;
+}
+.button-cap {
+	padding: 0.5rem 1rem;
+	@include block-text;
+	color: $light;
 }

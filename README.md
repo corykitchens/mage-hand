@@ -8,6 +8,10 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Step 3: Profit?
 
 
+##BUGS
+- Selecting class/race/spellbook doesn't remove overlay
+- New character throws errors about character skills not being present
+
 ## TODO
 - Authenticate character views
 - Saving throws
@@ -33,6 +37,7 @@ x Adding of equipment
 
 
 ### Rad possible features
+- Swipe to dismiss drawers
 - Initiative roll/track thing
 - Quick build characters
 - Racial name suggestions

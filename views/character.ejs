@@ -168,7 +168,6 @@
       </div>
 
       <button class="join-campaign button-muted button-small u-full-width xs-mt2 xs-mb0">Join Campaign</button>
-
     </form>
 
 
@@ -434,6 +433,32 @@
 
     </form>
 
+
+
+
+    <!--  # # # # # # # # # # # # # # # # # # # # # # # # # # # # #   -->
+    <!-- Campaign character data - join/manage campaign information -->
+    <!--  # # # # # # # # # # # # # # # # # # # # # # # # # # # # -->
+
+    <div class="slidable-form off-screen" id="character-campaign-info">
+
+      <div class="u-flex u-flex--center ability-form">
+        <label class="u-flex--grow">Campaigns</label>
+        <div class="join-campaign">
+          <i class="icon ion-android-add-circle"></i>
+        </div>
+      </div>
+
+      <ul class="campaign-listing">
+        <li v-for="campaign in campaigns">
+          {{ campaign.lol }}
+        </li>
+      </ul>
+
+      <div class="button-cap xs-mt2">You haven't joined a campaign yet</div>
+      <button class="join-campaign button-muted u-full-width xs-mt0 xs-mb0">Join Campaign</button>
+    </div>
+
   </div>
 </div>
 
@@ -453,6 +478,11 @@
     <div class="nav-button" data-show="character-form-inventory">
       <i class="icon ion-briefcase"></i>
     </div>
+
+    <div class="nav-button" data-show="character-campaign-info">
+      <i class="icon ion-android-compass"></i>
+    </div>
+
 
   </div>
 </div>

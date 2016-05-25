@@ -25,7 +25,8 @@ module.exports.characterPage = function characterPage(){
         data: {
           trigger: trigger,
           character: character_data,
-          gameMeta: gameMeta( character_data.type )
+          gameMeta: gameMeta( character_data.type ),
+          campaigns: getCampaigns(snap.val())
         },
         methods: {
           updateStore: function(){
@@ -90,6 +91,23 @@ module.exports.characterPage = function characterPage(){
   });
 };
 
+
+var getCampaigns = function(character_snap){
+  // WARNING ASYNC
+  // var campaignIds = Object.keys(character_snap.campaigns);
+  // var campaignData = [];
+  //
+  // campaignIds.forEach(function(campaignId){
+  //   fb_data.ref("campaigns/" + campaignId).once("value", function(snap){
+  //     campaignData.push(snap.val());
+  //   });
+  // }).then(function(){
+  //   console.log(campaignData);
+  // });
+
+  return { 123: {lol: 'blah'}, 134: {lol: 'wtf'} };
+};
+
 var attachClickHandlers = function(){
   $(".button-disabled").on('click', function(e){
     e.preventDefault();
@@ -136,7 +154,6 @@ var attachClickHandlers = function(){
 
   // Overlay clickity clicker
   $(".overlay").on("click", function(){
-    console.log('asdf');
     hideOverlay();
     hideDetailPane();
   });
@@ -224,11 +241,13 @@ var addCharacterToCampaign = function(campaignCode){
 
     // Check if campaign code matches thing, else return not found
     if (snap.val()[Object.keys(snap.val())[0]].campaign_key == campaignCode){
+      var campaignId = Object.keys(snap.val())[0];
 
-      // TODO add campaign to character, add character to campaign
-      // TODO show modal or something saying that they've been added (might make sense to create flash construct?)
-      console.log(snap.val());
-      
+      // Add character reference to campaign
+      fb_data.ref("campaigns/" + campaignId + "/characters/" + characterKey).set(Date.now());
+      // Add campaign reference to characeter
+      fb_data.ref("characters/" + characterKey + "/campaigns/" + campaignId).set(Date.now());
+
     } else {
       // Note: at this point something WAS returned, but priority lookups will
       // find the closest match if the beginning letters match
@@ -236,7 +255,7 @@ var addCharacterToCampaign = function(campaignCode){
       $(".join-modal").addClass("animated shake");
       setTimeout(function(){
         $(".join-modal").removeClass("animated shake");
-      }, 400)
+      }, 400);
       console.log("No campaign found with that code.")
     }
   });

@@ -3,6 +3,16 @@
   <!-- this will be the DOM element we will mount our VueJs instance to -->
   <div id="vue-campaign">
 
+    <h3>{{ campaign.name }}</h3>
+
+
+    <div v-for="character in characters">
+      {{character.name}}
+      <input v-model="character.name" type="text"></input>
+      <input v-model="character.age" type="text"></input>
+    </div>
+
+
     <div class="invite-info">
       <div class="invite-instructions">
         <h3>Invite other to join!</h3>
@@ -16,5 +26,3 @@
 
 
   </div>
-
-</div>
