@@ -12,14 +12,6 @@
 }
 
 // Field specific styles
-#character-name {
-	font-size: 2.4rem;
-	font-weight: bold;
-	color: $light;
-	margin-bottom: 1rem;
-	border: 1px solid transparent;
-	&:focus { color: black; }
-}
 #character-race {
 	text-transform: capitalize;
 	pointer-events: none;
@@ -231,26 +223,6 @@ label[for=character-prof-bonus]{
 	min-width: 70%;
 }
 
-#character-bottom-nav-menu {
-	z-index: 2;
-	position: fixed;
-	width: 100%;
-	bottom: 0;
-	background-color: #76877F;
-	border-top: 2px solid #76877F;
-	border-bottom: 2px solid #76877F;
-	color: $color-offwhite;
-	box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
-	.nav-button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		font-size: 2.5rem;
-		border-right: 2px solid $color-green;
-	}
-	.nav-button:last-child { border: 0; }
-}
 
 #character-form-secondary {
 	// background-color: lightsalmon;
@@ -267,7 +239,7 @@ label[for=character-prof-bonus]{
 	}
 }
 
-.equip-item, .ability-item {
+.equip-item, .ability-item, .campaign-item {
 	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 2px;
 	padding: 0.5rem;

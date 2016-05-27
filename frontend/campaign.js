@@ -6,9 +6,10 @@ var gameMeta = require('./meta').gameMeta; //TODO do we need this? (see below)
 
 module.exports.campaignPage = function campaignPage(){
   var campaign_id = window.location.search.replace("?id=", "");
+  var campaignPath = "campaigns/" + campaign_id;
 
   // Generate a vue directly from the firebase campaign object
-  fb_data.ref("campaigns/" + campaign_id).on("value", function(snap){
+  fb_data.ref(campaignPath).on("value", function(snap){
     var campaign_data = snap.val();
 
     if (!window.campaign){ // If we don't have campaign, make vue
@@ -49,7 +50,7 @@ var observeCharacterChanges = function(){
   var characterIds = Object.keys(window.campaign.campaign.characters);
   characterIds.forEach(function(character_id){
     fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-      Vue.set(window.campaign.characters, character_id, character_snap.val())
+      Vue.set(window.campaign.characters, character_id, character_snap.val());
     });
   });
 };

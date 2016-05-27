@@ -11658,14 +11658,14 @@
 	var gameMeta = __webpack_require__(10).gameMeta;
 	var getUrlParam = __webpack_require__(9).getUrlParam;
 
+
 	module.exports.characterPage = function characterPage(){
 	  window.locked = false; // Lock ability to edit fields
 	  var character_id = getUrlParam("id");
+	  var characterPath = "characters/" + character_id;
 	  var trigger = getUrlParam("trigger");
 	  var default_equipment = {name: 'New Equipment' }; // TODO
 	  var default_ability = {name: 'New Ability', bonus: 'Bonus', type: 'Type'}
-
-	  var characterPath = "characters/" + character_id;
 
 	  // Generate a vue directly from the firebase character object
 	  // All fb object properties will be avilable and bindable in the view
@@ -11680,7 +11680,7 @@
 	          trigger: trigger,
 	          character: character_data,
 	          gameMeta: gameMeta( character_data.type ),
-	          campaigns: getCampaigns(snap.val())
+	          campaigns: {},
 	        },
 	        methods: {
 	          updateStore: function(){
@@ -11742,30 +11742,50 @@
 	      window.character.$set("character", character_data);
 	    };
 
+	    getCampaigns(snap.val()); // Go grab campaign data whether it's init or update
+
 	  });
 	};
 
 
+	// Fetch campaign data from character snap and push it into
+	// our character vue object to render
 	var getCampaigns = function(character_snap){
-	  // WARNING ASYNC
-	  // var campaignIds = Object.keys(character_snap.campaigns);
-	  // var campaignData = [];
-	  //
-	  // campaignIds.forEach(function(campaignId){
-	  //   fb_data.ref("campaigns/" + campaignId).once("value", function(snap){
-	  //     campaignData.push(snap.val());
-	  //   });
-	  // }).then(function(){
-	  //   console.log(campaignData);
-	  // });
+	  // Reset campaign data to {} (for updates)
+	  window.character.$set("campaigns", {});
 
-	  return { 123: {lol: 'blah'}, 134: {lol: 'wtf'} };
+	  if (character_snap.campaigns){ // If any campaigns exist
+	    var campaignIds = Object.keys(character_snap.campaigns);
+	    campaignIds.forEach(function(campaignId){
+	      // Set listener off before we do anything to ensure ther aren't multiple listers attached
+	      // A better way to do this is prob listen to child_added on the campaign reference list on
+	      // character, and then set on and off based on that
+	      fb_data.ref("campaigns/" + campaignId).off();
+	      fb_data.ref("campaigns/" + campaignId).on("value", function(campaign_snap){
+	        Vue.set(window.character.campaigns, campaignId, campaign_snap.val());
+	        $("#campaign-join-warning").hide(); // Hide join campaign prompt
+	      });
+	    });
+	  } else {
+	    window.character.$set("campaigns", {});
+	    $("#campaign-join-warning").show();
+	  };
 	};
 
 	var attachClickHandlers = function(){
 	  $(".button-disabled").on('click', function(e){
 	    e.preventDefault();
 	  })
+
+	  $("body").on("click", ".leave-campaign", function(e){
+	    var character_id = getUrlParam("id");
+	    var characterPath = "characters/" + character_id;
+	    var campaign_id = $(e.currentTarget).data('campaign-id');
+	    // Remove character reference from campaign
+	    fb_data.ref("campaigns/" + campaign_id + "/characters/" + character_id).remove();
+	    // Remove campaign reference from character
+	    fb_data.ref(characterPath + "/campaigns/" + campaign_id).remove();
+	  });
 
 	  // Prevent form submission
 	  $("#character-form-primary, #character-form-secondary").submit(function(e){
@@ -11814,7 +11834,6 @@
 
 	  // Join campaign button
 	  $(".join-campaign").on("click", function(){
-	    console.log('asdf');
 	    $(".join-overlay").show();
 	    $(".join-modal").show();
 	  })
@@ -11833,7 +11852,6 @@
 	  });
 
 	  $(".character-lock-fields").on("click", function(e){
-	    console.log('qqq');
 	    if ($(e.currentTarget).hasClass("ion-unlocked")){
 	      // Lock fields down
 	      $lockIcons = $(".character-lock-fields");
@@ -11881,6 +11899,15 @@
 	};
 
 
+	var shakeAndClearCampaignModal = function(){
+	  $(".campaign-code-input").val(""); // Clear field
+	  $(".join-modal").addClass("animated shake");
+	  setTimeout(function(){
+	    $(".join-modal").removeClass("animated shake");
+	  }, 400);
+	  console.log("No campaign found with that code.")
+	};
+
 	var addCharacterToCampaign = function(campaignCode){
 	  var characterKey = getUrlParam("id");
 
@@ -11891,7 +11918,7 @@
 	    .once("value", function(snap){
 
 	    // If no reference exists, exit
-	    if (snap.val() === null) { console.log("NULL campaign"); return; }
+	    if (snap.val() === null) { shakeAndClearCampaignModal(); return; }
 
 	    // Check if campaign code matches thing, else return not found
 	    if (snap.val()[Object.keys(snap.val())[0]].campaign_key == campaignCode){
@@ -11901,24 +11928,15 @@
 	      fb_data.ref("campaigns/" + campaignId + "/characters/" + characterKey).set(Date.now());
 	      // Add campaign reference to characeter
 	      fb_data.ref("characters/" + characterKey + "/campaigns/" + campaignId).set(Date.now());
-
+	      hideOverlay();
 	    } else {
 	      // Note: at this point something WAS returned, but priority lookups will
 	      // find the closest match if the beginning letters match
-	      $(".campaign-code-input").val(""); // Clear field
-	      $(".join-modal").addClass("animated shake");
-	      setTimeout(function(){
-	        $(".join-modal").removeClass("animated shake");
-	      }, 400);
-	      console.log("No campaign found with that code.")
+	      shakeAndClearCampaignModal();
 	    }
 	  });
-	  // ref.orderByPriority().on("child_added", function(snapshot) {
-	  // console.log(snapshot.key());
-	  // });
-
-	  //fb_data.ref("characters/" + characterKey + "/campaigns")
 	};
+
 
 	var showSpellPane = function(){
 	  $(".spell-pane").removeClass("off-screen");
@@ -11934,7 +11952,9 @@
 
 	var hideOverlay = function(){
 	  $(".overlay").hide();
+	  $(".join-overlay").hide();
 	  $("#character-bottom-nav-menu").css('z-index', '');
+	  $(".join-modal").hide();
 	};
 
 
@@ -12117,9 +12137,10 @@
 
 	module.exports.campaignPage = function campaignPage(){
 	  var campaign_id = window.location.search.replace("?id=", "");
+	  var campaignPath = "campaigns/" + campaign_id;
 
 	  // Generate a vue directly from the firebase campaign object
-	  fb_data.ref("campaigns/" + campaign_id).on("value", function(snap){
+	  fb_data.ref(campaignPath).on("value", function(snap){
 	    var campaign_data = snap.val();
 
 	    if (!window.campaign){ // If we don't have campaign, make vue
@@ -12160,7 +12181,7 @@
 	  var characterIds = Object.keys(window.campaign.campaign.characters);
 	  characterIds.forEach(function(character_id){
 	    fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-	      Vue.set(window.campaign.characters, character_id, character_snap.val())
+	      Vue.set(window.campaign.characters, character_id, character_snap.val());
 	    });
 	  });
 	};

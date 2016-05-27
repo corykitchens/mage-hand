@@ -1514,6 +1514,14 @@ textarea {
     font-size: 3.5rem;
     transition: all 0.2s ease-in-out; }
 
+.page-header {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem; }
+  .page-header:focus {
+    color: black; }
+
 .header-sticky {
   position: fixed;
   top: 0;
@@ -1706,6 +1714,27 @@ input[type="number"] {
   color: white;
   font-weight: bold; }
 
+#bottom-nav-menu {
+  z-index: 2;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: #76877F;
+  border-top: 2px solid #76877F;
+  border-bottom: 2px solid #76877F;
+  color: #F5F5F5;
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1); }
+  #bottom-nav-menu .nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 2.5rem;
+    border-right: 2px solid #83968D; }
+  #bottom-nav-menu .nav-button:last-child {
+    border: 0; }
+
 .animated {
   animation-duration: 1s;
   animation-fill-mode: both; }
@@ -1730,15 +1759,6 @@ input[type="number"] {
   cursor: pointer;
   font-size: 2rem;
   padding: 0 1.5rem; }
-
-#character-name {
-  font-size: 2.4rem;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 1rem;
-  border: 1px solid transparent; }
-  #character-name:focus {
-    color: black; }
 
 #character-race {
   text-transform: capitalize;
@@ -1913,26 +1933,6 @@ ul.character-detail-tabs {
 label[for=character-prof-bonus] {
   min-width: 70%; }
 
-#character-bottom-nav-menu {
-  z-index: 2;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  background-color: #76877F;
-  border-top: 2px solid #76877F;
-  border-bottom: 2px solid #76877F;
-  color: #F5F5F5;
-  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1); }
-  #character-bottom-nav-menu .nav-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 2.5rem;
-    border-right: 2px solid #83968D; }
-  #character-bottom-nav-menu .nav-button:last-child {
-    border: 0; }
-
 .equip-form > label, .ability-form > label {
   margin: 0; }
 
@@ -1941,12 +1941,12 @@ label[for=character-prof-bonus] {
   margin-right: 1rem;
   color: rgba(255, 255, 255, 0.6); }
 
-.equip-item, .ability-item {
+.equip-item, .ability-item, .campaign-item {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
   padding: 0.5rem;
   margin-top: 0.5rem; }
-  .equip-item .name, .ability-item .name {
+  .equip-item .name, .ability-item .name, .campaign-item .name {
     height: 3rem;
     font-size: 1.2rem;
     font-weight: 600;
@@ -1958,7 +1958,7 @@ label[for=character-prof-bonus] {
     background-color: #83968D;
     transition: all 0.1s ease-in-out;
     border: 1px solid transparent; }
-  .equip-item .description, .equip-item .long-description, .ability-item .description, .ability-item .long-description {
+  .equip-item .description, .equip-item .long-description, .ability-item .description, .ability-item .long-description, .campaign-item .description, .campaign-item .long-description {
     font-size: 1.2rem;
     margin: 0;
     padding: 0.5rem;
@@ -1966,10 +1966,10 @@ label[for=character-prof-bonus] {
     color: black;
     background-color: rgba(255, 255, 255, 0.6);
     transition: all 0.1s ease-in-out; }
-  .equip-item .name:focus, .equip-item .description:focus, .equip-item .long-description:focus, .ability-item .name:focus, .ability-item .description:focus, .ability-item .long-description:focus {
+  .equip-item .name:focus, .equip-item .description:focus, .equip-item .long-description:focus, .ability-item .name:focus, .ability-item .description:focus, .ability-item .long-description:focus, .campaign-item .name:focus, .campaign-item .description:focus, .campaign-item .long-description:focus {
     background-color: rgba(255, 255, 255, 0.8);
     color: black; }
-  .equip-item .action-icon, .ability-item .action-icon {
+  .equip-item .action-icon, .ability-item .action-icon, .campaign-item .action-icon {
     font-size: 1.8rem;
     height: 3rem;
     padding: 0 1rem;
@@ -2030,7 +2030,7 @@ label[for=character-prof-bonus] {
   position: fixed;
   padding: 1rem;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
-  bottom: 0;
+  bottom: 44px;
   left: 0;
   width: 100%; }
   .invite-info h3 {
