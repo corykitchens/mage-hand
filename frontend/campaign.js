@@ -19,7 +19,7 @@ module.exports.campaignPage = function campaignPage(){
         data: {
           campaign: campaign_data, // Stores campaign data and character references
           characters: {}, // Stores expanded character data
-          gameMeta: gameMeta( campaign_data.type ) //TODO do we need gamemeta here?
+          gameMeta: gameMeta( campaign_data.game_type ),
         },
         methods: {
           updateStore: function(){
@@ -35,24 +35,26 @@ module.exports.campaignPage = function campaignPage(){
       window.campaign.$set("campaign", campaign_data);
     };
 
-    observeCharacterChanges();
+    updateCharacters();
 
   });
 };
 
 
 // Go through our character references stored in our campaign, and set up
-// listeners for those individual character lookups. On chanve from firebase,
+// listeners for those individual character lookups. On change from firebase,
 // they will change their character on the campaign object, thus re-rendering
 // the vue. On subsiquent polls, it will simply add characters, etc.
 // TODO will not remove characters in real time
-var observeCharacterChanges = function(){
-  var characterIds = Object.keys(window.campaign.campaign.characters);
-  characterIds.forEach(function(character_id){
-    fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-      Vue.set(window.campaign.characters, character_id, character_snap.val());
+var updateCharacters = function(){
+  if (window.campaign.campaign.characters){
+    var characterIds = Object.keys(window.campaign.campaign.characters);
+    characterIds.forEach(function(character_id){
+      fb_data.ref("characters/" + character_id).on("value", function(character_snap){
+        Vue.set(window.campaign.characters, character_id, character_snap.val());
+      });
     });
-  });
+  };
 };
 
 

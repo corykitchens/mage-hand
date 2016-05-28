@@ -1,7 +1,7 @@
 var Vue = require('vue');
 var fb_data = require('firebase').database();
 var revealPage = require('./globals').revealPage;
-//var gameTypes = require('./game_meta/meta').gameTypes;
+var gameTypes = require('./game_meta/meta').gameTypes;
 var gameMeta = require('./game_meta/meta').gameMeta;
 var campaignKeyGenerator = require('./generators.js').campaignKeyGenerator;
 
@@ -36,8 +36,25 @@ module.exports.campaignsPage = function campaignsPage(){
 
     new Vue({ // Draw all the characters pulled from firebase above
       el: '#vue-campaigns',
-      data: { campaigns: campaigns }
+      data: {
+        campaigns: campaigns,
+        game_types: gameTypes(),
+      }
     });
+
+    new Vue({ // Draw all the characters pulled from firebase above
+      el: '#vue-campaigns-modal',
+      data: {
+        game_types: gameTypes(),
+      },
+      methods: {
+        createCampaign: function(ee){
+          var game_type = $(ee.target).attr('id');
+          createNewCampaign(game_type);
+        }
+      }
+    });
+
 
     attachClickHandlers();
   });
@@ -49,14 +66,11 @@ var attachClickHandlers = function(){
     showConfirmationModal();
   });
 
-  $(document).on("click", "#campaign-modal-yes", function(ee){ // Yes to campaign modal
-    createNewCampaign();
-  });
 
+  // TODO these modal things are sort of duplicated in global - need to refactor
   // Things which hide modal
   $(document).on("click touchstart", ".overlay" , function(ee){ hideModal(); });
   $(document).keyup(function(e){  if (e.keyCode === 27) hideModal(); });
-  $("#campaign-modal-no").on('click', function(){ hideModal(); })
 
   // Clicking on a campaign sends you to a character page
   $(document).on("click", ".campaign", function(ee){
@@ -77,7 +91,7 @@ var showConfirmationModal = function(){
 };
 
 
-var createNewCampaign = function(){
+var createNewCampaign = function(game_type){
 
   // Set user as the owner for the campaign
   var owners = {};
@@ -89,6 +103,7 @@ var createNewCampaign = function(){
     name: 'New Campaign',
     owners: owners,
     campaign_key: campaignKey,
+    game_type: game_type,
   };
 
   // Push default campaign object as new campaign

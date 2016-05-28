@@ -1619,10 +1619,10 @@ textarea {
 .cleric {
   color: #ADA267; }
 
-.campaigns-page {
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8); }
-
+/* .campaigns-page {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.8);
+} */
 ul.detail-tabs {
   z-index: 3;
   overflow-x: scroll;
@@ -1733,8 +1733,13 @@ input[type="number"] {
     align-items: center;
     justify-content: center; }
 
-#vue-character, #vue-campaign {
+#vue-character,
+#vue-campaign {
   position: relative; }
+
+#vue-characters,
+#vue-campaigns {
+  padding: 1rem; }
 
 .slidable-form {
   transition: all 0.2s ease-in-out;
@@ -1764,19 +1769,39 @@ input[type="number"] {
 .campaign {
   cursor: pointer;
   border-radius: 0px;
-  padding: 0.5rem 1rem;
-  background-color: rgba(255, 255, 255, 0.85);
-  color: rgba(0, 0, 0, 0.85);
-  margin-bottom: 0.5rem; }
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem; }
+  .character .name,
+  .campaign .name {
+    position: relative;
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    width: 100%;
+    background-color: #778980;
+    padding: 0.25rem 0.75rem; }
+  .character .info,
+  .campaign .info {
+    padding: 0.5rem 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  .character .game-type,
+  .campaign .game-type {
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+    right: 5px;
+    top: 5px;
+    position: absolute;
+    letter-spacing: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
 
 .model_campaigns:last-child {
   margin-bottom: 0; }
-
-.character:hover,
-.character:focus,
-.campaign:hover,
-.campaign:focus {
-  background-color: white; }
 
 .section-header {
   text-transform: uppercase;
@@ -2034,7 +2059,8 @@ label[for=character-prof-bonus] {
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   bottom: 44px;
   left: 0;
-  width: 100%; }
+  width: 100%;
+  cursor: pointer; }
   .invite-info h3 {
     font-size: 2.8rem;
     margin-bottom: 0; }

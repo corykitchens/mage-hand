@@ -123,6 +123,7 @@ var getCampaigns = function(character_snap){
       fb_data.ref("campaigns/" + campaignId).on("value", function(campaign_snap){
         Vue.set(window.character.campaigns, campaignId, campaign_snap.val());
         $("#campaign-join-warning").hide(); // Hide join campaign prompt
+        $(".join-campaign").hide(); // Hide join campaign button on main page
       });
     });
   } else {

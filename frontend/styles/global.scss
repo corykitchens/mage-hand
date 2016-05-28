@@ -169,10 +169,10 @@ textarea {
 
 
 // LANDING PAGE
-.campaigns-page {
+/* .campaigns-page {
 	height: 100%;
 	background-color: rgba(255, 255, 255, 0.8);
-}
+} */
 
 $tab-height: 50px;
 
@@ -297,9 +297,12 @@ $box-field--vertical-height: 30px;
 	}
 }
 
-#vue-character, #vue-campaign {
-	position: relative; // for sliding
-}
+#vue-character,
+#vue-campaign { position: relative; } // for sliding
+
+#vue-characters,
+#vue-campaigns { padding: 1rem; }
+
 .slidable-form {
 	transition: all $transition-normal ease-in-out;
 	position: absolute;
@@ -328,18 +331,36 @@ $box-field--vertical-height: 30px;
 .campaign {
 	cursor: pointer;
 	border-radius: $radius;
-	padding: 0.5rem 1rem;
-	background-color: $light;
-	color: $dark;
-	margin-bottom: 0.5rem;
+	background-color: rgba(255, 255, 255, 0.2);
+	color: $light;
+	margin-bottom: 1rem;
+  .name {
+    position: relative;
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    width: 100%;
+    background-color: #778980;
+    padding: 0.25rem 0.75rem;
+  }
+  .info {
+    padding: 0.5rem 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .game-type {
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+    right: 5px; top: 5px;
+    position: absolute;
+    letter-spacing: 0px;
+    @include flex-center;
+  }
+
 } .model_campaigns:last-child { margin-bottom: 0; }
 
-.character:hover,
-.character:focus,
-.campaign:hover,
-.campaign:focus {
-	background-color: white;
-}
 
 .section-header {
 	text-transform: uppercase;

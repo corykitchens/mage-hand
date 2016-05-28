@@ -7,9 +7,12 @@
 
   <section id="vue-characters">
     <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
-      <h4>{{ character.name }}</h4>
-      <p>Currently in: Campaign name</p>
-      <h5>{{ character.experience }}</h5>
+
+      <h4 class="name">{{ character.name }} <span class="game-type">{{ character.game_type }}</span></h4>
+      <label class="info">
+        Level {{ character.level }} {{ character.class }}
+      </label>
+
     </div>
   </section>
 

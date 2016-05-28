@@ -31,11 +31,26 @@
     </form>
 
 
-    <!-- # # # # # # # # # # # # # # # # # # # #  -->
+    <!-- # # # # # # # # # # # # # # # # # # # -->
     <!-- Campaign background/story information -->
     <!-- # # # # # # # # #  # # # # # # # # # -->
     <form class="slidable-form off-screen" id="campaign-background">
-      <input v-model="campaign.background" type="text" />
+      <label class="xs-mt2">Campaign Overview <i class="icon ion-eye"></i></label>
+      <textarea v-model="campaign.background" v-on:change="updateStore"
+                placeholder="Public overview of campaign accessible by players in your campaign">
+      </textarea>
+
+      <label class="xs-mt2">Campaign Notes <i class="icon ion-eye-disabled"></i></label>
+      <textarea v-model="campaign.notes" v-on:change="updateStore"></textarea>
+
+    </form>
+
+
+    <!-- # # # # # # # # # # # # # # # # # # # -->
+    <!-- Equipment + ??? -->
+    <!-- # # # # # # # # #  # # # # # # # # # -->
+    <form class="slidable-form off-screen" id="campaign-features">
+      <h3>This is prob where equipment, NPCs, and shit like that will go?</h3>
     </form>
 
 
@@ -67,7 +82,7 @@
         <i class="icon ion-ios-book"></i>
       </div>
 
-      <div class="nav-button" data-show="character-form-inventory">
+      <div class="nav-button" data-show="campaign-features">
         <i class="icon ion-briefcase"></i>
       </div>
 

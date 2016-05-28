@@ -7,27 +7,30 @@
 
   <section id="vue-campaigns">
     <div v-for="campaign in campaigns" class="campaign u-full-width" id="{{ campaign.key }}">
-      <h4>{{ campaign.name }}</h4>
-      <ul class="campaign-characters">
-        <li></li>
-      </ul>
+      <h4 class="name">{{ campaign.name }} <span class="game-type">{{ campaign.game_type }}</span></h4>
+      <label class="info">
+        {{ campaign.background }}
+      </label>
     </div>
   </section>
 
-  <div class="modal">
-    <h3 class="section-header">Make a campaign?</h3>
+
+
+
+  <div class="modal" id="vue-campaigns-modal">
+    <h3 class="section-header">Create a campaign?</h3>
     <div class="xs-m2 u-text-small">
       This is intended for <b>DMs only</b>.
-      If you are trying to join a campaign, go to your character sheet and choose 'join campaign'. (This doens't exist yet)
-    </div>
-    <div class="xs-m2">
-      Once created, you can invite other players to add their characters to the campaign where you
-      can track campaign information and watch updates to their character sheet in real time.
+      If you are trying to join an existing campaign, head on over to your <a href="/characters">character sheet</a>.
     </div>
 
-    <div class="u-flex u-flex--fill">
-      <button class="button-light confirm-create" id="campaign-modal-yes">Yes</button>
-      <button class="button-secondary confirm-create" id="campaign-modal-no">No</button>
+    <div class="xs-m2">
+      <ul>
+        <li v-for="game in game_types" class="button button-primary u-full-width"
+            v-on:click="createCampaign" id="{{ $key }}">
+          New {{ game.short_name }} Campaign
+        </li>
+      </ul>
     </div>
   </div>
 
