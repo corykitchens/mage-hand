@@ -13,6 +13,8 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - New character throws errors about character skills not being present
 
 ## TODO
+- !Campaign game type + character/campaign type validation
+- Tests
 - Authenticate character views
 - Saving throws
 - Be able to delete characters
@@ -37,6 +39,7 @@ x Adding of equipment
 
 
 ### Rad possible features
+- Join link vs. join code (or both)
 - Swipe to dismiss drawers
 - Initiative roll/track thing
 - Quick build characters
