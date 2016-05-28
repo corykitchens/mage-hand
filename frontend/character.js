@@ -1,7 +1,7 @@
 var Vue = require('vue');
 var fb_data = require('./fb').database();
 var revealPage = require('./globals').revealPage;
-var gameMeta = require('./meta').gameMeta;
+var gameMeta = require('./game_meta/meta').gameMeta;
 var getUrlParam = require('./globals').getUrlParam;
 
 
@@ -20,12 +20,13 @@ module.exports.characterPage = function characterPage(){
     var character_data = snap.val();
 
     if (!window.character){ // If we don't have character, make vue
+      console.log(gameMeta('dnd_5e'))
       window.character = new Vue({
         el: '#vue-character',
         data: {
           trigger: trigger,
           character: character_data,
-          gameMeta: gameMeta( character_data.type ),
+          gameMeta: gameMeta( character_data.game_type ),
           campaigns: {},
         },
         methods: {

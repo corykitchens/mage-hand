@@ -1,30 +1,9 @@
-// Define character structure for different formats here
+// DND 5E Game meta information
+// This structure is used to determine field types and skill/spell/attribute
+// data when creating and viewing a character of this game type
 
-// Returns array of supported game types
-module.exports.gameTypes = function(name_type){
-  var game_types = Object.keys(game_meta).map(function(key){
-    if (game_meta[key].active == true){
-      return {
-
-        key_name: key,
-        short_name: game_meta[key].short_name,
-        long_name: game_meta[key].long_name
-      }
-    };
-  });
-  return game_types.filter(Boolean); // Remove empties - might be a way to use filter above?
-};
-
-
-module.exports.gameMeta = function(game_key){
-  return game_meta[game_key];
-};
-
-// Character forms are built out using :below meta information
-// To add a new game type, a meta structure will need to be built out, in addition
-// to a view cooresponding wi:that structure.
-var game_meta = {
-  dnd_5e: {
+module.exports.gameMeta = function gameMeta(){
+  var game_meta = {
     active: true,
     long_name: 'Dungeons and Dragons: 5th Edition',
     short_name: 'D&D 5E',
@@ -52,10 +31,10 @@ var game_meta = {
 
       alignment: {
         options: [
-        'Lawful Good', 'Neutral Good', 'Chaotic Good',
-        'Lawful Neutral', 'Neutral', 'Chaotic Neutral',
-        'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
-      ]},
+          'Lawful Good', 'Neutral Good', 'Chaotic Good',
+          'Lawful Neutral', 'Neutral', 'Chaotic Neutral',
+          'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
+        ]},
 
       classes: {
         fighter: {
@@ -346,7 +325,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Instantaneous",
         description: "You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. " +
-                     "A target must succeed on a Dexterity saving throw or take 1d6 acid damage.",
+        "A target must succeed on a Dexterity saving throw or take 1d6 acid damage.",
         subtext: "This spell’s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).",
       },
       dancing_lights: {
@@ -359,8 +338,8 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Concentration, up to 1 minute",
         description: "You create up to four torch-sized lights within range, making them appear as torches, lanterns, or glowing orbs that hover in the air " +
-                     "for the duration. You can also combine the four lights into one glowing vaguely humanoid form of Medium size. Whichever form you choose, each light " +
-                     "sheds dim light in a 10-foot radius.",
+        "for the duration. You can also combine the four lights into one glowing vaguely humanoid form of Medium size. Whichever form you choose, each light " +
+        "sheds dim light in a 10-foot radius.",
         subtext: "As a bonus action on your turn, you can move the lights up to 60 feet to a new spot within range. A light must be within 20 feet of another " +
         "light created by this spell, and a light winks out if it exceeds the spell’s range.",
       },
@@ -374,7 +353,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Instantaneous",
         description: "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target " +
-                     "takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn’t being worn or carried.",
+        "takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn’t being worn or carried.",
         subtext: "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
       },
       guidance: {
@@ -386,7 +365,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Concentration, up to 1 minute",
         description: "You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check " +
-                     "of its choice. It can roll the die before or after making the ability check. The spell then ends.",
+        "of its choice. It can roll the die before or after making the ability check. The spell then ends.",
       },
       light: {
         level: 0,
@@ -397,8 +376,8 @@ var game_meta = {
         casting_time: "1 action",
         duration: "1 hour",
         description:  "You touch one object that is no larger than 10 feet in any dimension. Until the spell ends, the object sheds bright light in a 20-foot " +
-                      "radius and dim light for an additional 20 feet. The light can be colored as you like. Completely covering the object with something opaque blocks the " +
-                      "light. The spell ends if you cast it again or dismiss it as an action.",
+        "radius and dim light for an additional 20 feet. The light can be colored as you like. Completely covering the object with something opaque blocks the " +
+        "light. The spell ends if you cast it again or dismiss it as an action.",
         subtext: "If you target an object held or worn by a hostile creature, that creature must succeed on a Dexterity saving throw to avoid the spell.",
       },
       mage_hand: {
@@ -410,10 +389,10 @@ var game_meta = {
         casting_time: "1 action",
         duration: "1 minute",
         description: "A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration or until you dismiss it as an action. " +
-                     "The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.",
+        "The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.",
         subtext:  "You can use your action to control the hand.You can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve " +
-                  "an item from an open container, or pour the contents out of a vial. You can move the hand up to 30 feet each time you use it. The hand can’t attack, " +
-                  "activate magic items, or carry more than 10 pounds.",
+        "an item from an open container, or pour the contents out of a vial. You can move the hand up to 30 feet each time you use it. The hand can’t attack, " +
+        "activate magic items, or carry more than 10 pounds.",
       },
       minor_illusion: {
         level: 0,
@@ -424,14 +403,14 @@ var game_meta = {
         casting_time: "1 action",
         duration: "1 minute",
         description:  "You create a sound or an image of an object within range that lasts for the duration. The illusion also ends if you dismiss " +
-                      "it as an action or cast this spell again. If you create a sound, its volume can range from a whisper to a scream. It can be your voice, " +
-                      "someone else’s voice, a lion’s roar, a beating of drums, or any other sound you choose. The sound continues unabated throughout the duration, " +
-                      "or you can make discrete sounds at different times before the spell ends.",
+        "it as an action or cast this spell again. If you create a sound, its volume can range from a whisper to a scream. It can be your voice, " +
+        "someone else’s voice, a lion’s roar, a beating of drums, or any other sound you choose. The sound continues unabated throughout the duration, " +
+        "or you can make discrete sounds at different times before the spell ends.",
         subtext:  "If you create an image of an object—such as a chair, muddy footprints, or a small chest—it must be no larger than a 5-foot cube. " +
-                  "The image can’t create sound, light, smell, or any other sensory effect. Physical interaction with the image reveals it to be an illusion, " +
-                  "because things can pass through it. If a creature uses its action to examine the sound or image, the creature can determine that it is an " +
-                  "illusion with a successful Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, " +
-                  "the illusion becomes faint to the creature.",
+        "The image can’t create sound, light, smell, or any other sensory effect. Physical interaction with the image reveals it to be an illusion, " +
+        "because things can pass through it. If a creature uses its action to examine the sound or image, the creature can determine that it is an " +
+        "illusion with a successful Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, " +
+        "the illusion becomes faint to the creature.",
       },
       poison_spray: {
         level: 0,
@@ -442,7 +421,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Instantaneous",
         description: "You extend your hand toward a creature you can see within range and project a puff of noxious gas from your palm. " +
-                     "The creature must succeed on a Constitution saving throw or take 1d12 poison damage.",
+        "The creature must succeed on a Constitution saving throw or take 1d12 poison damage.",
         subtext: "This spell’s damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12).",
       },
       prestidigitation: {
@@ -454,12 +433,12 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Up to 1 hour",
         description:  "This spell is a minor magical trick that novice spellcasters use for practice. You create one of the following magical effects within range:" +
-                      "You create an instantaneous, harmless sensory effect, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor." +
-                      "You instantaneously light or snuff out a candle, a torch, or a small campfire." +
-                      "You instantaneously clean or soil an object no larger than 1 cubic foot." +
-                      "You chill, warm, or flavor up to 1 cubic foot of nonliving material for 1 hour." +
-                      "You make a color, a small mark, or a symbol appear on an object or a surface for 1 hour." +
-                      "You create a nonmagical trinket or an illusory image that can fit in your hand and that lasts until the end of your next turn.",
+        "You create an instantaneous, harmless sensory effect, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor." +
+        "You instantaneously light or snuff out a candle, a torch, or a small campfire." +
+        "You instantaneously clean or soil an object no larger than 1 cubic foot." +
+        "You chill, warm, or flavor up to 1 cubic foot of nonliving material for 1 hour." +
+        "You make a color, a small mark, or a symbol appear on an object or a surface for 1 hour." +
+        "You create a nonmagical trinket or an illusory image that can fit in your hand and that lasts until the end of your next turn.",
         subtext: "If you cast this spell multiple times, you can have up to three of its non-instantaneous effects active at a time, and you can dismiss such an effect as an action.",
       },
       ray_of_frost: {
@@ -471,7 +450,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Instantaneous",
         description: "A frigid beam of blue-white light streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, it takes 1d8 cold damage, " +
-                     "and its speed is reduced by 10 feet until the start of your next turn.",
+        "and its speed is reduced by 10 feet until the start of your next turn.",
         subtext: "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
       },
       resistance: {
@@ -483,7 +462,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Concentration, up to 1 minute",
         description: "You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one saving throw of its choice. It can roll " +
-                     "the die before or after making the saving throw. The spell then ends.",
+        "the die before or after making the saving throw. The spell then ends.",
         subtext: "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
       },
       sacred_flame: {
@@ -495,7 +474,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Instantaneous",
         description: "Flame-like radiance descends on a creature that you can see within range. The target must succeed on a Dexterity saving throw or take 1d8 radiant damage. The " +
-                     "target gains no benefit from cover for this saving throw.",
+        "target gains no benefit from cover for this saving throw.",
         subtext: "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
       },
       shocking_grasp: {
@@ -507,7 +486,7 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Instantaneous",
         description: "Lightning springs from your hand to deliver a shock to a creature you try to touch. Make a melee spell attack against the target. You have advantage on the attack " +
-                     " roll if the target is wearing armor made of metal. On a hit, the target takes 1d8 lightning damage, and it can’t take reactions until the start of its next turn.",
+        " roll if the target is wearing armor made of metal. On a hit, the target takes 1d8 lightning damage, and it can’t take reactions until the start of its next turn.",
         subtext: "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
       },
       spare_the_dying: {
@@ -529,12 +508,12 @@ var game_meta = {
         casting_time: "1 action",
         duration: "Up to 1 minute",
         description: "You manifest a minor wonder, a sign of supernatural power, within range. You create one of the following magical effects within range:" +
-                     "Your voice booms up to three times as loud as normal for 1 minute." +
-                     "You cause flames to flicker, brighten, dim, or change color for 1 minute." +
-                     "You cause harmless tremors in the ground for 1 minute." +
-                     "You create an instantaneous sound that originates from a point of your choice within range, such as a rumble of thunder, the cry of a raven, or ominous whispers." +
-                     "You instantaneously cause an unlocked door or window to fly open or slam shut." +
-                     "You alter the appearance of your eyes for 1 minute.",
+        "Your voice booms up to three times as loud as normal for 1 minute." +
+        "You cause flames to flicker, brighten, dim, or change color for 1 minute." +
+        "You cause harmless tremors in the ground for 1 minute." +
+        "You create an instantaneous sound that originates from a point of your choice within range, such as a rumble of thunder, the cry of a raven, or ominous whispers." +
+        "You instantaneously cause an unlocked door or window to fly open or slam shut." +
+        "You alter the appearance of your eyes for 1 minute.",
         subtext: "If you cast this spell multiple times, you can have up to three of its 1-minute effects active at a time, and you can dismiss such an effect as an action.",
       },
       bless: {
@@ -561,14 +540,9 @@ var game_meta = {
         "The fire ignites any flammable objects in the area that aren’t being worn or carried.",
         subtext: "At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.",
       },
-    },
 
-  },
+    }
+  };
 
-  dungeon_world: { //TODO split metas into different files?
-    active: false,
-    long_name: 'Dungeon World',
-    short_name: 'Dungeon World',
-  }
-
+  return game_meta;
 };

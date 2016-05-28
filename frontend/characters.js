@@ -1,8 +1,8 @@
 var Vue = require('vue');
 var fb_data = require('firebase').database();
 var revealPage = require('./globals').revealPage;
-var gameTypes = require('./meta').gameTypes;
-var gameMeta = require('./meta').gameMeta;
+var gameTypes = require('./game_meta/meta').gameTypes;
+var gameMeta = require('./game_meta/meta').gameMeta;
 
 module.exports.charactersPage = function charactersPage(){
   var userUid = window.currentUser.uid;
@@ -77,7 +77,7 @@ var createNewCharacter = function(ee){
   var charactersPath = "users/" + userUid + "/characters";
   var game_type = $(ee.target).attr('id'); // Game type from link id
   var new_char_template = gameMeta(game_type).default_character; // Get default from meta
-  new_char_template.type = game_type; // Set game type on new character
+  new_char_template.game_type = game_type; // Set game type on new character
 
   var oo = fb_data.ref("characters").push(new_char_template); // Push new character to /characters
 

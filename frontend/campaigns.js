@@ -1,8 +1,7 @@
 var Vue = require('vue');
 var fb_data = require('firebase').database();
 var revealPage = require('./globals').revealPage;
-//var gameTypes = require('./meta').gameTypes;
-var gameMeta = require('./meta').gameMeta;
+var gameMeta = require('./game_meta/meta').gameMeta;
 var campaignKeyGenerator = require('./generators.js').campaignKeyGenerator;
 
 module.exports.campaignsPage = function campaignsPage(){

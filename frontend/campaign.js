@@ -1,7 +1,7 @@
 var Vue = require('vue');
 var fb_data = require('./fb').database();
 var revealPage = require('./globals').revealPage;
-var gameMeta = require('./meta').gameMeta; //TODO do we need this? (see below)
+var gameMeta = require('./game_meta/meta').gameMeta; //TODO do we need this? (see below)
 
 
 module.exports.campaignPage = function campaignPage(){
