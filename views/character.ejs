@@ -3,7 +3,6 @@
   <!-- this will be the DOM element we will mount our VueJs instance to -->
   <div id="vue-character">
 
-    <!-- <div class="join-modal" v-if="trigger == 'join'" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"> -->
 
     <!-- If coming from join link, show join modal -->
     <section v-if="trigger == 'join'">
@@ -11,7 +10,7 @@
       <div class="join-modal">
         <h3 class="section-header">Join a campaign</h3>
         <div class="join-modal-content">
-          <input type="text" class="campaign-code-input u-full-width" placeholder="campaign-code"></input>
+          <input type="text" class="campaign-code-input u-full-width" placeholder="campaign-code" />
           <button class="add-character-to-campaign button-primary u-full-width">Join</button>
         </div>
       </div>
@@ -21,11 +20,10 @@
       <div class="join-modal" style="display: none;">
         <h3 class="section-header">Join a campaign</h3>
         <div class="join-modal-content">
-          <input type="text" class="campaign-code-input u-full-width" placeholder="campaign-code"></input>
+          <input type="text" class="campaign-code-input u-full-width" placeholder="campaign-code" />
           <button class="add-character-to-campaign button-primary u-full-width">Join</button>
         </div>
       </div>
-      </section>
     </section>
 
 
@@ -37,7 +35,7 @@
       <!-- Character name -->
       <div class="u-flex">
         <input type="text" class="field-large page-header"
-          v-model="character.name" v-on:change="updateStore">
+               v-model="character.name" v-on:change="updateStore">
         <i class="icon ion-unlocked character-lock-fields"></i>
       </div>
 
@@ -45,43 +43,43 @@
       <div class="character-other-stats">
         <div class="box-field box-field--large">
           <input type="number" v-model="character.current_hp"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          class="field-small" id="character-current-hp">
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 class="field-small" id="character-current-hp">
           <label for="character-hp">Current HP</label>
         </div>
 
         <div class="box-field box-field--large">
           <input type="number" v-model="character.armor_class"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          class="field-small" id="character-armor_class">
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 class="field-small" id="character-armor_class">
           <label for="armor_class">AC</label>
         </div>
 
         <div class="box-field box-field--large">
           <input type="text" v-model="character.hit_die"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          class="field-small" id="character-armor_class">
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 class="field-small" id="character-armor_class">
           <label for="hit_die">Hit Die</label>
         </div>
 
       </div>
 
-      <!-- Temp/Max HP, Initiative, Speed -->
+      <!-- Temp + Max HP, Initiative + Speed -->
       <div class="u-flex u-flex--fill">
         <section class="character-hp-fields">
           <!-- Temp HP -->
           <div class="box-field box-field--vertical">
             <label for="character-temp-hp">Temp HP</label>
             <input type="number" v-model="character.temp_hp"
-            v-on:keyup="updateStore" v-on:change="updateStore"
-            class="field-small" id="character-current-temp-hp">
+                   v-on:keyup="updateStore" v-on:change="updateStore"
+                   class="field-small" id="character-current-temp-hp">
           </div>
           <!-- Max HP -->
           <div class="box-field box-field--vertical xs-mt1">
-          <label for="character-max-hp">Max HP</label>
+            <label for="character-max-hp">Max HP</label>
             <input type="number" v-model="character.max_hp"
-            v-on:keyup="updateStore" v-on:change="updateStore"
-            class="field-small" id="character-current-max-hp">
+                   v-on:keyup="updateStore" v-on:change="updateStore"
+                   class="field-small" id="character-current-max-hp">
           </div>
         </section>
 
@@ -90,15 +88,15 @@
           <div class="box-field box-field--vertical">
             <label for="character-initiative">Init</label>
             <input type="number" v-model="character.initiative"
-            v-on:keyup="updateStore" v-on:change="updateStore"
-            class="field-small" id="character-initiative">
+                   v-on:keyup="updateStore" v-on:change="updateStore"
+                   class="field-small" id="character-initiative">
           </div>
           <!-- Speed -->
           <div class="box-field box-field--vertical xs-mt1">
-          <label for="character-speed">Speed</label>
+            <label for="character-speed">Speed</label>
             <input type="number" v-model="character.speed"
-            v-on:keyup="updateStore" v-on:change="updateStore"
-            class="field-small" id="character-speed">
+                   v-on:keyup="updateStore" v-on:change="updateStore"
+                   class="field-small" id="character-speed">
           </div>
         </section>
       </div>
@@ -108,27 +106,33 @@
       <section class="character-stats">
         <div class="character-stat">
           <label for="character-str" class="xs-mb0">Str</label>
-          <input type="number" v-model="character.stats.str" v-on:keyup="updateStore" v-on:change="updateStore" id="character-str">
+          <input type="number" v-model="character.stats.str" v-on:keyup="updateStore"
+                 v-on:change="updateStore" id="character-str">
         </div>
         <div class="character-stat">
           <label for="character-dex" class="xs-mb0">Dex</label>
-          <input type="number" v-model="character.stats.dex" v-on:keyup="updateStore" v-on:change="updateStore" id="character-dex">
+          <input type="number" v-model="character.stats.dex" v-on:keyup="updateStore"
+                 v-on:change="updateStore" id="character-dex">
         </div>
         <div class="character-stat">
           <label for="character-con" class="xs-mb0">Con</label>
-          <input type="number" v-model="character.stats.con" v-on:keyup="updateStore" v-on:change="updateStore" id="character-con">
+          <input type="number" v-model="character.stats.con" v-on:keyup="updateStore"
+                 v-on:change="updateStore" id="character-con">
         </div>
         <div class="character-stat">
           <label for="character-int" class="xs-mb0">Int</label>
-          <input type="number" v-model="character.stats.int" v-on:keyup="updateStore" v-on:change="updateStore" id="character-int">
+          <input type="number" v-model="character.stats.int" v-on:keyup="updateStore"
+                 v-on:change="updateStore" id="character-int">
         </div>
         <div class="character-stat">
           <label for="character-wis" class="xs-mb0">Wis</label>
-          <input type="number" v-model="character.stats.wis" v-on:keyup="updateStore" v-on:change="updateStore" id="character-wis">
+          <input type="number" v-model="character.stats.wis" v-on:keyup="updateStore"
+                 v-on:change="updateStore" id="character-wis">
         </div>
         <div class="character-stat">
           <label for="character-cha" class="xs-mb0">Cha</label>
-          <input type="number" v-model="character.stats.cha" v-on:keyup="updateStore" v-on:change="updateStore" id="character-cha">
+          <input type="number" v-model="character.stats.cha" v-on:keyup="updateStore"
+                 v-on:change="updateStore" id="character-cha">
         </div>
       </section>
 
@@ -136,21 +140,20 @@
       <div class="u-flex">
         <div class="box-field xs-mr1">
           <label for="character-experience">Experience Points</label>
-          <input type="number" v-model="character.experience"
-            v-on:change="updateStore" id="character-experience" class="field-small" number>
+          <input type="number" id="character-experience" class="field-small"
+                 v-model="character.experience" v-on:change="updateStore"  number>
         </div>
         <div class="box-field">
           <label for="character-experience">Level</label>
-          <input type="number" v-model="character.level"
-            v-on:change="updateStore" id="character-level" class="field-small" number>
+          <input type="number" id="character-level" class="field-small"
+                 v-model="character.level" v-on:change="updateStore"  number>
         </div>
       </div>
       <!-- Proficiency Bonus -->
       <div class="box-field box-field--vertical xs-mt2">
         <label for="character-prof-bonus">Proficiency Bonus</label>
-        <input type="text" v-model="character.proficiency_bonus"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          class="field-small" id="character-prof-bonus">
+        <input type="text"  class="field-small" id="character-prof-bonus"
+               v-model="character.proficiency_bonus" v-on:keyup="updateStore" v-on:change="updateStore" >
       </div>
 
       <!-- Skill Proficiencies -->
@@ -158,7 +161,8 @@
       <div class="u-flex u-flex--column">
         <div class="box-skill" v-for="skill in gameMeta.character_structure.skills">
 
-          <input type="checkbox" id="skill-{{ $key }}" checked="checked" v-if="character.skills[$key]" v-on:change="updateSkill">
+          <input type="checkbox" id="skill-{{ $key }}" checked="checked"
+                 v-if="character.skills[$key]" v-on:change="updateSkill">
           <input type="checkbox" id="skill-{{ $key }}" v-else v-on:change="updateSkill">
 
           <label class="skill-name" for="skill-{{ $key }}" >{{ skill.name }}</label>
@@ -179,41 +183,41 @@
     <form class="slidable-form off-screen" id="character-form-secondary">
 
       <div class="box-field box-field--vertical xs-mb1 xs-mt2">
-      <label for="character-age">Age</label>
-      <input type="text" v-model="character.age"
-        v-on:keyup="updateStore" v-on:change="updateStore"
-        class="field-small" id="character-age">
+        <label for="character-age">Age</label>
+        <input type="text" v-model="character.age"
+               v-on:keyup="updateStore" v-on:change="updateStore"
+               class="field-small" id="character-age">
       </div>
       <div class="box-field box-field--vertical xs-mb1">
         <label for="character-height">Height</label>
         <input type="text" v-model="character.height"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          class="field-small" id="character-height">
+               v-on:keyup="updateStore" v-on:change="updateStore"
+               class="field-small" id="character-height">
       </div>
       <div class="box-field box-field--vertical xs-mb1">
         <label for="character-weight">Weight</label>
         <input type="text" v-model="character.weight"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          class="field-small" id="character-weight">
+               v-on:keyup="updateStore" v-on:change="updateStore"
+               class="field-small" id="character-weight">
       </div>
       <div class="box-field box-field--vertical xs-mb1">
         <label for="character-alignment">Alignment</label>
         <input type="text" v-model="character.alignment"
-        v-on:keyup="updateStore" v-on:change="updateStore"
-        class="field-small" id="character-alignment">
+               v-on:keyup="updateStore" v-on:change="updateStore"
+               class="field-small" id="character-alignment">
       </div>
 
       <!-- Race display on page -->
       <div class="box-field box-field--vertical detail-change-click xs-mt2 xs-mb1" data-field="race">
         <label for="character-race">Race/Species</label>
         <input type="text" v-model="character.race"
-        v-on:keyup="updateStore" v-on:change="updateStore"
-        class="field-small" id="character-race" tabindex="-1">
+               v-on:keyup="updateStore" v-on:change="updateStore"
+               class="field-small" id="character-race" tabindex="-1">
       </div>
 
       <!-- Section for selecting and viewing race details (starts off screen) -->
       <section>
-        <ul class="nav-tabs character-detail-tabs off-screen" data-selector="race">
+        <ul class="nav-tabs detail-tabs off-screen" data-selector="race">
           <li class="character-detail-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-lookup="{{$key}}">
             {{$key}}
           </li>
@@ -221,7 +225,7 @@
         </ul>
 
         <!-- Character detail panes that show details about a race (viewable after you select a tab) -->
-        <div id="{{$key}}-info" class="character-detail-panes off-screen" v-for="race in gameMeta.character_structure.races">
+        <div id="{{$key}}-info" class="detail-panes off-screen" v-for="race in gameMeta.character_structure.races">
           <div class="race-details">
             <div class="u-flex u-flex--center">
               <h5 class="block-header u-flex--grow xs-m0">{{ $key }}</h5>
@@ -248,20 +252,20 @@
       <div class="box-field box-field--vertical detail-change-click" data-field="class">
         <label for="character-class">Class</label>
         <input type="text" v-model="character.class"
-        v-on:keyup="updateStore" v-on:change="updateStore"
-        class="field-small" id="character-class" tabindex="-1">
+               v-on:keyup="updateStore" v-on:change="updateStore"
+               class="field-small" id="character-class" tabindex="-1">
       </div>
 
       <!-- Character class detail tabs selectable to view more about that class (hidden on load) -->
       <section>
-        <ul class="nav-tabs character-detail-tabs off-screen" data-selector="class">
+        <ul class="nav-tabs detail-tabs off-screen" data-selector="class">
           <li class="character-detail-tab" id="{{$key}}-tab" v-for="class in gameMeta.character_structure.classes" data-lookup="{{$key}}">
             {{$key}}
           </li>
           <li class="character-detail-tab" id="other-tab" data-lookup="other">Other</li>
         </ul>
         <!-- Character detail panes that show details about a class (viewable after you select a tab) -->
-        <div id="{{$key}}-info" class="character-detail-panes off-screen" v-for="class in gameMeta.character_structure.classes">
+        <div id="{{$key}}-info" class="detail-panes off-screen" v-for="class in gameMeta.character_structure.classes">
           <div class="class-details">
             <div class="u-flex u-flex--center">
               <h5 class="block-header u-flex--grow xs-m0">{{ $key }}</h5>
@@ -298,38 +302,38 @@
 
       <label for="character-languages" class="xs-mt2 u-full-width">Languages</label>
       <input type="text" v-model="character.background.languages"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      class="field-small u-full-width" id="character-languages">
+             v-on:keyup="updateStore" v-on:change="updateStore"
+             class="field-small u-full-width" id="character-languages">
 
       <label for="character-personality_traits" class="xs-mt4">Personality Traits</label>
       <textarea v-model="character.background.personality_traits"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      id="character-personality_traits"></textarea>
+                v-on:keyup="updateStore" v-on:change="updateStore"
+                id="character-personality_traits"></textarea>
 
       <label for="character-ideals">Ideals</label>
       <textarea v-model="character.background.ideals"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      id="character-ideals"></textarea>
+                v-on:keyup="updateStore" v-on:change="updateStore"
+                id="character-ideals"></textarea>
 
       <label for="character-bonds">Bonds</label>
       <textarea v-model="character.background.bonds"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      id="character-bonds"></textarea>
+                v-on:keyup="updateStore" v-on:change="updateStore"
+                id="character-bonds"></textarea>
 
       <label for="character-flaws">Flaws</label>
       <textarea v-model="character.background.flaws"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      id="character-flaws"></textarea>
+                v-on:keyup="updateStore" v-on:change="updateStore"
+                id="character-flaws"></textarea>
 
       <label for="character-general">Background</label>
       <textarea v-model="character.background.general"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      id="character-notes"></textarea>
+                v-on:keyup="updateStore" v-on:change="updateStore"
+                id="character-notes"></textarea>
 
       <label for="character-notes">Notes</label>
       <textarea v-model="character.background.notes"
-      v-on:keyup="updateStore" v-on:change="updateStore"
-      id="character-notes"></textarea>
+                v-on:keyup="updateStore" v-on:change="updateStore"
+                id="character-notes"></textarea>
 
     </form>
 
@@ -361,11 +365,11 @@
           </div>
 
           <input type="text" v-model="ability.description"
-            v-on:keyup="updateStore" v-on:change="updateStore"
-            class="description">
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 class="description">
           <textarea type="text" v-model="ability.long_description"
-            v-on:keyup="updateStore" v-on:change="updateStore"
-            class="long-description"></textarea>
+                    v-on:keyup="updateStore" v-on:change="updateStore"
+                    class="long-description"></textarea>
 
         </div>
       </div>
@@ -373,7 +377,7 @@
 
       <!-- Spellbook section (off screen by default) -->
       <section>
-        <div class="spell-pane character-detail-panes off-screen">
+        <div class="detail-pane--full detail-panes off-screen" id="spell-pane">
           <div id="{{$key}}-info" v-for="spell in gameMeta.spells" class="spell-listing">
             <div class="u-flex">
               <label class="u-flex--grow">{{ $key.split('_').join(' ') }}</label>
@@ -418,16 +422,16 @@
 
           <!-- Does equipment really need descriptions? -->
           <!-- <input type="text" v-model="item.description"
-          v-on:keyup="updateStore" v-on:change="updateStore"
-          id="equip-{{ $key }}" class="equip-description"> -->
+v-on:keyup="updateStore" v-on:change="updateStore"
+id="equip-{{ $key }}" class="equip-description"> -->
         </div>
       </div>
 
       <!-- Wealth -->
       <label for="character-wealth" class="xs-mt2 u-full-width">Wealth</label>
       <input type="text" v-model="character.wealth"
-        v-on:keyup="updateStore" v-on:change="updateStore"
-        class="field-small u-full-width" id="character-wealth">
+             v-on:keyup="updateStore" v-on:change="updateStore"
+             class="field-small u-full-width" id="character-wealth">
 
 
     </form>

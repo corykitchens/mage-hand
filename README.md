@@ -11,17 +11,19 @@ A real-time campaign and character management tool for table-top roleplaying gam
 ##BUGS
 - Selecting class/race/spellbook doesn't remove overlay
 - New character throws errors about character skills not being present
+- Leaving a campaign doesn't update live
 
 ## TODO
 - !Campaign game type + character/campaign type validation
 - Tests
+- Make /join do something
+- 'Other' race and class
 - Authenticate character views
 - Saving throws
 - Be able to delete characters
 - Sort out how fb3 effects user storage for lookups on /characters
 - Allow skills to be selectable from class chooser pane
 - Move game rule meta to separate files
-- 'Other' race and class
 - Make campaign view
 - Add character class/rules construct
 - Trim/organize CSS

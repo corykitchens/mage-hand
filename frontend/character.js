@@ -215,29 +215,6 @@ var attachClickHandlers = function(){
     };
   });
 
-  // Bottom fixed nav bar thing
-  $(".nav-button").on("click", function(ee){
-    var selector = $(ee.currentTarget).data('show');
-    var $slidableForms = $(".slidable-form");
-
-    $slidableForms.addClass("off-screen");
-    $slidableForms.show();
-
-    setTimeout(function(){
-      $(window).scrollTop(0);
-      $("#" + selector).removeClass("off-screen");
-    }, 300)
-
-    // After animation (0.3) hide non-visible screens to prevent excess scroll areas
-    setTimeout(function(){
-      $("form").each(function(ii, form){
-        $form = $(form);
-        if($form.hasClass('off-screen')) $form.hide();
-      })
-    }, 300)
-
-  });
-
   $(document).keypress(function(e) { // Prevent enter from doing anything
     if(e.which == 13) return false;
     // ^ not technically a click handler but #yolo
@@ -286,7 +263,7 @@ var addCharacterToCampaign = function(campaignCode){
 
 
 var showSpellPane = function(){
-  $(".spell-pane").removeClass("off-screen");
+  $("#spell-pane").removeClass("off-screen");
   showOverlay();
 };
 
@@ -311,7 +288,7 @@ var showDetailPane = function(selector, fieldValue){
 
   showOverlay();
 
-  $(".character-detail-panes").addClass("off-screen"); // Hide all detail panes
+  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
   $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
 
   $detailTab.removeClass("off-screen"); // Show race tabs
@@ -320,8 +297,9 @@ var showDetailPane = function(selector, fieldValue){
 };
 
 var hideDetailPane = function(){
-  $(".character-detail-tabs").addClass("off-screen");
-  $(".character-detail-panes").addClass("off-screen"); // Hide detail panes
+  $(".detail-tabs").addClass("off-screen");
+  $(".detail-panes").addClass("off-screen"); // Hide detail panes
+  hideOverlay();
 };
 
 

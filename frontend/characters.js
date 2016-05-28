@@ -85,9 +85,9 @@ var createNewCharacter = function(ee){
   // This might change with Firebase 3?
   var character_id = oo.key;
   fb_data.ref(charactersPath + "/" + character_id).update(
-    {created_on: (new Date).toString()}
+    { created_on: (new Date).toString() }
   );
   window.location.href = "/character?id=" + character_id; // Redirect to character view
 };
 
-// Wildcat!Wildcat! Tower
+// 🎵 Wildcat!Wildcat! Tower

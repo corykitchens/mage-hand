@@ -1623,6 +1623,67 @@ textarea {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.8); }
 
+ul.detail-tabs {
+  z-index: 3;
+  overflow-x: scroll;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  list-style: none;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out; }
+  ul.detail-tabs.off-screen {
+    top: -50px !important; }
+  ul.detail-tabs li.character-detail-tab {
+    margin-bottom: 0;
+    min-width: 28%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    height: 50px;
+    text-align: center;
+    flex-grow: 1;
+    background-color: #534875;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  ul.detail-tabs li.selected {
+    background-color: #483e65; }
+
+.detail-panes {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 20vw;
+  width: 80vw;
+  overflow: scroll;
+  background-color: #F5F5F5;
+  color: #3E3E3E;
+  padding: 0.5rem;
+  padding-top: 55px;
+  padding-bottom: 60px;
+  transition: all 0.2s ease-in-out;
+  z-index: 2; }
+  .detail-panes.off-screen {
+    left: 101vw !important; }
+  .detail-panes ul {
+    margin-bottom: 0;
+    font-size: 1.4rem;
+    list-style: none; }
+  .detail-panes li {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0; }
+  .detail-panes label {
+    margin-top: 2rem; }
+
+.detail-pane--full {
+  padding-top: 10px; }
+
 input[type="text"],
 input[type="number"] {
   background-color: transparent;
@@ -1671,6 +1732,20 @@ input[type="number"] {
     display: flex;
     align-items: center;
     justify-content: center; }
+
+#vue-character, #vue-campaign {
+  position: relative; }
+
+.slidable-form {
+  transition: all 0.2s ease-in-out;
+  position: absolute;
+  margin-bottom: 60px;
+  top: 0;
+  left: 0;
+  width: 100%; }
+  .slidable-form.off-screen {
+    left: -120%;
+    opacity: 0.1; }
 
 .overlay {
   display: none;
@@ -1850,85 +1925,12 @@ input[type="number"] {
     color: black;
     background-color: rgba(255, 255, 255, 0.8); }
 
-ul.character-detail-tabs {
-  z-index: 3;
-  overflow-x: scroll;
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  list-style: none;
-  text-transform: uppercase;
-  transition: all 0.2s ease-in-out; }
-  ul.character-detail-tabs.off-screen {
-    top: -50px !important; }
-  ul.character-detail-tabs li.character-detail-tab {
-    margin-bottom: 0;
-    min-width: 28%;
-    font-size: 1.2rem;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    height: 50px;
-    text-align: center;
-    flex-grow: 1;
-    background-color: #534875;
-    display: flex;
-    align-items: center;
-    justify-content: center; }
-  ul.character-detail-tabs li.selected {
-    background-color: #483e65; }
-
-.character-detail-panes, .spell-pane {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 20vw;
-  width: 80vw;
-  overflow: scroll;
-  background-color: #F5F5F5;
-  color: #3E3E3E;
-  padding: 0.5rem;
-  padding-top: 55px;
-  padding-bottom: 60px;
-  transition: all 0.2s ease-in-out;
-  z-index: 2; }
-  .character-detail-panes.off-screen, .spell-pane.off-screen {
-    left: 101vw !important; }
-  .character-detail-panes ul, .spell-pane ul {
-    margin-bottom: 0;
-    font-size: 1.4rem;
-    list-style: none; }
-  .character-detail-panes li, .spell-pane li {
-    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-    padding: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin: 0; }
-  .character-detail-panes label, .spell-pane label {
-    margin-top: 2rem; }
-
-.spell-pane {
-  padding-top: 10px; }
-
 .spell-listing {
   border-top: 1px solid rgba(0, 0, 0, 0.1); }
   .spell-listing:first-child {
     border: 0; }
-
-#vue-character {
-  position: relative; }
-
-.slidable-form {
-  transition: all 0.3s ease-in-out;
-  position: absolute;
-  margin-bottom: 60px;
-  top: 0;
-  left: 0;
-  width: 100%; }
-  .slidable-form.off-screen {
-    left: -120%;
-    opacity: 0.1; }
+  .spell-listing li:first-child {
+    border: none !important; }
 
 label[for=character-prof-bonus] {
   min-width: 70%; }

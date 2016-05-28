@@ -2,27 +2,43 @@
 
   <div id="vue-campaign">
 
-    <input type="text" class="field-large page-header" v-model="campaign.name"
-      v-on:keyup="updateStore" v-on:change="updateStore">
+    <!-- # # # # # # # # # # # # # # #  -->
+    <!-- Character vitals and overview -->
+    <!-- # # # # # # # # #  # # # # # -->
+    <form class="slidable-form" id="campaign-character-vitals">
 
-    <div v-for="character in characters" class="xs-mb2">
-      <label class="xs-mb0">{{character.name}}</label>
-      <div class="u-flex">
-        <div class="box-field xs-mr1">
-          <label>HP</label>
-          <input v-model="character.current_hp" type="text"></input>
+      <input type="text" class="field-large page-header" v-model="campaign.name"
+             v-on:keyup="updateStore" v-on:change="updateStore">
+
+      <div v-for="character in characters" class="xs-mb2">
+        <label class="xs-mb0">{{character.name}}</label>
+        <div class="u-flex">
+          <div class="box-field xs-mr1">
+            <label>HP</label>
+            <input v-model="character.current_hp" type="text" />
+          </div>
+          <div class="box-field xs-mr1">
+            <label>Init</label>
+            <input v-model="character.initiative" type="text" />
+          </div>
+          <div class="box-field">
+            <label>AC</label>
+            <input v-model="character.armor_class" type="text" />
+          </div>
         </div>
-        <div class="box-field xs-mr1">
-          <label>Init</label>
-          <input v-model="character.initiative" type="text"></input>
-        </div>
-        <div class="box-field">
-          <label>AC</label>
-          <input v-model="character.armor_class" type="text"></input>
-        </div>
+
       </div>
+    </form>
 
-    </div>
+
+    <!-- # # # # # # # # # # # # # # # # # # # #  -->
+    <!-- Campaign background/story information -->
+    <!-- # # # # # # # # #  # # # # # # # # # -->
+    <form class="slidable-form off-screen" id="campaign-background">
+      <input v-model="campaign.background" type="text" />
+    </form>
+
+
 
     <!-- Invite info -->
     <div class="invite-info">
@@ -43,22 +59,17 @@
   <div id="bottom-nav-menu">
     <div class="u-flex u-flex--fill">
 
-      <div class="nav-button" data-show="campaign-form-primary">
+      <div class="nav-button" data-show="campaign-character-vitals">
         <i class="icon ion-ios-pulse-strong"></i>
       </div>
 
-      <div class="nav-button" data-show="character-form-secondary">
+      <div class="nav-button" data-show="campaign-background">
         <i class="icon ion-ios-book"></i>
       </div>
 
       <div class="nav-button" data-show="character-form-inventory">
         <i class="icon ion-briefcase"></i>
       </div>
-
-      <!-- <div class="nav-button" data-show="character-campaign-info">
-        <i class="icon ion-android-compass"></i>
-      </div> -->
-
 
     </div>
   </div>
