@@ -9,13 +9,13 @@ A real-time campaign and character management tool for table-top roleplaying gam
 
 
 ##BUGS
-- Selecting class/race/spellbook doesn't remove overlay
-- New character throws errors about character skills not being present
 - Leaving a campaign doesn't update live
+
 
 ## TODO
 - !Campaign game type + character/campaign type validation
 - Tests
+- User profile page
 - Make /join do something
 - 'Other' race and class
 - Authenticate character views

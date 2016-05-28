@@ -162,7 +162,7 @@
         <div class="box-skill" v-for="skill in gameMeta.character_structure.skills">
 
           <input type="checkbox" id="skill-{{ $key }}" checked="checked"
-                 v-if="character.skills[$key]" v-on:change="updateSkill">
+                 v-if="character.skills && character.skills[$key]" v-on:change="updateSkill">
           <input type="checkbox" id="skill-{{ $key }}" v-else v-on:change="updateSkill">
 
           <label class="skill-name" for="skill-{{ $key }}" >{{ skill.name }}</label>

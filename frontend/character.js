@@ -4,14 +4,20 @@ var revealPage = require('./globals').revealPage;
 var gameMeta = require('./game_meta/meta').gameMeta;
 var getUrlParam = require('./globals').getUrlParam;
 
+var showOverlay = require('./globals').showOverlay;
+var hideOverlay = require('./globals').hideOverlay;
+var showDetailPane = require('./globals').showDetailPane;
+var hideDetailPane = require('./globals').hideDetailPane;
+
+
 
 module.exports.characterPage = function characterPage(){
   window.locked = false; // Lock ability to edit fields
   var character_id = getUrlParam("id");
   var characterPath = "characters/" + character_id;
   var trigger = getUrlParam("trigger");
-  var default_equipment = {name: 'New Equipment' }; // TODO
-  var default_ability = {name: 'New Ability', bonus: 'Bonus', type: 'Type'}
+  var default_equipment = { name: 'New Equipment' };
+  var default_ability = { name: 'New Ability', bonus: 'Bonus', type: 'Type' };
 
   // Generate a vue directly from the firebase character object
   // All fb object properties will be avilable and bindable in the view
@@ -68,8 +74,15 @@ module.exports.characterPage = function characterPage(){
 
             var serializedSpell = {
               name: spellName.replace("_", " "),
-              description: spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range,
-              long_description: spellData.description + spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range
+              description: spellData.casting_time + " : " +
+                spellData.duration + " : " +
+                spellData.components + " : " +
+                spellData.range,
+              long_description: spellData.description +
+                spellData.casting_time + " : " +
+                spellData.duration + " : " +
+                spellData.components + " : " +
+                spellData.range
             };
 
             fb_data.ref(characterPath + "/abilities").push(serializedSpell).then(function(){
@@ -89,16 +102,15 @@ module.exports.characterPage = function characterPage(){
       window.character.$set("character", character_data);
     };
 
-    getCampaigns(snap.val()); // Go grab campaign data whether it's init or update
-
+    getCampaigns(snap.val()); // Go fetch campaign data whether it's init or update
   });
 };
 
 
-// Fetch campaign data from character snap and push it into
-// our character vue object to render
+// Fetch campaign data from character snap and push it into our character vue object to render
 var getCampaigns = function(character_snap){
   // Reset campaign data to {} (for updates)
+  // ^ If this isn't done deletes won't update because we're just setting existing keys
   window.character.$set("campaigns", {});
 
   if (character_snap.campaigns){ // If any campaigns exist
@@ -122,7 +134,7 @@ var getCampaigns = function(character_snap){
 var attachClickHandlers = function(){
   $(".button-disabled").on('click', function(e){
     e.preventDefault();
-  })
+  });
 
   $("body").on("click", ".leave-campaign", function(e){
     var character_id = getUrlParam("id");
@@ -173,11 +185,6 @@ var attachClickHandlers = function(){
     hideDetailPane(); // Hide pane
   });
 
-  // Overlay clickity clicker
-  $(".overlay").on("click", function(){
-    hideOverlay();
-    hideDetailPane();
-  });
 
   // Join campaign button
   $(".join-campaign").on("click", function(){
@@ -192,9 +199,9 @@ var attachClickHandlers = function(){
 
   $(".add-character-to-campaign").on("click", function(e){
     var campaignCode = $(e.currentTarget)
-      .closest(".join-modal-content")
-      .find(".campaign-code-input")
-      .val();
+    .closest(".join-modal-content")
+    .find(".campaign-code-input")
+    .val();
     addCharacterToCampaign(campaignCode);
   });
 
@@ -215,14 +222,10 @@ var attachClickHandlers = function(){
     };
   });
 
-  $(document).keypress(function(e) { // Prevent enter from doing anything
-    if(e.which == 13) return false;
-    // ^ not technically a click handler but #yolo
-  });
-
 };
 
 
+// Shake the campaign modal and clear it's value to tell the user what they did was wrong
 var shakeAndClearCampaignModal = function(){
   $(".campaign-code-input").val(""); // Clear field
   $(".join-modal").addClass("animated shake");
@@ -267,42 +270,3 @@ var showSpellPane = function(){
   showOverlay();
 };
 
-var showOverlay = function(){
-  var $overlay = $(".overlay");
-  $overlay.css('z-index', '1');
-  $overlay.show();
-  $("#character-bottom-nav-menu").css('z-index', 1);
-};
-
-var hideOverlay = function(){
-  $(".overlay").hide();
-  $(".join-overlay").hide();
-  $("#character-bottom-nav-menu").css('z-index', '');
-  $(".join-modal").hide();
-};
-
-
-var showDetailPane = function(selector, fieldValue){
-  var $detailTab = $("[data-selector="+ selector +"]");
-  var $detailPane = $("#" + fieldValue + "-info");
-
-  showOverlay();
-
-  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
-  $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
-
-  $detailTab.removeClass("off-screen"); // Show race tabs
-  $detailTab.find($("#"+ fieldValue +"-tab")).addClass("selected");
-  $detailPane.removeClass("off-screen"); // Show the selected race pane
-};
-
-var hideDetailPane = function(){
-  $(".detail-tabs").addClass("off-screen");
-  $(".detail-panes").addClass("off-screen"); // Hide detail panes
-  hideOverlay();
-};
-
-
-String.prototype.capitalize = function() { // TODO move this out if we need it other places?
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};

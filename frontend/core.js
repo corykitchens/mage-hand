@@ -3,6 +3,10 @@ var Vue = require('vue');
 var fb = require('./fb').database();
 var setupUser = require('./auth').setupUser;
 var routeUser = require('./router').routeUser;
+var showOverlay = require('./globals').showOverlay;
+var hideOverlay = require('./globals').hideOverlay;
+var showDetailPane = require('./globals').showDetailPane;
+var hideDetailPane = require('./globals').hideDetailPane;
 
 require("./styles/core.scss");
 
@@ -26,12 +30,18 @@ firebase.auth().onAuthStateChanged(function(user) {
 // console.log("%c\n\nLive adventurously.", console_style);
 
 
-//// #GLOBALS
-
+//// # Globals
 window.revealed = false;
 $("#loading-text").text("Don't trust the rogue."); //TODO make this random
 
-// Sticky section header
+
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+
+// # Sticky section header
+// On characters + campaigns
 var $head = $(".header-sticky");
 var nav_height = $(".nav").height();
 
@@ -46,8 +56,21 @@ $( window ).scroll(function() {
 });
 
 
+// # Global handlers
+$(document).keypress(function(e) { // Prevent enter from doing anything
+  if(e.which == 13) return false;
+});
+
+// Overlay clickity clicker
+$(".overlay").on("click", function(){
+  hideOverlay();
+  hideDetailPane();
+});
+
 // Bottom fixed nav bar thing
 $(".nav-button").on("click", function(ee){
+  hideOverlay();
+  hideDetailPane();
   var selector = $(ee.currentTarget).data('show');
   var $slidableForms = $(".slidable-form");
 
@@ -68,4 +91,3 @@ $(".nav-button").on("click", function(ee){
   }, 200)
 
 });
-

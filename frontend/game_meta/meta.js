@@ -31,5 +31,6 @@ module.exports.gameTypes = function(name_type){
 // Retrieve game meta based on game meta key/failname
 module.exports.gameMeta = function(game_key){
   var game_meta = require('./' + game_key).gameMeta();
+  console.log(game_meta)
   return game_meta;
 };

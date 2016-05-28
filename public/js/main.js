@@ -49,6 +49,10 @@
 	var fb = __webpack_require__(3).database();
 	var setupUser = __webpack_require__(6).setupUser;
 	var routeUser = __webpack_require__(7).routeUser;
+	var showOverlay = __webpack_require__(9).showOverlay;
+	var hideOverlay = __webpack_require__(9).hideOverlay;
+	var showDetailPane = __webpack_require__(9).showDetailPane;
+	var hideDetailPane = __webpack_require__(9).hideDetailPane;
 
 	__webpack_require__(16);
 
@@ -72,12 +76,18 @@
 	// console.log("%c\n\nLive adventurously.", console_style);
 
 
-	//// #GLOBALS
-
+	//// # Globals
 	window.revealed = false;
 	$("#loading-text").text("Don't trust the rogue."); //TODO make this random
 
-	// Sticky section header
+
+	String.prototype.capitalize = function() {
+	  return this.charAt(0).toUpperCase() + this.slice(1);
+	};
+
+
+	// # Sticky section header
+	// On characters + campaigns
 	var $head = $(".header-sticky");
 	var nav_height = $(".nav").height();
 
@@ -92,8 +102,21 @@
 	});
 
 
+	// # Global handlers
+	$(document).keypress(function(e) { // Prevent enter from doing anything
+	  if(e.which == 13) return false;
+	});
+
+	// Overlay clickity clicker
+	$(".overlay").on("click", function(){
+	  hideOverlay();
+	  hideDetailPane();
+	});
+
 	// Bottom fixed nav bar thing
 	$(".nav-button").on("click", function(ee){
+	  hideOverlay();
+	  hideDetailPane();
 	  var selector = $(ee.currentTarget).data('show');
 	  var $slidableForms = $(".slidable-form");
 
@@ -114,7 +137,6 @@
 	  }, 200)
 
 	});
-
 
 
 /***/ },
@@ -11092,6 +11114,46 @@
 	}
 
 
+	var showOverlay = function(){ // So that it's accesible to other functions here
+	  var $overlay = $(".overlay");
+	  $overlay.css('z-index', '1');
+	  $overlay.show();
+	  $("#character-bottom-nav-menu").css('z-index', 1);
+	};
+	module.exports.showOverlay = showOverlay;
+
+	var hideOverlay = function(){ // So that it's accesible to other functions here
+	  $(".overlay").hide();
+	  $(".join-overlay").hide();
+	  $("#character-bottom-nav-menu").css('z-index', '');
+	  $(".join-modal").hide();
+	};
+	module.exports.hideOverlay = hideOverlay;
+
+
+	module.exports.showDetailPane = function(selector, fieldValue){
+	  var $detailTab = $("[data-selector="+ selector +"]");
+	  var $detailPane = $("#" + fieldValue + "-info");
+
+	  showOverlay();
+
+	  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
+	  $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
+
+	  $detailTab.removeClass("off-screen"); // Show race tabs
+	  $detailTab.find($("#"+ fieldValue +"-tab")).addClass("selected");
+	  $detailPane.removeClass("off-screen"); // Show the selected race pane
+	};
+
+	module.exports.hideDetailPane = function(){
+	  $(".detail-tabs").addClass("off-screen");
+	  $(".detail-panes").addClass("off-screen"); // Hide detail panes
+	  hideOverlay();
+	};
+
+
+
+
 /***/ },
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
@@ -11129,6 +11191,7 @@
 	// Retrieve game meta based on game meta key/failname
 	module.exports.gameMeta = function(game_key){
 	  var game_meta = __webpack_require__(18)("./" + game_key).gameMeta();
+	  console.log(game_meta)
 	  return game_meta;
 	};
 
@@ -11143,14 +11206,20 @@
 	var gameMeta = __webpack_require__(10).gameMeta;
 	var getUrlParam = __webpack_require__(9).getUrlParam;
 
+	var showOverlay = __webpack_require__(9).showOverlay;
+	var hideOverlay = __webpack_require__(9).hideOverlay;
+	var showDetailPane = __webpack_require__(9).showDetailPane;
+	var hideDetailPane = __webpack_require__(9).hideDetailPane;
+
+
 
 	module.exports.characterPage = function characterPage(){
 	  window.locked = false; // Lock ability to edit fields
 	  var character_id = getUrlParam("id");
 	  var characterPath = "characters/" + character_id;
 	  var trigger = getUrlParam("trigger");
-	  var default_equipment = {name: 'New Equipment' }; // TODO
-	  var default_ability = {name: 'New Ability', bonus: 'Bonus', type: 'Type'}
+	  var default_equipment = { name: 'New Equipment' };
+	  var default_ability = { name: 'New Ability', bonus: 'Bonus', type: 'Type' };
 
 	  // Generate a vue directly from the firebase character object
 	  // All fb object properties will be avilable and bindable in the view
@@ -11207,8 +11276,15 @@
 
 	            var serializedSpell = {
 	              name: spellName.replace("_", " "),
-	              description: spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range,
-	              long_description: spellData.description + spellData.casting_time + " : " + spellData.duration + " : " + spellData.components + " : " + spellData.range
+	              description: spellData.casting_time + " : " +
+	                spellData.duration + " : " +
+	                spellData.components + " : " +
+	                spellData.range,
+	              long_description: spellData.description +
+	                spellData.casting_time + " : " +
+	                spellData.duration + " : " +
+	                spellData.components + " : " +
+	                spellData.range
 	            };
 
 	            fb_data.ref(characterPath + "/abilities").push(serializedSpell).then(function(){
@@ -11228,16 +11304,15 @@
 	      window.character.$set("character", character_data);
 	    };
 
-	    getCampaigns(snap.val()); // Go grab campaign data whether it's init or update
-
+	    getCampaigns(snap.val()); // Go fetch campaign data whether it's init or update
 	  });
 	};
 
 
-	// Fetch campaign data from character snap and push it into
-	// our character vue object to render
+	// Fetch campaign data from character snap and push it into our character vue object to render
 	var getCampaigns = function(character_snap){
 	  // Reset campaign data to {} (for updates)
+	  // ^ If this isn't done deletes won't update because we're just setting existing keys
 	  window.character.$set("campaigns", {});
 
 	  if (character_snap.campaigns){ // If any campaigns exist
@@ -11261,7 +11336,7 @@
 	var attachClickHandlers = function(){
 	  $(".button-disabled").on('click', function(e){
 	    e.preventDefault();
-	  })
+	  });
 
 	  $("body").on("click", ".leave-campaign", function(e){
 	    var character_id = getUrlParam("id");
@@ -11312,11 +11387,6 @@
 	    hideDetailPane(); // Hide pane
 	  });
 
-	  // Overlay clickity clicker
-	  $(".overlay").on("click", function(){
-	    hideOverlay();
-	    hideDetailPane();
-	  });
 
 	  // Join campaign button
 	  $(".join-campaign").on("click", function(){
@@ -11331,9 +11401,9 @@
 
 	  $(".add-character-to-campaign").on("click", function(e){
 	    var campaignCode = $(e.currentTarget)
-	      .closest(".join-modal-content")
-	      .find(".campaign-code-input")
-	      .val();
+	    .closest(".join-modal-content")
+	    .find(".campaign-code-input")
+	    .val();
 	    addCharacterToCampaign(campaignCode);
 	  });
 
@@ -11354,14 +11424,10 @@
 	    };
 	  });
 
-	  $(document).keypress(function(e) { // Prevent enter from doing anything
-	    if(e.which == 13) return false;
-	    // ^ not technically a click handler but #yolo
-	  });
-
 	};
 
 
+	// Shake the campaign modal and clear it's value to tell the user what they did was wrong
 	var shakeAndClearCampaignModal = function(){
 	  $(".campaign-code-input").val(""); // Clear field
 	  $(".join-modal").addClass("animated shake");
@@ -11406,45 +11472,6 @@
 	  showOverlay();
 	};
 
-	var showOverlay = function(){
-	  var $overlay = $(".overlay");
-	  $overlay.css('z-index', '1');
-	  $overlay.show();
-	  $("#character-bottom-nav-menu").css('z-index', 1);
-	};
-
-	var hideOverlay = function(){
-	  $(".overlay").hide();
-	  $(".join-overlay").hide();
-	  $("#character-bottom-nav-menu").css('z-index', '');
-	  $(".join-modal").hide();
-	};
-
-
-	var showDetailPane = function(selector, fieldValue){
-	  var $detailTab = $("[data-selector="+ selector +"]");
-	  var $detailPane = $("#" + fieldValue + "-info");
-
-	  showOverlay();
-
-	  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
-	  $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
-
-	  $detailTab.removeClass("off-screen"); // Show race tabs
-	  $detailTab.find($("#"+ fieldValue +"-tab")).addClass("selected");
-	  $detailPane.removeClass("off-screen"); // Show the selected race pane
-	};
-
-	var hideDetailPane = function(){
-	  $(".detail-tabs").addClass("off-screen");
-	  $(".detail-panes").addClass("off-screen"); // Hide detail panes
-	  hideOverlay();
-	};
-
-
-	String.prototype.capitalize = function() { // TODO move this out if we need it other places?
-	  return this.charAt(0).toUpperCase() + this.slice(1);
-	};
 
 
 /***/ },
@@ -11454,6 +11481,7 @@
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(4).database();
 	var revealPage = __webpack_require__(9).revealPage;
+	//var gameTypes = require('./game_meta/meta').gameTypes;
 	var gameMeta = __webpack_require__(10).gameMeta;
 	var campaignKeyGenerator = __webpack_require__(13).campaignKeyGenerator;
 
