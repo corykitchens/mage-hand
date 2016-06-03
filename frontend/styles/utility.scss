@@ -1,11 +1,8 @@
 // UTILITY
 
 .block-header {
-	font-weight: 600;
-	text-transform: uppercase;
+	@include small-upcase-text;
 	color: rgba(0, 0, 0, 0.7);
-	font-size: 1.5rem;
-	letter-spacing: 0.5px;
 }
 
 .modal {
@@ -25,6 +22,15 @@
 
 .modal-body {
 	padding: 1rem;
+}
+
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box;
+}
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .u-flex { display: flex; }
@@ -75,8 +81,7 @@
 
 .u-fixed-center {
 	position: fixed;
-	top: 50%;
-	left: 50%;
+	top: 50%; left: 50%;
 	transform: translateY(-50%) translateX(-50%);
 }
 

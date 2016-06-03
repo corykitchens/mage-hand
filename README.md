@@ -7,6 +7,8 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Step 2: Also have `webpack --watch` running
 - Step 3: Profit?
 
+http://fireball-179561.nitrousapp.com/
+
 
 ##BUGS
 - Leaving a campaign doesn't update live

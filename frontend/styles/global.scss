@@ -1,7 +1,12 @@
-html, body { height: 100%; width: 100%; }
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0; padding: 0;
+	box-sizing: border-box;
+}
 
 * {
-	box-sizing: border-box;
+
 }
 body {
 	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
@@ -100,17 +105,6 @@ textarea {
 	font-size: 2.5rem;
 }
 
-// .button-back {
-// 	background-color: $color-secondary;
-// 	position: fixed;
-// 	bottom: 1.5rem;
-// 	left: 1.5rem;
-// }
-// .button-back:before {
-// 	content: "<";
-// 	line-height: 4.4rem;
-// 	font-size: 2.5rem;
-// }
 
 .button-huge-middle { // Might go away if new screen gets prettier later on
 	left: 50% !important;
@@ -168,12 +162,6 @@ textarea {
 .cleric { color: $color-yellow; }
 
 
-// LANDING PAGE
-/* .campaigns-page {
-	height: 100%;
-	background-color: rgba(255, 255, 255, 0.8);
-} */
-
 $tab-height: 50px;
 
 ul.detail-tabs {
@@ -188,7 +176,7 @@ ul.detail-tabs {
 	text-transform: uppercase;
 	transition: all $transition-normal ease-in-out;
 
-	&.off-screen { top: -$tab-height !important; } // Default state
+	&.off-screen { top: -$tab-height*2 !important; } // Default state
 
 	li.character-detail-tab {
 		margin-bottom: 0;
@@ -273,7 +261,6 @@ input[type="number"]{
 	& > label {
 		text-align: center;
 		background-color: $lightest;
-		padding: 0 0.5rem;
 		margin: 0;
 	}
 }
@@ -292,8 +279,7 @@ $box-field--vertical-height: 30px;
 	& > input { height: $box-field--vertical-height; }
 	& > label {
 		height: $box-field--vertical-height;
-		//To center text \/
-		display: flex; align-items: center; justify-content: center;
+		@include flex-center;
 	}
 }
 
@@ -335,11 +321,9 @@ $box-field--vertical-height: 30px;
 	color: $light;
 	margin-bottom: 1rem;
   .name {
+		@include large-downcase-text;
     position: relative;
-    display: block;
-    font-weight: bold;
     margin: 0;
-    width: 100%;
     background-color: #778980;
     padding: 0.25rem 0.75rem;
   }
@@ -358,8 +342,8 @@ $box-field--vertical-height: 30px;
     letter-spacing: 0px;
     @include flex-center;
   }
-
-} .model_campaigns:last-child { margin-bottom: 0; }
+}
+.model_campaigns:last-child { margin-bottom: 0; }
 
 
 .section-header {

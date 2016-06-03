@@ -41,7 +41,9 @@
       </textarea>
 
       <label class="xs-mt2">Campaign Notes <i class="icon ion-eye-disabled"></i></label>
-      <textarea v-model="campaign.notes" v-on:change="updateStore"></textarea>
+      <textarea v-model="campaign.notes" v-on:change="updateStore"
+                placeholder="Private notes only you can see.">
+      </textarea>
 
     </form>
 
