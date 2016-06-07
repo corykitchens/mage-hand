@@ -52,6 +52,20 @@
 }
 
 
+li.character-skill-list {
+  font-size: 1.2rem;
+  border: 0 !important;
+  padding: 0 2px;
+  
+  &:after {
+    content: ",";
+  }
+  &:last-child:after{
+    content: "";
+  }
+}
+
+
 
 
 // Fa - Nils Fram

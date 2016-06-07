@@ -75,6 +75,12 @@
 	letter-spacing: 0.5px;
 }
 
+.u-block-text { // Not currently used
+	@include block-text;
+}
+.u-small-text { font-size: 1.2rem; }
+
+
 .u-hide { display: none; }
 
 .u-noscroll { overflow: hidden !important; }

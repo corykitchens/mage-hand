@@ -4,7 +4,7 @@
   <div id="vue-character">
 
 
-    <!-- If coming from join link, show join modal -->
+    <!-- TODO If coming from join link, show join modal -->
     <section v-if="trigger == 'join'">
       <div class="join-overlay"></div>
       <div class="join-modal">
@@ -344,7 +344,7 @@
 
       <!-- Spells + Abilities -->
       <div class="u-flex u-flex--center ability-form">
-        <label class="u-flex--grow">Spells and Abilities</label>
+        <label class="u-flex--grow">Spells & Abilities</label>
         <div v-on:click="addAbilityPicker">
           <i class="icon ion-flash"></i>
         </div>
@@ -375,7 +375,7 @@
 
       <!-- Spellbook section (off screen by default) -->
       <section>
-        <div class="detail-pane--full detail-panes off-screen" id="spell-pane">
+        <div class="detail-panes--full detail-panes off-screen" id="spell-pane">
           <div id="{{$key}}-info" v-for="spell in gameMeta.spells" class="spell-listing">
             <div class="u-flex">
               <label class="u-flex--grow">{{ $key.split('_').join(' ') }}</label>

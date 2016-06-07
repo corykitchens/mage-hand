@@ -10,25 +10,191 @@
       <input type="text" class="field-large page-header" v-model="campaign.name"
              v-on:keyup="updateStore" v-on:change="updateStore">
 
-      <div v-for="character in characters" class="xs-mb2">
+      <div v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
         <label class="xs-mb0">{{character.name}}</label>
         <div class="u-flex">
           <div class="box-field xs-mr1">
             <label>HP</label>
-            <input v-model="character.current_hp" type="text" />
+            <input disabled v-model="character.current_hp" type="text" />
           </div>
           <div class="box-field xs-mr1">
             <label>Init</label>
-            <input v-model="character.initiative" type="text" />
+            <input disabled v-model="character.initiative" type="text" />
           </div>
           <div class="box-field">
             <label>AC</label>
-            <input v-model="character.armor_class" type="text" />
+            <input disabled v-model="character.armor_class" type="text" />
           </div>
         </div>
 
+        <!-- Full character pane (off screen by default) -->
+        <section>
+          <div class="detail-panes detail-panes--full off-screen" id="detail-{{$key}}">
+            <!-- Character name -->
+            <input disabled type="text" class="field-large--detail page-header" v-model="character.name">
+            <label class="xs-m0 xs-ml2 xs-mb2">Level {{character.level}} {{character.race}} {{character.class}} ({{character.experience}} XP)</label>
+            <!-- HP & AC -->
+            <div class="character-other-stats">
+              <div class="box-field box-field--detail box-field--large">
+                <input disabled type="number" v-model="character.current_hp" class="field-small">
+                <label for="character-hp">HP</label>
+              </div>
+              <div class="box-field box-field--detail box-field--large">
+                <input disabled type="number" v-model="character.armor_class" class="field-small">
+                <label for="armor_class">AC</label>
+              </div>
+              <div class="box-field box-field--detail box-field--large">
+                <input disabled type="text" v-model="character.hit_die" class="field-small">
+                <label for="hit_die">Hit Die</label>
+              </div>
+            </div>
+            <!-- Temp + Max HP, Initiative + Speed -->
+            <div class="u-flex u-flex--fill">
+              <section class="character-hp-fields">
+                <!-- Temp HP -->
+                <div class="box-field box-field--detail box-field--vertical">
+                  <label for="character-temp-hp">Temp HP</label>
+                  <input disabled type="number" v-model="character.temp_hp" class="field-small">
+                </div>
+                <!-- Max HP -->
+                <div class="box-field box-field--detail box-field--vertical xs-mt1">
+                  <label for="character-max-hp">Max HP</label>
+                  <input disabled type="number" v-model="character.max_hp" class="field-small">
+                </div>
+              </section>
+              <section class="character-tertiary-stats">
+                <!-- Initative -->
+                <div class="box-field box-field--detail box-field--vertical ">
+                  <label for="character-initiative">Init</label>
+                  <input disabled type="number" v-model="character.initiative" class="field-small">
+                </div>
+                <!-- Speed -->
+                <div class="box-field box-field--detail box-field--vertical xs-mt1">
+                  <label for="character-speed">Speed</label>
+                  <input disabled type="number" v-model="character.speed" class="field-small">
+                </div>
+              </section>
+            </div>
+
+            <!-- Primary character stats -->
+            <section class="character-stats">
+              <div class="character-stat character-stat--detail">
+                <label for="character-str" class="xs-mb0">Str</label>
+                <input disabled type="number" v-model="character.stats.str">
+              </div>
+              <div class="character-stat character-stat--detail">
+                <label for="character-dex" class="xs-mb0">Dex</label>
+                <input disabled type="number" v-model="character.stats.dex">
+              </div>
+              <div class="character-stat character-stat--detail">
+                <label for="character-con" class="xs-mb0">Con</label>
+                <input disabled type="number" v-model="character.stats.con">
+              </div>
+              <div class="character-stat character-stat--detail">
+                <label for="character-int" class="xs-mb0">Int</label>
+                <input disabled type="number" v-model="character.stats.int">
+              </div>
+              <div class="character-stat character-stat--detail">
+                <label for="character-wis" class="xs-mb0">Wis</label>
+                <input disabled type="number" v-model="character.stats.wis">
+              </div>
+              <div class="character-stat character-stat--detail">
+                <label for="character-cha" class="xs-mb0">Cha</label>
+                <input disabled type="number" v-model="character.stats.cha">
+              </div>
+            </section>
+
+            <!-- Experience + Level -->
+            <div class="u-flex u-flex--fill">
+              <div class="box-field box-field--detail xs-mr1">
+                <label for="character-experience">XP</label>
+                <input disabled type="number" class="field-small" v-model="character.experience">
+              </div>
+              <div class="box-field box-field--detail">
+                <label for="character-experience">Level</label>
+                <input disabled type="number" class="field-small" v-model="character.level">
+              </div>
+            </div>
+            <!-- Proficiency Bonus -->
+            <div class="box-field box-field--detail box-field--vertical xs-mt2">
+              <label for="character-prof-bonus">Proficiency Bonus</label>
+              <input disabled type="text"  class="field-small" v-model="character.proficiency_bonus">
+            </div>
+            <!-- Proficiencies list -->
+            <div v-if="character.skills">
+              <label>Proficiencies</label>
+              <ul class="u-flex u-flex--wrap ">
+                <li v-for="skill in character.skills" class="character-skill-list u-capitalize">{$key}}</li>
+              </ul>
+            </div>
+            <!-- Character Detail Abilities -->
+            <div v-if="character.abilities">
+              <label>Skills & Abilities</label>
+              <ul>
+                <li v-for="ability in character.abilities" class="u-capitalize u-small-text">
+                    <span class="u-block-text">{{ability.name}}</span><br>{{ability.description}}
+                </li>
+              </ul>
+            </div>
+            <!-- Character Detail Equipment -->
+            <div v-if="character.equipment">
+              <label>Equipment</label>
+              <ul>
+                <li v-for="equipment in character.equipment" class="u-capitalize">{{equipment.name}}</li>
+              </ul>
+            </div>
+            <!-- Wealth -->
+            <div class="xs-mt4" v-if="character.wealth">
+              <label>Wealth</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.wealth">
+            </div>
+            <!-- Launguages -->
+            <div class="xs-mt2" v-if="character.background.languages">
+              <label >Languages</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.languages">
+            </div>
+            <!-- Background - Background -->
+            <div class="xs-mt2" v-if="character.background.background">
+              <label >Background</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.general">
+            </div>
+            <!-- Background - Personality Traits -->
+            <div class="xs-mt2" v-if="character.background.personality_traits">
+              <label >Personality Traits</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.personality_traits">
+            </div>
+            <!-- Background - Ideals -->
+            <div class="xs-mt2" v-if="character.background.ideals">
+              <label >Ideals</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.ideals">
+            </div>
+            <!-- Background - Bonds -->
+            <div class="xs-mt2" v-if="character.background.bonds">
+              <label >Bonds</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.bonds">
+            </div>
+            <!-- Background - Flaws -->
+            <div class="xs-mt2" v-if="character.background.flaws">
+              <label >Flaws</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.flaws">
+            </div>
+            <!-- Background - Notes -->
+            <div class="xs-mt2" v-if="character.background.notes">
+              <label >Notes</label>
+              <input disabled type="text" class="input-detail-plain" v-model="character.background.notes">
+            </div>
+
+
+
+
+          </div>
+        </section>
+
       </div>
     </form>
+
+
+
 
 
     <!-- # # # # # # # # # # # # # # # # # # # -->

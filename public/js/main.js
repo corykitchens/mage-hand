@@ -12216,7 +12216,7 @@
 	var fb_data = __webpack_require__(3).database();
 	var revealPage = __webpack_require__(9).revealPage;
 	var gameMeta = __webpack_require__(10).gameMeta; //TODO do we need this? (see below)
-
+	var showOverlay = __webpack_require__(9).showOverlay;
 
 	module.exports.campaignPage = function campaignPage(){
 	  var campaign_id = window.location.search.replace("?id=", "");
@@ -12266,6 +12266,7 @@
 	    characterIds.forEach(function(character_id){
 	      fb_data.ref("characters/" + character_id).on("value", function(character_snap){
 	        Vue.set(window.campaign.characters, character_id, character_snap.val());
+	        attachCharacterClickHandler(character_id);
 	      });
 	    });
 	  };
@@ -12280,6 +12281,17 @@
 	    $inviteInfo.toggleClass("shrink");
 	  });
 
+	};
+
+	var attachCharacterClickHandler = function(character_id){
+	  $(document).on("click", "[data-show-character="+ character_id +"]", function(e){
+	    showCharacterDetails(character_id);
+	  });
+	};
+
+	var showCharacterDetails = function(character_id){
+	  showOverlay();
+	  $("#detail-" + character_id).removeClass("off-screen");
 	};
 
 

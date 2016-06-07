@@ -4,10 +4,10 @@ html, body {
 	margin: 0; padding: 0;
 	box-sizing: border-box;
 }
-
-* {
-
+*, *:before, *:after {
+  box-sizing: inherit;
 }
+
 body {
 	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 	-webkit-font-smoothing: antialiased;
@@ -48,10 +48,15 @@ textarea {
 	}
 	.icon { font-size: 3rem; }
 	.logo {
+		margin-top: -0.2rem;
 		font-family: 'Dosis', sans-serif;
 		letter-spacing: 0.5px;
-		font-size: 3.5rem;
 		transition: all $transition-normal ease-in-out;
+	}
+	.logo--nav {
+		font-size: 3rem;
+		margin-left: 1rem;
+		margin-bottom: 0.5rem;
 	}
 }
 
@@ -187,10 +192,11 @@ ul.detail-tabs {
 		height: $tab-height;
 		text-align: center;
 		flex-grow: 1;
-		background-color: $color-purple;
+		background-color: darken($color-green, 15%);
 		@include flex-center;
+		border-right: 2px solid darken($color-green, 18%);
 	}
-	li.selected { background-color: darken($color-purple, 5%); }
+	li.selected { background-color: darken($color-green, 25%); }
 }
 
 
@@ -217,15 +223,20 @@ ul.detail-tabs {
 	li {
 		border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
 		padding: 0.5rem;
-		background-color: rgba(255, 255, 255, 0.1);
 		margin: 0;
 	}
 	label {
 		margin-top: 2rem;
 	}
+	.input-detail-plain {
+		color: $color-offblack;
+		font-size: 1.2rem;
+		padding: 0;
+		height: 1.4rem;
+	}
 }
 
-.detail-pane--full { padding-top: 10px; }
+.detail-panes--full { padding-top: 10px; }
 
 input[type="text"],
 input[type="number"]{
@@ -235,9 +246,17 @@ input[type="number"]{
 	color: white;
 }
 
+input[type="text"]:disabled,
+input[type="number"]:disabled{
+	border-bottom: 1px solid $transparent;
+}
+
 .field-large {
 	font-size: 3rem;
 	width: 100%;
+}
+.field-large--detail {
+	color: $color-offblack !important;;
 }
 .field-large:focus, .field-small:focus {
 	color: black;
@@ -282,6 +301,43 @@ $box-field--vertical-height: 30px;
 		@include flex-center;
 	}
 }
+
+// Shorter and darker, just how I like my Dwarves
+.box-field--detail {
+	$detail-field-height: 25px;
+	background-color: rgba(0, 0, 0, 0.1);
+
+	& > label {
+		height: $detail-field-height;
+		@include flex-center;
+	}
+	& > input {
+		font-size: 12px;
+		height: $detail-field-height;
+		color: $color-offblack;
+	}
+	&.box-field--large {
+		input {
+			font-size: 18px !important;
+			height: $box-field--vertical-height;
+		}
+		label { height: inherit; }
+	}
+}
+// For the character detail pane on the campaign page
+.character-stat--detail {
+	background-color: $transparent;
+
+	label { margin: 0; }
+	input {
+		color: $color-offblack !important;
+		font-size: 18px !important;
+		padding: 0 !important;
+		height: 30px;
+		background-color: rgba(0, 0, 0, 0.1) !important;
+	}
+}
+
 
 #vue-character,
 #vue-campaign { position: relative; } // for sliding
@@ -351,11 +407,13 @@ $box-field--vertical-height: 30px;
 	font-size: 1.2rem;
 	letter-spacing: 0.5px;
 	margin: 0;
-	padding: 0.7rem 1rem;
-	background-color: #68613E;
-	background-color: $color-purple;
+	padding: 0.5rem 2rem;
+	background-color: rgba(0, 0, 0, 0.2);
 	color: white;
 	font-weight: bold;
+}
+.section-header--red {
+	background-color: $color-red !important;
 }
 
 #bottom-nav-menu {
