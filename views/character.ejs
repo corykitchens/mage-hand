@@ -219,7 +219,7 @@
           <li class="character-detail-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-lookup="{{$key}}">
             {{$key}}
           </li>
-          <li class="character-detail-tab" id="other-tab" data-lookup="other">Other</li>
+          <li class="character-detail-tab" id="other-race-tab" data-lookup="other-race">Other</li>
         </ul>
 
         <!-- Character detail panes that show details about a race (viewable after you select a tab) -->
@@ -244,6 +244,12 @@
             <button class="button-primary u-full-width xs-mb1 xs-mt2" data-lookup="race" data-detail-select={{$key}}>Select</button>
           </div>
         </div>
+        <div id="other-race-info" class="detail-panes off-screen">
+          <label for="character-other-race" class="xs-mt2">Custom Race</label>
+          <input type="text" v-model="character.race"
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 id="character-other-race" style="color: black;">
+        </div>
       </section>
 
       <!-- Class display on page -->
@@ -260,7 +266,7 @@
           <li class="character-detail-tab" id="{{$key}}-tab" v-for="class in gameMeta.character_structure.classes" data-lookup="{{$key}}">
             {{$key}}
           </li>
-          <li class="character-detail-tab" id="other-tab" data-lookup="other">Other</li>
+          <li class="character-detail-tab" id="other-class-tab" data-lookup="other-class">Other</li>
         </ul>
         <!-- Character detail panes that show details about a class (viewable after you select a tab) -->
         <div id="{{$key}}-info" class="detail-panes off-screen" v-for="class in gameMeta.character_structure.classes">
@@ -294,6 +300,12 @@
 
             <button class="button-primary u-full-width xs-mb1 xs-mt2" data-lookup="class" data-detail-select={{$key}}>Select</button>
           </div>
+        </div>
+        <div id="other-class-info" class="detail-panes off-screen">
+          <label for="character-other-class" class="xs-mt2">Custom Class</label>
+          <input type="text" v-model="character.class"
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 id="character-other-class" style="color: black;">
         </div>
       </section>
 

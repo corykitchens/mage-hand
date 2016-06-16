@@ -31,6 +31,7 @@ http://fireball-179561.nitrousapp.com/
 - Raw stats to bonus slider
 - Desktop view
 - Trim/organize CSS
+- Join campaign modal colors are weird (and probably others)
 x Move game rule meta to separate files
 x Make campaign view
 x Sort out how fb3 effects user storage for lookups on /characters
