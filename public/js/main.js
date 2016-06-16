@@ -11819,16 +11819,20 @@
 	            fb_data.ref(characterPath).update(this.character);
 	          },
 	          addEquipment: function(){ // Push a new equipment
+	            if (window.locked === true) return; // Ignore if locked
 	            fb_data.ref(characterPath + "/equipment").push(default_equipment);
 	          },
 	          deleteEquipment: function(ee){ // Destroy equipment
+	            if (window.locked === true) return; // Ignore if locked
 	            var equipment_id = $(ee.target).data("equipment-id");
 	            fb_data.ref(characterPath + "/equipment/" + equipment_id).remove();
 	          },
 	          addAbility: function(){ // Push a new equipment
+	            if (window.locked === true) return; // Ignore if locked
 	            fb_data.ref(characterPath + "/abilities").push(default_ability);
 	          },
 	          deleteAbility: function(ee){ // Destroy equipment
+	            if (window.locked === true) return; // Ignore if locked
 	            var ability_id = $(ee.target).data("ability-id");
 	            fb_data.ref(characterPath + "/abilities/" + ability_id).remove();
 	          },
@@ -11844,6 +11848,7 @@
 	            };
 	          },
 	          addAbilityPicker: function(){
+	            if (window.locked === true) return; // Ignore if locked
 	            showSpellPane();
 	          },
 	          addSpell: function(ee){

@@ -12,7 +12,6 @@ http://fireball-179561.nitrousapp.com/
 
 ## Bugs
 - Leaving a campaign doesn't update live
-- Lock shouldn't let you delete or add new spells/equip 
 
 ## TODO
 - Use indexes (not priority) for campaign code lookups
@@ -25,12 +24,13 @@ http://fireball-179561.nitrousapp.com/
 - Saving throws
 - Be able to delete characters
 - Allow skills to be selectable from class chooser pane
-- Trim/organize CSS
 - Add security rules
 - Add all spells
 - Add facebook auth
 - Add google auth
 - Raw stats to bonus slider
+- Desktop view
+- Trim/organize CSS
 x Move game rule meta to separate files
 x Make campaign view
 x Sort out how fb3 effects user storage for lookups on /characters
