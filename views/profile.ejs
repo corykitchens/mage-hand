@@ -1,0 +1,9 @@
+<div id="vue-user" class="xs-p2">
+  <label>Display Name</label>
+  <input type="text" class="field-large page-header" v-model="user.displayName" v-on:change="updateStore"/>
+
+  <label>Email</label>
+  <input type="email" class="field-large" v-model="user.email" v-on:change="updateStore"/>
+
+  <button class="button-primary u-full-width xs-mt6" v-on:click="deleteUser">Delete Account</button>
+</div>

@@ -245,7 +245,7 @@ var addCharacterToCampaign = function(campaignCode){
   var characterKey = getUrlParam("id");
 
   fb_data.ref("campaigns")
-    .orderByPriority()
+    .orderByChild('campaign_key') // Using index (set in rules)
     .startAt(campaignCode)
     .limitToFirst(1)
     .once("value", function(snap){

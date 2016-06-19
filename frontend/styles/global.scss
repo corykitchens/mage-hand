@@ -1,11 +1,10 @@
+
+*, *:before, *:after { box-sizing: inherit; }
 html, body {
 	height: 100%;
 	width: 100%;
 	margin: 0; padding: 0;
 	box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
 }
 
 body {
@@ -38,7 +37,6 @@ textarea {
 	display: flex;
 	align-items: center;
 	color: white;
-	//border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 
 	a { color: white; }
@@ -239,6 +237,7 @@ ul.detail-tabs {
 .detail-panes--full { padding-top: 10px; }
 
 input[type="text"],
+input[type="email"],
 input[type="number"]{
 	background-color: transparent;
 	border: 1px solid transparent;
@@ -247,6 +246,7 @@ input[type="number"]{
 }
 
 input[type="text"]:disabled,
+input[type="email"]:disabled,
 input[type="number"]:disabled{
 	border-bottom: 1px solid $transparent;
 }
@@ -408,7 +408,7 @@ $box-field--vertical-height: 30px;
 	letter-spacing: 0.5px;
 	margin: 0;
 	padding: 0.5rem 2rem;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
 	font-weight: bold;
 }

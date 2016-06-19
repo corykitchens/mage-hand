@@ -12,17 +12,17 @@ http://fireball-179561.nitrousapp.com/
 
 ## Bugs
 - Leaving a campaign doesn't update live
+- Can't update stats in Firefox
 
 ## TODO
-- Use indexes (not priority) for campaign code lookups
+- User profile page
+- Be able to delete characters + campaigns
 - !Campaign game type + character/campaign type validation
 - Tests
-- User profile page
 - Make /join do something
 - 'Other' race and class
 - Authenticate character views
 - Saving throws
-- Be able to delete characters
 - Allow skills to be selectable from class chooser pane
 - Add security rules
 - Add all spells
@@ -31,7 +31,9 @@ http://fireball-179561.nitrousapp.com/
 - Raw stats to bonus slider
 - Desktop view
 - Trim/organize CSS
-- Join campaign modal colors are weird (and probably others)
+- Have multiple providers on one account?
+x Join campaign modal colors are weird (and probably others)
+x Use indexes (not priority) for campaign code lookups
 x Move game rule meta to separate files
 x Make campaign view
 x Sort out how fb3 effects user storage for lookups on /characters

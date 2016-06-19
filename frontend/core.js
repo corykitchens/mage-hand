@@ -1,7 +1,6 @@
 // var $ = require('jquery');
 var Vue = require('vue');
 var fb = require('./fb').database();
-var setupUser = require('./auth').setupUser;
 var routeUser = require('./router').routeUser;
 var showOverlay = require('./globals').showOverlay;
 var hideOverlay = require('./globals').hideOverlay;

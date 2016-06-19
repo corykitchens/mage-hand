@@ -1298,7 +1298,8 @@ there.
   max-height: 600px;
   transform: translateX(-50%) translateY(-50%);
   padding-top: 0.5rem;
-  overflow: scroll; }
+  overflow: scroll;
+  overflow-x: hidden !important; }
 
 .modal-body {
   padding: 1rem; }
@@ -1374,15 +1375,15 @@ there.
 .u-uppercase {
   text-transform: uppercase; }
 
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box; }
-
-*, *:before, *:after {
-  box-sizing: inherit; }
 
 body {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -1606,6 +1607,7 @@ ul.detail-tabs {
   padding-top: 10px; }
 
 input[type="text"],
+input[type="email"],
 input[type="number"] {
   background-color: transparent;
   border: 1px solid transparent;
@@ -1613,6 +1615,7 @@ input[type="number"] {
   color: white; }
 
 input[type="text"]:disabled,
+input[type="email"]:disabled,
 input[type="number"]:disabled {
   border-bottom: 1px solid transparent; }
 
@@ -1765,7 +1768,7 @@ input[type="number"]:disabled {
   letter-spacing: 0.5px;
   margin: 0;
   padding: 0.5rem 2rem;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   font-weight: bold; }
 

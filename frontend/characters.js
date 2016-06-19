@@ -13,7 +13,7 @@ module.exports.charactersPage = function charactersPage(){
     if (snap.val() == null){ // If no characters exist yet
 
       $(".button-add").addClass("button-huge-middle");
-      revealPage(); // TODO Show a tooltip or something on how to make new
+      // TODO maybe show some instruction on adding first character?
 
     } else { // Else, display each character user has
 
@@ -22,14 +22,14 @@ module.exports.charactersPage = function charactersPage(){
           // Push each character to the characters array so that vue can draw them afterwards
           var cc = character_snap.val();
           cc.key = character_id;
+          cc.game_type = gameMeta(cc.game_type).short_name; // Transform game type to readable format
           characters.push(cc);
-          revealPage();
         });
       });
 
     };
   }).then(function(){
-
+    revealPage();
     new Vue({ // Draw all the characters pulled from firebase above
       el: '#vue-characters',
       data: { characters: characters }

@@ -20,14 +20,15 @@ module.exports.campaignsPage = function campaignsPage(){
 
       Object.keys(snap.val()).forEach(function(campaign_id){
         fb_data.ref("campaigns/" + campaign_id).once('value', function(campaign_snap){
-          // Push each campaign to the characters array so that vue can draw them afterwards
-          var cc = campaign_snap.val();
-          cc.key = campaign_id;
-          campaigns.push(cc);
-
-          //TODO for each campaign, find the characters to display on campaigns listing page?
-
-          revealPage();
+          // IF we encounter a campaign that doesn't exist
+          if (campaign_snap.val() == null){
+            fb_data.ref(campaignsPath + "/" + campaign_id).remove();
+          } else { // Else, transform & show data
+            // Push each campaign to the campaigns array so that vue can draw them afterwards
+            var cc = campaign_snap.val();
+            cc.key = campaign_id;
+            campaigns.push(cc);
+          };
         });
       });
 
@@ -55,7 +56,7 @@ module.exports.campaignsPage = function campaignsPage(){
       }
     });
 
-
+    revealPage();
     attachClickHandlers();
   });
 };
@@ -65,7 +66,6 @@ var attachClickHandlers = function(){
   $(document).on("click", "#new-campaign", function(ee){ // New campaign triggers confirmation modal
     showConfirmationModal();
   });
-
 
   // TODO these modal things are sort of duplicated in global - need to refactor
   // Things which hide modal

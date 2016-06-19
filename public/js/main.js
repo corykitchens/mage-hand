@@ -47,14 +47,13 @@
 	// var $ = require('jquery');
 	var Vue = __webpack_require__(1);
 	var fb = __webpack_require__(3).database();
-	var setupUser = __webpack_require__(6).setupUser;
-	var routeUser = __webpack_require__(7).routeUser;
+	var routeUser = __webpack_require__(6).routeUser;
 	var showOverlay = __webpack_require__(9).showOverlay;
 	var hideOverlay = __webpack_require__(9).hideOverlay;
 	var showDetailPane = __webpack_require__(9).showDetailPane;
 	var hideDetailPane = __webpack_require__(9).hideDetailPane;
 
-	__webpack_require__(18);
+	__webpack_require__(19);
 
 	Vue.config.debug = true;  // TODO
 	if (Vue.config.debug == true) console.log('!vue debug is on');
@@ -10860,95 +10859,15 @@
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var firebase = __webpack_require__(3);
-	var fb_auth = __webpack_require__(3).auth;
-	var fb_data = __webpack_require__(3).database();
-
-	window.fb_data = fb_data; //TODO remove
-	window.fb_auth = fb_auth;
-	// window.auth = fb.getAuth(); //TODO replace
-
-
-	var provider = new firebase.auth.TwitterAuthProvider();
-
-	//TODO fix this \/ ?
-	// // Set up user when the log in
-	// module.exports.setupUser = function setupUser(authData){
-	//   fb.child("users").child(authData.uid).once("value", function(snap){
-	//     if (snap.val() == undefined){ // If they aren't in databse, create a record for them
-	//       fb.child("users").child(authData.uid).update({ // Always use update, never set
-	//         provider: authData.provider,
-	//         name: getProviderName(authData)
-	//       });
-	//     };
-	//     window.auth = fb.getAuth();
-	//   });
-	// };
-	//
-
-
-	// Only let authorized users into these pages
-	module.exports.requiresAuth = function requiresAuth(callback){
-	  if (!window.currentUser) {
-	    window.location.replace("/login")
-	  } else {
-	    if (callback) callback();
-	  }
-	};
-
-	// #Authentication
-	module.exports.twitterAuth = function(){
-
-	  firebase.auth().signInWithPopup(provider).then(function(result) {
-	    // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-	    // You can use these server side with your app's credentials to access the Twitter API.
-	    var token = result.credential.accessToken;
-	    var secret = result.credential.secret;
-	    // The signed-in user info.
-	    var user = result.user;
-	    // ...
-	    console.log("Logged in correctly lol", result);
-	    window.currentUser = user;
-	  }).catch(function(error) {
-	    // Handle Errors here.
-	    var errorCode = error.code;
-	    var errorMessage = error.message;
-	    // The email of the user's account used.
-	    var email = error.email;
-	    // The firebase.auth.AuthCredential type that was used.
-	    var credential = error.credential;
-	    console.log("An error happened during login lol", error);
-	    // ...
-	  });
-	};
-
-
-
-	// // find a suitable name based on the meta info given by each provider
-	// var getProviderName = function getProviderName(authData) {
-	//   switch(authData.provider) {
-	//      case 'password':
-	//        return authData.password.email.replace(/@.*/, '');
-	//      case 'twitter':
-	//        return authData.twitter.displayName;
-	//      case 'facebook':
-	//        return authData.facebook.displayName;
-	//   }
-	// };
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var requiresAuth = __webpack_require__(6).requiresAuth;
+	var requiresAuth = __webpack_require__(7).requiresAuth;
 	var charactersPage = __webpack_require__(8).charactersPage;
 	var characterPage = __webpack_require__(13).characterPage;
 	var campaignsPage = __webpack_require__(14).campaignsPage;
 	var campaignPage = __webpack_require__(16).campaignPage;
 	var joinPage = __webpack_require__(17).joinPage;
+	var profilePage = __webpack_require__(18).profilePage;
 
-	var twitterAuth = __webpack_require__(6).twitterAuth;
+	var twitterAuth = __webpack_require__(7).twitterAuth;
 	var revealPage = __webpack_require__(9).revealPage;
 
 	// ROUTER
@@ -10988,7 +10907,65 @@
 	  else if (window.location.pathname === "/campaigns"){ // List of campaigns
 	    requiresAuth(campaignsPage);
 	  }
+	  else if (window.location.pathname === "/profile"){ // List of campaigns
+	    requiresAuth(profilePage);
+	  }
 
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var firebase = __webpack_require__(3);
+	var fb_auth = __webpack_require__(3).auth;
+	var fb_data = __webpack_require__(3).database();
+
+	var provider = new firebase.auth.TwitterAuthProvider();
+
+	// Only let authorized users into these pages
+	module.exports.requiresAuth = function requiresAuth(callback){
+	  if (!window.currentUser) {
+	    window.location.replace("/login");
+	  } else {
+	    if (callback) callback();
+	  }
+	};
+
+	// #Authentication
+	module.exports.twitterAuth = function(){
+	  firebase.auth().signInWithPopup(provider).then(function(result) {
+	    // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+	    // You can use these server side with your app's credentials to access the Twitter API.
+	    // var token = result.credential.accessToken; //var secret = result.credential.secret;
+	    var user = result.user;
+	    window.currentUser = user;
+	  }).then(function(){
+	    setupUser('twitter');
+	  }).catch(function(error){
+	    var errorCode = error.code;
+	    console.log("An error happened during login lol", error);
+	    alert(error.message)
+	  });
+	};
+
+
+	// Set up user when the log in
+	var setupUser = function setupUser(auth_type){
+	  var authData = window.currentUser;
+	  var snap_val;
+
+	  fb_data.ref("users/" + authData.uid).once("value", function(snap){
+	    snap_val = snap.val();
+	  }).then(function(){
+	    if (snap_val == undefined || snap_val == null){ // If they aren't in databse, create a record for them
+	      fb_data.ref("users/" + authData.uid).update({
+	        provider: auth_type,
+	        display_name: authData.displayName
+	      });
+	    };
+	  });
 	};
 
 
@@ -11011,7 +10988,7 @@
 	    if (snap.val() == null){ // If no characters exist yet
 
 	      $(".button-add").addClass("button-huge-middle");
-	      revealPage(); // TODO Show a tooltip or something on how to make new
+	      // TODO maybe show some instruction on adding first character?
 
 	    } else { // Else, display each character user has
 
@@ -11020,14 +10997,14 @@
 	          // Push each character to the characters array so that vue can draw them afterwards
 	          var cc = character_snap.val();
 	          cc.key = character_id;
+	          cc.game_type = gameMeta(cc.game_type).short_name; // Transform game type to readable format
 	          characters.push(cc);
-	          revealPage();
 	        });
 	      });
 
 	    };
 	  }).then(function(){
-
+	    revealPage();
 	    new Vue({ // Draw all the characters pulled from firebase above
 	      el: '#vue-characters',
 	      data: { characters: characters }
@@ -12023,7 +12000,7 @@
 	  var characterKey = getUrlParam("id");
 
 	  fb_data.ref("campaigns")
-	    .orderByPriority()
+	    .orderByChild('campaign_key') // Using index (set in rules)
 	    .startAt(campaignCode)
 	    .limitToFirst(1)
 	    .once("value", function(snap){
@@ -12081,14 +12058,15 @@
 
 	      Object.keys(snap.val()).forEach(function(campaign_id){
 	        fb_data.ref("campaigns/" + campaign_id).once('value', function(campaign_snap){
-	          // Push each campaign to the characters array so that vue can draw them afterwards
-	          var cc = campaign_snap.val();
-	          cc.key = campaign_id;
-	          campaigns.push(cc);
-
-	          //TODO for each campaign, find the characters to display on campaigns listing page?
-
-	          revealPage();
+	          // IF we encounter a campaign that doesn't exist
+	          if (campaign_snap.val() == null){
+	            fb_data.ref(campaignsPath + "/" + campaign_id).remove();
+	          } else { // Else, transform & show data
+	            // Push each campaign to the campaigns array so that vue can draw them afterwards
+	            var cc = campaign_snap.val();
+	            cc.key = campaign_id;
+	            campaigns.push(cc);
+	          };
 	        });
 	      });
 
@@ -12116,7 +12094,7 @@
 	      }
 	    });
 
-
+	    revealPage();
 	    attachClickHandlers();
 	  });
 	};
@@ -12126,7 +12104,6 @@
 	  $(document).on("click", "#new-campaign", function(ee){ // New campaign triggers confirmation modal
 	    showConfirmationModal();
 	  });
-
 
 	  // TODO these modal things are sort of duplicated in global - need to refactor
 	  // Things which hide modal
@@ -12253,8 +12230,7 @@
 	      window.campaign.$set("campaign", campaign_data);
 	    };
 
-	    updateCharacters();
-
+	    updateCharacters(campaign_id);
 	  });
 	};
 
@@ -12264,13 +12240,19 @@
 	// they will change their character on the campaign object, thus re-rendering
 	// the vue. On subsiquent polls, it will simply add characters, etc.
 	// TODO will not remove characters in real time
-	var updateCharacters = function(){
+	var updateCharacters = function(campaign_id){
 	  if (window.campaign.campaign.characters){
 	    var characterIds = Object.keys(window.campaign.campaign.characters);
 	    characterIds.forEach(function(character_id){
 	      fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-	        Vue.set(window.campaign.characters, character_id, character_snap.val());
-	        attachCharacterClickHandler(character_id);
+
+	        if (character_snap.val() == null) { // If this character has been removed, remove the reference
+	          fb_data.ref("campaigns/" + campaign_id + "/characters/" + character_id).remove();
+	        } else {
+	          Vue.set(window.campaign.characters, character_id, character_snap.val());
+	          attachCharacterClickHandler(character_id);
+	        };
+
 	      });
 	    });
 	  };
@@ -12315,6 +12297,92 @@
 
 /***/ },
 /* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(1);
+	var fb_data = __webpack_require__(3).database();
+	var revealPage = __webpack_require__(9).revealPage;
+
+
+	var removeUser = function(){
+	  var uid = window.currentUser.uid;
+	  var userPath = "users/" + uid;
+	  var userData;
+
+	  fb_data.ref(userPath).once("value", function(snap){
+	    userData = snap.val();
+	  }).then(function(){
+
+	    // Remove all user campaigns
+	    if (userData.campaigns){
+	      Object.keys(userData.campaigns).forEach(function(campaign_key){
+	        // Note: At this point not all references to this campaign has been removed
+	        // Instead, when a user is pulling up their campaign data, if it's not present,
+	        // the referebce will be removed.
+	        fb_data.ref("/campaigns/" + campaign_key).remove();
+	      });
+	    };
+
+	    if (userData.characters){
+	      // Remove all user characters
+	      Object.keys(userData.characters).forEach(function(character_key){
+	        fb_data.ref("/characters/" + character_key).remove();
+	      });
+	    };
+
+	    // Remove the user data in database
+	    fb_data.ref(userPath).remove();
+
+	  }).then(function(){
+	    firebase.auth().currentUser.delete().then(function() {
+	      window.location.replace("/");
+	    }, function(error) {
+	      console.log(error);
+	      alert(error.message);
+	    });
+	  });
+
+	};
+
+
+	module.exports.profilePage = function profilePage(){
+	  var uid = window.currentUser.uid;
+	  var userPath = "users/" + uid;
+	  var userData;
+
+	  fb_data.ref(userPath).once("value", function(snap){
+	    userData = snap.val();
+	  }).then(function(){
+	    new Vue({
+	      el: '#vue-user',
+	      data: {
+	        user: userData, // Stores campaign data and character references
+	      },
+	      methods: {
+	        updateStore: function(){
+	          fb_data.ref(userPath).update(this.user);
+	        },
+	        deleteUser: function(){
+	          var c = confirm("Delete your account, including all your characters and campaigns?");
+	          if (c == true) {
+	            console.log('You will be remembered...');
+	            removeUser();
+	          } else {
+	            console.log('Great choice');
+	          }
+	        },
+	      }
+	    });
+
+	    revealPage();
+	  });
+
+
+	};
+
+
+/***/ },
+/* 19 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

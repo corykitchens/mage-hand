@@ -4,6 +4,7 @@ var characterPage = require('./character').characterPage;
 var campaignsPage = require('./campaigns').campaignsPage;
 var campaignPage = require('./campaign').campaignPage;
 var joinPage = require('./join').joinPage;
+var profilePage = require('./profile').profilePage;
 
 var twitterAuth = require('./auth').twitterAuth;
 var revealPage = require('./globals').revealPage;
@@ -44,6 +45,9 @@ module.exports.routeUser = function(){
   }
   else if (window.location.pathname === "/campaigns"){ // List of campaigns
     requiresAuth(campaignsPage);
+  }
+  else if (window.location.pathname === "/profile"){ // List of campaigns
+    requiresAuth(profilePage);
   }
 
 };

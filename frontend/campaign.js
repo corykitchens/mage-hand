@@ -35,8 +35,7 @@ module.exports.campaignPage = function campaignPage(){
       window.campaign.$set("campaign", campaign_data);
     };
 
-    updateCharacters();
-
+    updateCharacters(campaign_id);
   });
 };
 
@@ -46,13 +45,19 @@ module.exports.campaignPage = function campaignPage(){
 // they will change their character on the campaign object, thus re-rendering
 // the vue. On subsiquent polls, it will simply add characters, etc.
 // TODO will not remove characters in real time
-var updateCharacters = function(){
+var updateCharacters = function(campaign_id){
   if (window.campaign.campaign.characters){
     var characterIds = Object.keys(window.campaign.campaign.characters);
     characterIds.forEach(function(character_id){
       fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-        Vue.set(window.campaign.characters, character_id, character_snap.val());
-        attachCharacterClickHandler(character_id);
+
+        if (character_snap.val() == null) { // If this character has been removed, remove the reference
+          fb_data.ref("campaigns/" + campaign_id + "/characters/" + character_id).remove();
+        } else {
+          Vue.set(window.campaign.characters, character_id, character_snap.val());
+          attachCharacterClickHandler(character_id);
+        };
+
       });
     });
   };

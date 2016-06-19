@@ -38,5 +38,11 @@ router.get('/join', function(req, res, next) {
   res.render('join', { title: 'Join a Campaign' });
 });
 
+/* GET profile */
+router.get('/profile', function(req, res, next) {
+  res.render('profile', { title: 'Profile' });
+});
+
+
 
 module.exports = router;
