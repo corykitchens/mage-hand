@@ -40,7 +40,6 @@ var removeUser = function(){
       alert(error.message);
     });
   });
-
 };
 
 
@@ -51,30 +50,38 @@ module.exports.profilePage = function profilePage(){
 
   fb_data.ref(userPath).once("value", function(snap){
     userData = snap.val();
-  }).then(function(){
-    new Vue({
-      el: '#vue-user',
-      data: {
-        user: userData, // Stores campaign data and character references
-      },
-      methods: {
-        updateStore: function(){
-          fb_data.ref(userPath).update(this.user);
-        },
-        deleteUser: function(){
-          var c = confirm("Delete your account, including all your characters and campaigns?");
-          if (c == true) {
-            console.log('You will be remembered...');
-            removeUser();
-          } else {
-            console.log('Great choice');
-          }
-        },
-      }
-    });
+    var authData = window.currentUser.providerData[0];
 
-    revealPage();
+    if (snap.val() == undefined || snap.val() == null){
+      fb_data.ref(userPath).update({
+        provider: authData.providerId,
+        displayName: authData.displayName
+      }).then(function(){
+        profilePage(); // Recall
+      });
+    } else {
+      window.profileData = new Vue({
+        el: '#vue-user',
+        data: {
+          user: userData, // Stores campaign data and character references
+        },
+        methods: {
+          updateStore: function(){
+            fb_data.ref(userPath).update(this.user);
+          },
+          deleteUser: function(){
+            var c = confirm("Delete your account, including all your characters and campaigns?");
+            if (c == true) {
+              console.log('You will be remembered...');
+              removeUser();
+            } else {
+              console.log('Great choice');
+            }
+          },
+        }
+      });
+
+      revealPage();
+    };
   });
-
-
 };

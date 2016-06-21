@@ -1,25 +1,16 @@
 // var $ = require('jquery');
 var Vue = require('vue');
 var fb = require('./fb').database();
-var routeUser = require('./router').routeUser;
 var showOverlay = require('./globals').showOverlay;
 var hideOverlay = require('./globals').hideOverlay;
 var showDetailPane = require('./globals').showDetailPane;
 var hideDetailPane = require('./globals').hideDetailPane;
+var routeUser = require('./router').routeUser;
 
 require("./styles/core.scss");
 
 Vue.config.debug = true;  // TODO
 if (Vue.config.debug == true) console.log('!vue debug is on');
-
-// On auth state change
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) { // If user is logged in, set global
-    window.currentUser = firebase.auth().currentUser;
-  };
-  routeUser(); // Then route user appropriately
-});
-
 
 // #Notice
 // var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
@@ -29,12 +20,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 // console.log("%c\n\nLive adventurously.", console_style);
 
 
+routeUser(); // Get the user to the right page depending on their state
+
+
 //// # Globals
 window.revealed = false;
 $("#loading-text").text("Don't trust the rogue."); //TODO make this random
 
 
-String.prototype.capitalize = function() {
+String.prototype.capitalize = function() { // TODO I think this isn't used
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 

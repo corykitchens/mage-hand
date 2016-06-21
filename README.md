@@ -13,6 +13,7 @@ http://fireball-179561.nitrousapp.com/
 ## Bugs
 - Leaving a campaign doesn't update live
 - Can't update stats in Firefox
+- Deleting user account has weird session error
 
 ## TODO
 - User profile page

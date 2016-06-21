@@ -47,25 +47,16 @@
 	// var $ = require('jquery');
 	var Vue = __webpack_require__(1);
 	var fb = __webpack_require__(3).database();
-	var routeUser = __webpack_require__(6).routeUser;
 	var showOverlay = __webpack_require__(9).showOverlay;
 	var hideOverlay = __webpack_require__(9).hideOverlay;
 	var showDetailPane = __webpack_require__(9).showDetailPane;
 	var hideDetailPane = __webpack_require__(9).hideDetailPane;
+	var routeUser = __webpack_require__(6).routeUser;
 
 	__webpack_require__(19);
 
 	Vue.config.debug = true;  // TODO
 	if (Vue.config.debug == true) console.log('!vue debug is on');
-
-	// On auth state change
-	firebase.auth().onAuthStateChanged(function(user) {
-	  if (user) { // If user is logged in, set global
-	    window.currentUser = firebase.auth().currentUser;
-	  };
-	  routeUser(); // Then route user appropriately
-	});
-
 
 	// #Notice
 	// var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
@@ -75,12 +66,15 @@
 	// console.log("%c\n\nLive adventurously.", console_style);
 
 
+	routeUser(); // Get the user to the right page depending on their state
+
+
 	//// # Globals
 	window.revealed = false;
 	$("#loading-text").text("Don't trust the rogue."); //TODO make this random
 
 
-	String.prototype.capitalize = function() {
+	String.prototype.capitalize = function() { // TODO I think this isn't used
 	  return this.charAt(0).toUpperCase() + this.slice(1);
 	};
 
@@ -10872,45 +10866,53 @@
 
 	// ROUTER
 	// For routing the user around depending on their state
-
 	module.exports.routeUser = function(){
 
-	  if (window.location.pathname === "/"){
+	  firebase.auth().onAuthStateChanged(function(user) {
 
-	    if (window.currentUser == undefined){ // If user is logged OUT
-	      $(".logged-in").hide();
-	    } else {
-	      $(".logged-out").hide();
-	    };
-	    revealPage();
-	  }
+	    // If user is logged in, set global
+	    if (user){ window.currentUser = firebase.auth().currentUser; }
 
-	  else if (window.location.pathname === "/login"){ // IF at login
-	    if (window.currentUser) { window.location.replace("/"); } // Redirect if already logged in
-	    else { revealPage(); } // Else show login page
+	    if (window.location.pathname === "/"){
+	      if (window.currentUser == undefined){ // If user is logged OUT
+	        $(".logged-in").hide();
+	      } else {
+	        $(".logged-out").hide();
+	      };
+	      revealPage();
+	    }
 
-	    // Enable login click handlers (Might not really belong here but whatevs #YOLO)
-	    $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
-	  }
-	  else if (window.location.pathname === "/character"){ // Specific character
-	    requiresAuth(characterPage);
-	  }
-	  else if (window.location.pathname === "/characters"){ // List of characters
-	    requiresAuth(charactersPage);
-	  }
-	  else if (window.location.pathname === "/join"){ // Join a campaign
-	    requiresAuth(joinPage); // TODO make this unique page to explain why to sign up?
-	  }
-	  else if (window.location.pathname === "/campaign"){ // Specific campaign
-	    requiresAuth(campaignPage);
-	  }
-	  else if (window.location.pathname === "/campaigns"){ // List of campaigns
-	    requiresAuth(campaignsPage);
-	  }
-	  else if (window.location.pathname === "/profile"){ // List of campaigns
-	    requiresAuth(profilePage);
-	  }
+	    else if (window.location.pathname === "/login"){ // IF at login
 
+	      if (window.currentUser) { // Redirect if already logged in
+	        window.location.replace("/");
+	      } else { // Else show login page
+	        revealPage();
+	      }
+	      // Enable login click handlers (Might not really belong here but whatevs #YOLO)
+	      $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
+	    }
+
+	    else if (window.location.pathname === "/character"){ // Specific character
+	      requiresAuth(characterPage);
+	    }
+	    else if (window.location.pathname === "/characters"){ // List of characters
+	      requiresAuth(charactersPage);
+	    }
+	    else if (window.location.pathname === "/join"){ // Join a campaign
+	      requiresAuth(joinPage); // TODO make this unique page to explain why to sign up?
+	    }
+	    else if (window.location.pathname === "/campaign"){ // Specific campaign
+	      requiresAuth(campaignPage);
+	    }
+	    else if (window.location.pathname === "/campaigns"){ // List of campaigns
+	      requiresAuth(campaignsPage);
+	    }
+	    else if (window.location.pathname === "/profile"){ // List of campaigns
+	      requiresAuth(profilePage);
+	    }
+
+	  });
 	};
 
 
@@ -10924,6 +10926,7 @@
 
 	var provider = new firebase.auth.TwitterAuthProvider();
 
+
 	// Only let authorized users into these pages
 	module.exports.requiresAuth = function requiresAuth(callback){
 	  if (!window.currentUser) {
@@ -10936,35 +10939,12 @@
 	// #Authentication
 	module.exports.twitterAuth = function(){
 	  firebase.auth().signInWithPopup(provider).then(function(result) {
-	    // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-	    // You can use these server side with your app's credentials to access the Twitter API.
-	    // var token = result.credential.accessToken; //var secret = result.credential.secret;
-	    var user = result.user;
-	    window.currentUser = user;
-	  }).then(function(){
+	    window.currentUser = result.user;
 	    setupUser('twitter');
 	  }).catch(function(error){
 	    var errorCode = error.code;
 	    console.log("An error happened during login lol", error);
 	    alert(error.message)
-	  });
-	};
-
-
-	// Set up user when the log in
-	var setupUser = function setupUser(auth_type){
-	  var authData = window.currentUser;
-	  var snap_val;
-
-	  fb_data.ref("users/" + authData.uid).once("value", function(snap){
-	    snap_val = snap.val();
-	  }).then(function(){
-	    if (snap_val == undefined || snap_val == null){ // If they aren't in databse, create a record for them
-	      fb_data.ref("users/" + authData.uid).update({
-	        provider: auth_type,
-	        display_name: authData.displayName
-	      });
-	    };
 	  });
 	};
 
@@ -12341,7 +12321,6 @@
 	      alert(error.message);
 	    });
 	  });
-
 	};
 
 
@@ -12352,32 +12331,40 @@
 
 	  fb_data.ref(userPath).once("value", function(snap){
 	    userData = snap.val();
-	  }).then(function(){
-	    new Vue({
-	      el: '#vue-user',
-	      data: {
-	        user: userData, // Stores campaign data and character references
-	      },
-	      methods: {
-	        updateStore: function(){
-	          fb_data.ref(userPath).update(this.user);
-	        },
-	        deleteUser: function(){
-	          var c = confirm("Delete your account, including all your characters and campaigns?");
-	          if (c == true) {
-	            console.log('You will be remembered...');
-	            removeUser();
-	          } else {
-	            console.log('Great choice');
-	          }
-	        },
-	      }
-	    });
+	    var authData = window.currentUser.providerData[0];
 
-	    revealPage();
+	    if (snap.val() == undefined || snap.val() == null){
+	      fb_data.ref(userPath).update({
+	        provider: authData.providerId,
+	        displayName: authData.displayName
+	      }).then(function(){
+	        profilePage(); // Recall
+	      });
+	    } else {
+	      window.profileData = new Vue({
+	        el: '#vue-user',
+	        data: {
+	          user: userData, // Stores campaign data and character references
+	        },
+	        methods: {
+	          updateStore: function(){
+	            fb_data.ref(userPath).update(this.user);
+	          },
+	          deleteUser: function(){
+	            var c = confirm("Delete your account, including all your characters and campaigns?");
+	            if (c == true) {
+	              console.log('You will be remembered...');
+	              removeUser();
+	            } else {
+	              console.log('Great choice');
+	            }
+	          },
+	        }
+	      });
+
+	      revealPage();
+	    };
 	  });
-
-
 	};
 
 
