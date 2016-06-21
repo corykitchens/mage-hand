@@ -33,13 +33,14 @@ http://fireball-179561.nitrousapp.com/
 - Desktop view
 - Trim/organize CSS
 - Have multiple providers on one account?
-x Join campaign modal colors are weird (and probably others)
-x Use indexes (not priority) for campaign code lookups
-x Move game rule meta to separate files
-x Make campaign view
-x Sort out how fb3 effects user storage for lookups on /characters
-x Allow adding of spells
-x Adding of equipment
+- Add signout
+- ~~Join campaign modal colors are weird (and probably others)~~
+- ~~Use indexes (not priority) for campaign code lookups~~
+- ~~Move game rule meta to separate files~~
+- ~~Make campaign view~~
+- ~~Sort out how fb3 effects user storage for lookups on /characters~~
+- ~~Allow adding of spells~~
+- ~~Adding of equipment~~
 
 
 ### Security rules

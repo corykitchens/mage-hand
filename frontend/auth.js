@@ -18,7 +18,6 @@ module.exports.requiresAuth = function requiresAuth(callback){
 module.exports.twitterAuth = function(){
   firebase.auth().signInWithPopup(provider).then(function(result) {
     window.currentUser = result.user;
-    setupUser('twitter');
   }).catch(function(error){
     var errorCode = error.code;
     console.log("An error happened during login lol", error);

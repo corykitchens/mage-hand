@@ -5,5 +5,9 @@
   <label>Email</label>
   <input type="email" class="field-large" v-model="user.email" v-on:change="updateStore"/>
 
+  <!-- This button does nothing, save is on keyup -->
+  <button class="button button-primary u-full-width xs-mt2">Save</button>
+
+  </br></br>
   <button class="button-primary u-full-width xs-mt6" v-on:click="deleteUser">Delete Account</button>
 </div>

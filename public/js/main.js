@@ -47,11 +47,11 @@
 	// var $ = require('jquery');
 	var Vue = __webpack_require__(1);
 	var fb = __webpack_require__(3).database();
-	var showOverlay = __webpack_require__(9).showOverlay;
-	var hideOverlay = __webpack_require__(9).hideOverlay;
-	var showDetailPane = __webpack_require__(9).showDetailPane;
-	var hideDetailPane = __webpack_require__(9).hideDetailPane;
-	var routeUser = __webpack_require__(6).routeUser;
+	var showOverlay = __webpack_require__(6).showOverlay;
+	var hideOverlay = __webpack_require__(6).hideOverlay;
+	var showDetailPane = __webpack_require__(6).showDetailPane;
+	var hideDetailPane = __webpack_require__(6).hideDetailPane;
+	var routeUser = __webpack_require__(7).routeUser;
 
 	__webpack_require__(19);
 
@@ -10851,18 +10851,80 @@
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	// Global helpers
+	module.exports.revealPage = function(){
+	  if (window.revealed == false){
+	    $(".loading-message").hide();
+	    $(".body-content").addClass("u-opacity1");
+	  };
+	};
+
+	module.exports.getUrlParam = function(name, url) {
+	  if (!url) url = window.location.href;
+	  name = name.replace(/[\[\]]/g, "\\$&");
+	  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	      results = regex.exec(url);
+	  if (!results) return null;
+	  if (!results[2]) return '';
+	  return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+
+
+	module.exports.showDetailPane = function(selector, fieldValue){
+	  var $detailTab = $("[data-selector="+ selector +"]");
+	  var $detailPane = $("#" + fieldValue + "-info");
+
+
+	  showOverlay();
+
+	  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
+	  $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
+
+	  $detailTab.removeClass("off-screen"); // Show race tabs
+	  $detailTab.find($("#"+ fieldValue +"-tab")).addClass("selected");
+	  $detailPane.removeClass("off-screen"); // Show the selected race pane
+	};
+
+	module.exports.hideDetailPane = function(){
+	  $(".detail-tabs").addClass("off-screen");
+	  $(".detail-panes").addClass("off-screen"); // Hide detail panes
+	  hideOverlay();
+	};
+
+
+	var showOverlay = function(){ // So that it's accesible to other functions here
+	  var $overlay = $(".overlay");
+	  $overlay.css('z-index', '1');
+	  $overlay.show();
+	  $("#character-bottom-nav-menu").css('z-index', 1);
+	};
+	module.exports.showOverlay = showOverlay;
+
+	var hideOverlay = function(){ // So that it's accesible to other functions here
+	  $(".overlay").hide();
+	  $(".join-overlay").hide();
+	  $("#character-bottom-nav-menu").css('z-index', '');
+	  $(".join-modal").hide();
+	};
+	module.exports.hideOverlay = hideOverlay;
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var requiresAuth = __webpack_require__(7).requiresAuth;
-	var charactersPage = __webpack_require__(8).charactersPage;
+	var requiresAuth = __webpack_require__(8).requiresAuth;
+	var charactersPage = __webpack_require__(9).charactersPage;
 	var characterPage = __webpack_require__(13).characterPage;
 	var campaignsPage = __webpack_require__(14).campaignsPage;
 	var campaignPage = __webpack_require__(16).campaignPage;
 	var joinPage = __webpack_require__(17).joinPage;
 	var profilePage = __webpack_require__(18).profilePage;
 
-	var twitterAuth = __webpack_require__(7).twitterAuth;
-	var revealPage = __webpack_require__(9).revealPage;
+	var twitterAuth = __webpack_require__(8).twitterAuth;
+	var revealPage = __webpack_require__(6).revealPage;
 
 	// ROUTER
 	// For routing the user around depending on their state
@@ -10917,7 +10979,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var firebase = __webpack_require__(3);
@@ -10940,7 +11002,6 @@
 	module.exports.twitterAuth = function(){
 	  firebase.auth().signInWithPopup(provider).then(function(result) {
 	    window.currentUser = result.user;
-	    setupUser('twitter');
 	  }).catch(function(error){
 	    var errorCode = error.code;
 	    console.log("An error happened during login lol", error);
@@ -10950,12 +11011,12 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(4).database();
-	var revealPage = __webpack_require__(9).revealPage;
+	var revealPage = __webpack_require__(6).revealPage;
 	var gameTypes = __webpack_require__(10).gameTypes;
 	var gameMeta = __webpack_require__(10).gameMeta;
 
@@ -11046,68 +11107,6 @@
 	};
 
 	// 🎵 Wildcat!Wildcat! Tower
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	// Global helpers
-	module.exports.revealPage = function(){
-	  if (window.revealed == false){
-	    $(".loading-message").hide();
-	    $(".body-content").addClass("u-opacity1");
-	  };
-	};
-
-	module.exports.getUrlParam = function(name, url) {
-	  if (!url) url = window.location.href;
-	  name = name.replace(/[\[\]]/g, "\\$&");
-	  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-	      results = regex.exec(url);
-	  if (!results) return null;
-	  if (!results[2]) return '';
-	  return decodeURIComponent(results[2].replace(/\+/g, " "));
-	}
-
-
-	module.exports.showDetailPane = function(selector, fieldValue){
-	  var $detailTab = $("[data-selector="+ selector +"]");
-	  var $detailPane = $("#" + fieldValue + "-info");
-
-
-	  showOverlay();
-
-	  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
-	  $(".character-detail-tab").removeClass("selected"); // Remove selected highlight style
-
-	  $detailTab.removeClass("off-screen"); // Show race tabs
-	  $detailTab.find($("#"+ fieldValue +"-tab")).addClass("selected");
-	  $detailPane.removeClass("off-screen"); // Show the selected race pane
-	};
-
-	module.exports.hideDetailPane = function(){
-	  $(".detail-tabs").addClass("off-screen");
-	  $(".detail-panes").addClass("off-screen"); // Hide detail panes
-	  hideOverlay();
-	};
-
-
-	var showOverlay = function(){ // So that it's accesible to other functions here
-	  var $overlay = $(".overlay");
-	  $overlay.css('z-index', '1');
-	  $overlay.show();
-	  $("#character-bottom-nav-menu").css('z-index', 1);
-	};
-	module.exports.showOverlay = showOverlay;
-
-	var hideOverlay = function(){ // So that it's accesible to other functions here
-	  $(".overlay").hide();
-	  $(".join-overlay").hide();
-	  $("#character-bottom-nav-menu").css('z-index', '');
-	  $(".join-modal").hide();
-	};
-	module.exports.hideOverlay = hideOverlay;
 
 
 /***/ },
@@ -11735,14 +11734,14 @@
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(9).revealPage;
+	var revealPage = __webpack_require__(6).revealPage;
 	var gameMeta = __webpack_require__(10).gameMeta;
-	var getUrlParam = __webpack_require__(9).getUrlParam;
+	var getUrlParam = __webpack_require__(6).getUrlParam;
 
-	var showOverlay = __webpack_require__(9).showOverlay;
-	var hideOverlay = __webpack_require__(9).hideOverlay;
-	var showDetailPane = __webpack_require__(9).showDetailPane;
-	var hideDetailPane = __webpack_require__(9).hideDetailPane;
+	var showOverlay = __webpack_require__(6).showOverlay;
+	var hideOverlay = __webpack_require__(6).hideOverlay;
+	var showDetailPane = __webpack_require__(6).showDetailPane;
+	var hideDetailPane = __webpack_require__(6).hideDetailPane;
 
 
 
@@ -12018,7 +12017,7 @@
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(4).database();
-	var revealPage = __webpack_require__(9).revealPage;
+	var revealPage = __webpack_require__(6).revealPage;
 	var gameTypes = __webpack_require__(10).gameTypes;
 	var gameMeta = __webpack_require__(10).gameMeta;
 	var campaignKeyGenerator = __webpack_require__(15).campaignKeyGenerator;
@@ -12175,9 +12174,9 @@
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(9).revealPage;
+	var revealPage = __webpack_require__(6).revealPage;
 	var gameMeta = __webpack_require__(10).gameMeta; //TODO do we need this? (see below)
-	var showOverlay = __webpack_require__(9).showOverlay;
+	var showOverlay = __webpack_require__(6).showOverlay;
 
 	module.exports.campaignPage = function campaignPage(){
 	  var campaign_id = window.location.search.replace("?id=", "");
@@ -12267,7 +12266,7 @@
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(9).revealPage;
+	var revealPage = __webpack_require__(6).revealPage;
 
 	module.exports.joinPage = function joinPage(){
 	  console.log('loller');
@@ -12281,7 +12280,7 @@
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(9).revealPage;
+	var revealPage = __webpack_require__(6).revealPage;
 
 
 	var removeUser = function(){
