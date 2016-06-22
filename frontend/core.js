@@ -12,6 +12,12 @@ require("./styles/core.scss");
 Vue.config.debug = true;  // TODO
 if (Vue.config.debug == true) console.log('!vue debug is on');
 
+// TODO offline content
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register('/offline.js');
+}
+// https://www.youtube.com/watch?v=qDJAz3IIq18
+
 // #Notice
 // var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
 // console.log("%cmagehand.xyz ✋", "color: black; font-family: 'Doris', monospace; font-size: 2rem; font-weight: 800;");

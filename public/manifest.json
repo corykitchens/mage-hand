@@ -1,0 +1,16 @@
+{
+  "name": "Magehand",
+  "short_name": "Magehand",
+  "default_locale": "en",
+  "display": "standalone",
+  "description": "Manage your tabletop games in real-time.",
+  "icons": {...},
+  "theme_color": "#ADA267",
+  "background_color": "#83968D",
+  "author": "spenser.xyz",
+
+  "homepage_url": "/",
+  "start_url": "/",
+
+
+}
