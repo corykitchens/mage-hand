@@ -194,6 +194,7 @@ var attachClickHandlers = function(){
 
   // Join campaign button
   $(".join-campaign").on("click", function(){
+    //TODO add focus to form on modal
     $(".join-overlay").show();
     $(".join-modal").show();
   })

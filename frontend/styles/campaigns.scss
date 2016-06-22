@@ -52,11 +52,17 @@
 }
 
 
+[data-show-character] {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 1rem 1rem 1rem;
+  border-radius: 3px;
+}
+
 li.character-skill-list {
   font-size: 1.2rem;
   border: 0 !important;
   padding: 0 2px;
-  
+
   &:after {
     content: ",";
   }

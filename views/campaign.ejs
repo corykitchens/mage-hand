@@ -10,7 +10,7 @@
       <input type="text" class="field-large page-header" v-model="campaign.name"
              v-on:keyup="updateStore" v-on:change="updateStore">
 
-      <div v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
+      <div v-if="characters" v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
         <label class="xs-mb0">{{character.name}}</label>
         <div class="u-flex">
           <div class="box-field xs-mr1">
@@ -124,7 +124,7 @@
             <div v-if="character.skills">
               <label>Proficiencies</label>
               <ul class="u-flex u-flex--wrap ">
-                <li v-for="skill in character.skills" class="character-skill-list u-capitalize">{$key}}</li>
+                <li v-for="skill in character.skills" class="character-skill-list u-capitalize">{{$key.replace('_', ' ')}}</li>
               </ul>
             </div>
             <!-- Character Detail Abilities -->
@@ -184,13 +184,11 @@
               <input disabled type="text" class="input-detail-plain" v-model="character.background.notes">
             </div>
 
-
-
-
           </div>
         </section>
 
       </div>
+
     </form>
 
 

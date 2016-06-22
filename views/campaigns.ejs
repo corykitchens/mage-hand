@@ -8,7 +8,7 @@
   <section id="vue-campaigns">
     <div v-for="campaign in campaigns" class="campaign u-full-width" id="{{ campaign.key }}">
       <h4 class="name">{{ campaign.name }} <span class="game-type">{{ campaign.game_type }}</span></h4>
-      <label class="info">
+      <label class="info" v-if:"campaign.background">
         {{ campaign.background }}
       </label>
     </div>

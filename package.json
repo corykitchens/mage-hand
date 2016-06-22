@@ -5,6 +5,7 @@
   "description": "A campaign manager for tabletop role-playing games.",
   "homepage": "https://github.com/bananatron/fireball#readme",
   "devDependencies": {
+    "autoprefixer": "^6.3.6",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^2.0.0",
@@ -12,6 +13,8 @@
     "gulp-sass": "^2.3.1",
     "gulp-uglify": "^1.5.3",
     "node-sass": "^3.6.0",
+    "postcss-loader": "^0.9.1",
+    "precss": "^1.4.0",
     "sass-loader": "^3.2.0"
   },
   "scripts": {

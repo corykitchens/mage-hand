@@ -1,7 +1,6 @@
 
 *, *:before, *:after { box-sizing: inherit; }
 html, body {
-	height: 100%;
 	width: 100%;
 	margin: 0; padding: 0;
 	box-sizing: border-box;
@@ -59,11 +58,11 @@ textarea {
 }
 
 .page-header {
-	font-size: 2.4rem;
+	font-size: 20px;
 	font-weight: bold;
 	color: $light;
 	margin-bottom: 1rem;
-	//border: 1px solid transparent !important;
+	height: 50px !important;
 	&:focus { color: black; }
 }
 
@@ -160,6 +159,10 @@ textarea {
 .ion-social-google:focus { color: #F90101; }
 .icon-social { color: rgba(0, 0, 0, 0.5); cursor:pointer; }
 .ion-locked { color: #824343 !important; }
+.ion-flash,
+.ion-android-add-circle {
+	cursor: pointer;
+}
 
 .wizard { color: $color-blue; }
 .cleric { color: $color-yellow; }
@@ -348,10 +351,10 @@ $box-field--vertical-height: 30px;
 .slidable-form {
 	transition: all $transition-normal ease-in-out;
 	position: absolute;
-	margin-bottom: 60px; //should match height of #character-bottom-nav-menu
 	top: 0;
 	left: 0;
 	width: 100%;
+	padding-bottom: 60px; // Should be same height as bottom nav
 	&.off-screen {
 		left: -120%; // This is negative because of weirdness with mobile fixed
 		opacity: 0.1;
@@ -433,6 +436,7 @@ $box-field--vertical-height: 30px;
 		text-align: center;
 		font-size: 2.5rem;
 		border-right: 2px solid $color-green;
+		cursor: pointer;
 	}
 	.nav-button:last-child { border: 0; }
 }

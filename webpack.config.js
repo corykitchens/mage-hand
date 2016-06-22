@@ -1,4 +1,6 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var precss            = require('precss');
+var autoprefixer      = require('autoprefixer');
 
 module.exports = {
   entry: "./frontend/core.js",
@@ -10,9 +12,12 @@ module.exports = {
     loaders: [
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("css-loader!sass")
+        loader: ExtractTextPlugin.extract("css-loader!postcss-loader!sass")
       }
     ]
+  },
+  postcss: function () {
+    return [precss, autoprefixer];
   },
   plugins: [
     new ExtractTextPlugin("../stylesheets/[name].css")
