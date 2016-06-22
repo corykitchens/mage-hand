@@ -3,7 +3,7 @@ var precss            = require('precss');
 var autoprefixer      = require('autoprefixer');
 
 module.exports = {
-  entry: "./frontend/core.js",
+  entry: "./frontend/init.js",
   output: {
     path: "./public/js/",
     filename: "main.js"

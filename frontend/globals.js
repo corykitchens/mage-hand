@@ -1,10 +1,28 @@
 // Global helpers
+
+var showOverlay = function(){ // So that it's accesible to other functions here
+  var $overlay = $(".overlay");
+  $overlay.css('z-index', '1');
+  $overlay.show();
+  $("#character-bottom-nav-menu").css('z-index', 1);
+}; module.exports.showOverlay = showOverlay;
+
+
+var hideOverlay = function(){ // So that it's accesible to other functions here
+  $(".overlay").hide();
+  $(".join-overlay").hide();
+  $("#character-bottom-nav-menu").css('z-index', '');
+  $(".join-modal").hide();
+}; module.exports.hideOverlay = hideOverlay;
+
+
 module.exports.revealPage = function(){
   if (window.revealed == false){
     $(".loading-message").hide();
     $(".body-content").addClass("u-opacity1");
   };
 };
+
 
 module.exports.getUrlParam = function(name, url) {
   if (!url) url = window.location.href;
@@ -21,7 +39,6 @@ module.exports.showDetailPane = function(selector, fieldValue){
   var $detailTab = $("[data-selector="+ selector +"]");
   var $detailPane = $("#" + fieldValue + "-info");
 
-
   showOverlay();
 
   $(".detail-panes").addClass("off-screen"); // Hide all detail panes
@@ -32,6 +49,7 @@ module.exports.showDetailPane = function(selector, fieldValue){
   $detailPane.removeClass("off-screen"); // Show the selected race pane
 };
 
+
 module.exports.hideDetailPane = function(){
   $(".detail-tabs").addClass("off-screen");
   $(".detail-panes").addClass("off-screen"); // Hide detail panes
@@ -39,18 +57,6 @@ module.exports.hideDetailPane = function(){
 };
 
 
-var showOverlay = function(){ // So that it's accesible to other functions here
-  var $overlay = $(".overlay");
-  $overlay.css('z-index', '1');
-  $overlay.show();
-  $("#character-bottom-nav-menu").css('z-index', 1);
-};
-module.exports.showOverlay = showOverlay;
-
-var hideOverlay = function(){ // So that it's accesible to other functions here
-  $(".overlay").hide();
-  $(".join-overlay").hide();
-  $("#character-bottom-nav-menu").css('z-index', '');
-  $(".join-modal").hide();
-};
-module.exports.hideOverlay = hideOverlay;
+// String.prototype.capitalize = function() { // TODO I think this isn't used
+//   return this.charAt(0).toUpperCase() + this.slice(1);
+// };

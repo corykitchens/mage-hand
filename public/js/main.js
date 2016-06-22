@@ -47,95 +47,98 @@
 	// var $ = require('jquery');
 	var Vue = __webpack_require__(1);
 	var fb = __webpack_require__(3).database();
-	var showOverlay = __webpack_require__(6).showOverlay;
 	var hideOverlay = __webpack_require__(6).hideOverlay;
-	var showDetailPane = __webpack_require__(6).showDetailPane;
 	var hideDetailPane = __webpack_require__(6).hideDetailPane;
 	var routeUser = __webpack_require__(7).routeUser;
+	//var showOverlay = require('./globals').showOverlay;
+	//var showDetailPane = require('./globals').showDetailPane;
+	//require("./styles/core.scss");
 
-	__webpack_require__(19);
+	// Initialize on every page load
+	function init(){
 
-	Vue.config.debug = true;  // TODO
-	if (Vue.config.debug == true) console.log('!vue debug is on');
+	  Vue.config.debug = true;  // TODO
+	  if (Vue.config.debug == true) console.log('!vue debug is on');
 
-	// TODO offline content
-	if (navigator.serviceWorker) {
-	  navigator.serviceWorker.register('/offline.js');
-	}
-	// https://www.youtube.com/watch?v=qDJAz3IIq18
+	  // TODO offline content
+	  if (navigator.serviceWorker) {
+	    navigator.serviceWorker.register('/offline.js');
+	  }
+	  // https://www.youtube.com/watch?v=qDJAz3IIq18
+
+	  // When app is loaded, route user
+	  routeUser(); // Get the user to the right page depending on their state
+	  setGlobals();
+	  initHandlers();
+	}; init();
+
+	function setGlobals(){
+	  window.revealed = false;
+	  $("#loading-text").text("Don't trust the rogue."); //TODO make this random
+	};
+
+
+	function initHandlers(){
+	  // # Sticky section header on characters + campaigns
+	  var $head = $(".header-sticky");
+	  var nav_height = $(".nav").height();
+
+	  $( window ).scroll(function() {
+	    var scroll_pos = $(window).scrollTop();
+
+	    if (scroll_pos > nav_height) {
+	      $head.removeClass("u-opacity0");
+	    } else {
+	      $head.addClass("u-opacity0");
+	    }
+	  });
+
+
+	  // # Global handlers
+	  // These maybe should live in Vue?
+	  $(document).keypress(function(e) { // Prevent enter from doing anything
+	    if(e.which == 13) return false;
+	  });
+
+	  // Overlay clickity clicker
+	  $(".overlay").on("click", function(){
+	    hideOverlay();
+	    hideDetailPane();
+	  });
+
+	  // Bottom fixed nav bar thing
+	  $(".nav-button").on("click", function(ee){
+	    hideOverlay();
+	    hideDetailPane();
+	    var selector = $(ee.currentTarget).data('show');
+	    var $slidableForms = $(".slidable-form");
+
+	    $slidableForms.addClass("off-screen");
+	    $slidableForms.show();
+
+	    setTimeout(function(){
+	      $(window).scrollTop(0);
+	      $("#" + selector).removeClass("off-screen");
+	    }, 200)
+
+	    // After animation (0.3) hide non-visible screens to prevent excess scroll areas
+	    setTimeout(function(){
+	      $("form").each(function(ii, form){
+	        $form = $(form);
+	        if($form.hasClass('off-screen')) $form.hide();
+	      })
+	    }, 200)
+	  });
+	};
+
+
 
 	// #Notice
 	// var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
 	// console.log("%cmagehand.xyz ✋", "color: black; font-family: 'Doris', monospace; font-size: 2rem; font-weight: 800;");
 	// console.log('%cHey hombre! Feel free to poke around for any bugs and report them to', console_style);
-	// console.log('%cdev@magehand.xyz', console_style + 'font-size: 18px; color: #A77A7A; font-family:monospace;');
+	// console.log('%chttps://github.com/bananatron/mage-hand/issues', console_style + 'font-size: 18px; color: #A77A7A; font-family:monospace;');
 	// console.log("%c\n\nLive adventurously.", console_style);
-
-
-	routeUser(); // Get the user to the right page depending on their state
-
-
-	//// # Globals
-	window.revealed = false;
-	$("#loading-text").text("Don't trust the rogue."); //TODO make this random
-
-
-	String.prototype.capitalize = function() { // TODO I think this isn't used
-	  return this.charAt(0).toUpperCase() + this.slice(1);
-	};
-
-
-	// # Sticky section header
-	// On characters + campaigns
-	var $head = $(".header-sticky");
-	var nav_height = $(".nav").height();
-
-	$( window ).scroll(function() {
-	  var scroll_pos = $(window).scrollTop();
-
-	  if (scroll_pos > nav_height) {
-	    $head.removeClass("u-opacity0");
-	  } else {
-	    $head.addClass("u-opacity0");
-	  }
-	});
-
-
-	// # Global handlers
-	$(document).keypress(function(e) { // Prevent enter from doing anything
-	  if(e.which == 13) return false;
-	});
-
-	// Overlay clickity clicker
-	$(".overlay").on("click", function(){
-	  hideOverlay();
-	  hideDetailPane();
-	});
-
-	// Bottom fixed nav bar thing
-	$(".nav-button").on("click", function(ee){
-	  hideOverlay();
-	  hideDetailPane();
-	  var selector = $(ee.currentTarget).data('show');
-	  var $slidableForms = $(".slidable-form");
-
-	  $slidableForms.addClass("off-screen");
-	  $slidableForms.show();
-
-	  setTimeout(function(){
-	    $(window).scrollTop(0);
-	    $("#" + selector).removeClass("off-screen");
-	  }, 200)
-
-	  // After animation (0.3) hide non-visible screens to prevent excess scroll areas
-	  setTimeout(function(){
-	    $("form").each(function(ii, form){
-	      $form = $(form);
-	      if($form.hasClass('off-screen')) $form.hide();
-	    })
-	  }, 200)
-
-	});
 
 
 /***/ },
@@ -10860,12 +10863,30 @@
 /***/ function(module, exports) {
 
 	// Global helpers
+
+	var showOverlay = function(){ // So that it's accesible to other functions here
+	  var $overlay = $(".overlay");
+	  $overlay.css('z-index', '1');
+	  $overlay.show();
+	  $("#character-bottom-nav-menu").css('z-index', 1);
+	}; module.exports.showOverlay = showOverlay;
+
+
+	var hideOverlay = function(){ // So that it's accesible to other functions here
+	  $(".overlay").hide();
+	  $(".join-overlay").hide();
+	  $("#character-bottom-nav-menu").css('z-index', '');
+	  $(".join-modal").hide();
+	}; module.exports.hideOverlay = hideOverlay;
+
+
 	module.exports.revealPage = function(){
 	  if (window.revealed == false){
 	    $(".loading-message").hide();
 	    $(".body-content").addClass("u-opacity1");
 	  };
 	};
+
 
 	module.exports.getUrlParam = function(name, url) {
 	  if (!url) url = window.location.href;
@@ -10882,7 +10903,6 @@
 	  var $detailTab = $("[data-selector="+ selector +"]");
 	  var $detailPane = $("#" + fieldValue + "-info");
 
-
 	  showOverlay();
 
 	  $(".detail-panes").addClass("off-screen"); // Hide all detail panes
@@ -10893,6 +10913,7 @@
 	  $detailPane.removeClass("off-screen"); // Show the selected race pane
 	};
 
+
 	module.exports.hideDetailPane = function(){
 	  $(".detail-tabs").addClass("off-screen");
 	  $(".detail-panes").addClass("off-screen"); // Hide detail panes
@@ -10900,21 +10921,9 @@
 	};
 
 
-	var showOverlay = function(){ // So that it's accesible to other functions here
-	  var $overlay = $(".overlay");
-	  $overlay.css('z-index', '1');
-	  $overlay.show();
-	  $("#character-bottom-nav-menu").css('z-index', 1);
-	};
-	module.exports.showOverlay = showOverlay;
-
-	var hideOverlay = function(){ // So that it's accesible to other functions here
-	  $(".overlay").hide();
-	  $(".join-overlay").hide();
-	  $("#character-bottom-nav-menu").css('z-index', '');
-	  $(".join-modal").hide();
-	};
-	module.exports.hideOverlay = hideOverlay;
+	// String.prototype.capitalize = function() { // TODO I think this isn't used
+	//   return this.charAt(0).toUpperCase() + this.slice(1);
+	// };
 
 
 /***/ },
@@ -10988,11 +10997,12 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// AUTH - - - -
+	// Contains functions related to authentication
+
 	var firebase = __webpack_require__(3);
 	var fb_auth = __webpack_require__(3).auth;
 	var fb_data = __webpack_require__(3).database();
-
-	var provider = new firebase.auth.TwitterAuthProvider();
 
 
 	// Only let authorized users into these pages
@@ -11004,8 +11014,9 @@
 	  }
 	};
 
-	// #Authentication
+	// Twitter authentication
 	module.exports.twitterAuth = function(){
+	  var provider = new firebase.auth.TwitterAuthProvider();
 	  firebase.auth().signInWithPopup(provider).then(function(result) {
 	    window.currentUser = result.user;
 	  }).catch(function(error){
@@ -11019,6 +11030,8 @@
 /***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
+
+	// Defines functions applicable to the /characters list page
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(4).database();
@@ -11119,17 +11132,41 @@
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// The meta documents are design to define character and game structure for drawing and
-	// maniuplating views related to a character of that 'game_type' - This contains the
-	// appropriate functions to fetch the appropriate game data depending on type
+	
+	// The game meta documents are design to define character and game structure for drawing and
+	// maniuplating views related to a character of that 'game type' - This contains the
+	// appropriate functions to fetch game meta for use in view.
 
-	// Game meta information are stored in seperate files in this folder, and can be disabled
-	// by setting the 'active' flag to false before a rollout
+	// -- Adding Game Meta --
+	// You'll need to create a new file for each 'game type' which should correspond with it's key
+	// used to access it. Use dnd_5e as an example - it contains stat information, how characters
+	// should be structure, spells, etc.
+
+	// A view will not inherintly be smart enough to know what to do with a gameMeta object, but
+	// you can use them as an easy way to abstract view logic and allow for consinstent changes
+	// for a given game type.
+
+	// NOTE: Game meta information for each game are stored in seperate files in this folder, and can
+	// be disabled by setting the 'active' flag to false before a game type is active/live.
 
 
-	// Returns and array of objects containing a pruned subset of information about the game
+
+
+
+	// Retrieve full 'game meta' information based on the key passed in
+	// Arguments(game_key) [String] - eg. 'dnd_5e'
+	// Returns gameMeta Object
+	module.exports.gameMeta = function(game_key){
+	  var game_meta = __webpack_require__(11)("./" + game_key).gameMeta();
+	  return game_meta;
+	};
+
+
+
+	// returns [Object]
+	// Returns and array of objects containing a pruned subset of information about a given game type
 	// (key, long_name, short_name) - This can be expanded later if needed
-	module.exports.gameTypes = function(name_type){
+	module.exports.gameTypes = function(){
 	  var gameMeta = __webpack_require__(10).gameMeta;
 	  var game_list = ['dnd_5e']; // Harded coded list of string matching meta filename
 	  var game_type_data = {};
@@ -11146,13 +11183,6 @@
 	    };
 	  });
 	  return game_type_data; // Just return the subset
-	};
-
-
-	// Retrieve game meta based on game meta key/failname
-	module.exports.gameMeta = function(game_key){
-	  var game_meta = __webpack_require__(11)("./" + game_key).gameMeta();
-	  return game_meta;
 	};
 
 
@@ -11184,6 +11214,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
+	
 	// DND 5E Game meta information
 	// This structure is used to determine field types and skill/spell/attribute
 	// data when creating and viewing a character of this game type
@@ -11456,6 +11487,7 @@
 
 	    },
 
+	    // Level progression isn't currently used
 	    level_progression: { //TODO these numbers probably aren't right
 	      1: 300,
 	      2: 600,
@@ -11737,6 +11769,8 @@
 /***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
+
+	// Defines functions applicable to an individual /campaign page
 
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
@@ -12022,6 +12056,8 @@
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// Defines functions applicable to the /campaigns list page
+
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(4).database();
 	var revealPage = __webpack_require__(6).revealPage;
@@ -12179,6 +12215,8 @@
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// Defines functions applicable to an individual /campaign page
+
 	var Vue = __webpack_require__(1);
 	var fb_data = __webpack_require__(3).database();
 	var revealPage = __webpack_require__(6).revealPage;
@@ -12231,7 +12269,7 @@
 	    var characterIds = Object.keys(window.campaign.campaign.characters);
 	    characterIds.forEach(function(character_id){
 	      fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-	        
+
 	        if (character_snap.val() == null) { // If this character has been removed, remove the reference
 	          fb_data.ref("campaigns/" + campaign_id + "/characters/" + character_id).remove();
 	        } else {
@@ -12373,12 +12411,6 @@
 	  });
 	};
 
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

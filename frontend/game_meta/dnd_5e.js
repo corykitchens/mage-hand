@@ -1,3 +1,4 @@
+
 // DND 5E Game meta information
 // This structure is used to determine field types and skill/spell/attribute
 // data when creating and viewing a character of this game type
@@ -270,6 +271,7 @@ module.exports.gameMeta = function gameMeta(){
 
     },
 
+    // Level progression isn't currently used
     level_progression: { //TODO these numbers probably aren't right
       1: 300,
       2: 600,

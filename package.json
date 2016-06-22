@@ -1,9 +1,9 @@
 {
-  "name": "Fireball",
-  "version": "1.0.0",
+  "name": "Magehand",
+  "version": "0.0.8",
   "private": true,
   "description": "A campaign manager for tabletop role-playing games.",
-  "homepage": "https://github.com/bananatron/fireball#readme",
+  "homepage": "http://magehand.xyz",
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "gulp": "^3.9.1",
@@ -22,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bananatron/fireball.git"
+    "url": "git+https://github.com/bananatron/mage-hand.git"
   },
   "author": "spenser.xyz",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bananatron/fireball/issues"
+    "url": "https://github.com/bananatron/mage-hand/issues"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

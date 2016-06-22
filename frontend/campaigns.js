@@ -1,3 +1,5 @@
+// Defines functions applicable to the /campaigns list page
+
 var Vue = require('vue');
 var fb_data = require('firebase').database();
 var revealPage = require('./globals').revealPage;

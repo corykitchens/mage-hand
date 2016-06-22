@@ -1,3 +1,5 @@
+// Defines functions applicable to an individual /campaign page
+
 var Vue = require('vue');
 var fb_data = require('./fb').database();
 var revealPage = require('./globals').revealPage;
@@ -50,7 +52,7 @@ var updateCharacters = function(campaign_id){
     var characterIds = Object.keys(window.campaign.campaign.characters);
     characterIds.forEach(function(character_id){
       fb_data.ref("characters/" + character_id).on("value", function(character_snap){
-        
+
         if (character_snap.val() == null) { // If this character has been removed, remove the reference
           fb_data.ref("campaigns/" + campaign_id + "/characters/" + character_id).remove();
         } else {
