@@ -370,7 +370,7 @@
 
           <div class="u-flex u-flex--center">
             <input type="text" class="name u-flex--grow" v-model="ability.name" v-on:keyup="updateStore" v-on:change="updateStore">
-            <i class="icon ion-information-circled action-icon" v-on:click="toggleInfo" data-equipment-id='{{ $key }}'></i>
+            <i class="icon ion-information-circled action-icon" v-on:click="toggleInfo"></i>
             <i class="icon ion-close action-icon" v-on:click="deleteAbility" data-ability-id='{{ $key }}'></i>
           </div>
 
@@ -432,8 +432,8 @@
 
           <!-- Does equipment really need descriptions? -->
           <!-- <input type="text" v-model="item.description"
-v-on:keyup="updateStore" v-on:change="updateStore"
-id="equip-{{ $key }}" class="equip-description"> -->
+            v-on:keyup="updateStore" v-on:change="updateStore"
+            id="equip-{{ $key }}" class="equip-description"> -->
         </div>
       </div>
 

@@ -57,6 +57,7 @@ textarea {
 
 #mobile-nav-toggle { cursor: pointer; }
 #mobile-nav-icons {
+	pointer-events: none; // So you can't click on invisible icons
 	position: absolute;
 	display: flex;
 	justify-content: space-around;
@@ -69,6 +70,7 @@ textarea {
 	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
 	transition: opacity 0.1s ease-in-out;
 	a { color: inherit !important; }
+	&.show { pointer-events: all; }
 }
 
 .page-header {

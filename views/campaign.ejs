@@ -214,7 +214,34 @@
     <!-- Equipment + ??? -->
     <!-- # # # # # # # # #  # # # # # # # # # -->
     <form class="slidable-form off-screen" id="campaign-features">
-      <h3>This is prob where equipment, NPCs, and shit like that will go?</h3>
+      <!-- <h3>This is prob where equipment, NPCs, and shit like that will go?</h3> -->
+      <div class="u-flex u-flex--center">
+        <label class="u-flex--grow xs-mt2">NPCs<i class="icon ion-eye-disabled"></i></label>
+        <i class="icon ion-android-add-circle" v-on:click="addNpc" style="font-size:2rem;"></i>
+      </div>
+
+
+      <div class="u-flex u-flex--column-reverse">
+        <div v-for="npc in campaign.npcs" class="ability-item">
+
+          <div class="u-flex u-flex--center">
+            <input type="text" class="name u-flex--grow" v-model="npc.name" v-on:keyup="updateStore" v-on:change="updateStore">
+            <i class="icon ion-information-circled action-icon" v-on:click="toggleInfo"></i>
+            <i class="icon ion-close action-icon" v-on:click="deleteNpc" data-npc-id='{{ $key }}'></i>
+          </div>
+
+          <input type="text" v-model="npc.overview"
+                 v-on:keyup="updateStore" v-on:change="updateStore"
+                 class="description" placeholder="Brief NPC summary">
+          <textarea type="text" v-model="npc.long_description"
+                    v-on:keyup="updateStore" v-on:change="updateStore"
+                    class="long-description" placeholder="Detailed NPC Information"></textarea>
+
+        </div>
+      </div>
+
+
+
     </form>
 
 

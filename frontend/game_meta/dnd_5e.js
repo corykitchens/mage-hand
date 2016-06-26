@@ -315,6 +315,10 @@ module.exports.gameMeta = function gameMeta(){
       }
     },
 
+    default_npc: {
+      name: 'New NPC',
+    },
+
 
     spells: {
       acid_splash: {

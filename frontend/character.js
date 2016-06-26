@@ -96,7 +96,7 @@ module.exports.characterPage = function characterPage(){
               hideDetailPane();
             });
           },
-          toggleInfo: function(ee){   // Toggle long information for abilities and spells
+          toggleInfo: function(ee){ // Toggle long information for abilities and spells
             $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
           },
         }

@@ -9,6 +9,9 @@ var showOverlay = require('./globals').showOverlay;
 module.exports.campaignPage = function campaignPage(){
   var campaign_id = window.location.search.replace("?id=", "");
   var campaignPath = "campaigns/" + campaign_id;
+  var npcsPath = campaignPath + '/npcs'
+
+  var defaultNpc = gameMeta('dnd_5e').default_npc; // TODO make this pull from meta?
 
   // Generate a vue directly from the firebase campaign object
   fb_data.ref(campaignPath).on("value", function(snap){
@@ -26,6 +29,17 @@ module.exports.campaignPage = function campaignPage(){
         methods: {
           updateStore: function(){
             fb_data.ref(campaignPath).update(this.campaign);
+          },
+          toggleInfo: function(ee){   // Toggle long information for abilities and spells
+            $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
+          },
+          addNpc: function(){
+            fb_data.ref(npcsPath).push(defaultNpc);
+          },
+          deleteNpc: function(ee){
+            var npc_id = $(ee.currentTarget).data('npc-id');
+            console.log(npc_id, npcsPath + '/npc_id')
+            fb_data.ref(npcsPath + '/' + npc_id).remove();
           },
         }
       });

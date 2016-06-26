@@ -16,12 +16,9 @@ http://fireball-179561.nitrousapp.com/
 - Deleting user account has weird session error
 
 ## TODO
-- ~~User profile page~~
 - Be able to delete characters + campaigns
 - !Campaign game type + character/campaign type validation
-- Tests
 - Make /join do something
-- ~~'Other' race and class~~
 - Authenticate character views
 - Add security rules
 - Saving throws
@@ -29,19 +26,19 @@ http://fireball-179561.nitrousapp.com/
 - Add all spells
 - Raw stats to bonus slider
 - Desktop view
-- Add signout
-- Private character notes
 - Have multiple providers on one account?
 - Add facebook auth
 - Add google auth
 - Add icons to social logins
-
+- Tests
 
 ### Security rules
 - Don't let id references be updated ever?
 
 
 ### Rad possible features
+- Private character notes
+- Add NPC stats
 - Join link vs. join code (or both)
 - Hide nav menu when keyboard is up
 - Swipe to dismiss drawers
