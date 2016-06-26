@@ -28,6 +28,7 @@ module.exports.campaignsPage = function campaignsPage(){
           } else { // Else, transform & show data
             // Push each campaign to the campaigns array so that vue can draw them afterwards
             var cc = campaign_snap.val();
+            cc.game_type = gameMeta(cc.game_type).short_name; // Transform game type to readable format
             cc.key = campaign_id;
             campaigns.push(cc);
           };

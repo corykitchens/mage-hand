@@ -1,12 +1,16 @@
+require("./styles/core.scss");
+
 // var $ = require('jquery');
 var Vue = require('vue');
 var fb = require('./fb').database();
 var hideOverlay = require('./globals').hideOverlay;
 var hideDetailPane = require('./globals').hideDetailPane;
 var routeUser = require('./router').routeUser;
+
 //var showOverlay = require('./globals').showOverlay;
 //var showDetailPane = require('./globals').showDetailPane;
 //require("./styles/core.scss");
+
 
 // Initialize on every page load
 function init(){
@@ -83,6 +87,17 @@ function initHandlers(){
       })
     }, 200)
   });
+
+  // Mobile nav square icon
+  $("#mobile-nav-toggle").on('click', function(){
+    $('#mobile-nav-icons').toggleClass('show');
+  });
+
+  // Social explanation on login page
+  $("#social").on('click', function(){
+    $("#social-explanation").toggle();
+  });
+
 };
 
 

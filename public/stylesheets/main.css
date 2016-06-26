@@ -141,7 +141,7 @@ a {
   text-decoration: none !important; }
 
 a:hover {
-  color: #2C7FA6; }
+  color: rgba(0, 0, 0, 0.8); }
 
 /* Buttons */
 .button, button, input[type="submit"], input[type="reset"], input[type="button"] {
@@ -165,9 +165,6 @@ a:hover {
   box-sizing: border-box;
   -webkit-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out; }
-
-.button:hover, button:hover, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, .button:focus, button:focus, input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus {
-  background-color: #83968D; }
 
 .button-primary, .button.button-primary, button.button-primary, input[type="submit"].button-primary, input[type="reset"].button-primary, input[type="button"].button-primary {
   color: #FFF;
@@ -1232,7 +1229,6 @@ there.
   -webkit-transform: translateX(-50%) translateY(-50%);
           transform: translateX(-50%) translateY(-50%);
   padding-top: 0.5rem;
-  overflow: scroll;
   overflow-x: hidden !important; }
 
 .modal-body {
@@ -1398,6 +1394,28 @@ textarea {
     margin-left: 1rem;
     margin-bottom: 0.5rem; }
 
+#mobile-nav-toggle {
+  cursor: pointer; }
+
+#mobile-nav-icons {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100%;
+  z-index: 1;
+  background-color: #606f67;
+  padding: 0.5rem 2rem;
+  opacity: 0;
+  font-size: 2.5rem;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+  -webkit-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out; }
+  #mobile-nav-icons a {
+    color: inherit !important; }
+
 .page-header {
   font-size: 20px;
   font-weight: bold;
@@ -1426,7 +1444,7 @@ textarea {
   height: 50px !important;
   width: 50px !important;
   border-radius: 50% !important;
-  box-shadow: 0px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 4px rgba(0, 0, 0, 0.4);
   border: 0;
   color: rgba(255, 255, 255, 0.8); }
 
@@ -1434,16 +1452,15 @@ textarea {
   background-color: #534875;
   color: rgba(255, 255, 255, 0.8); }
 
-.button-add {
+.button-circle:hover {
+  box-shadow: 0px 2px rgba(0, 0, 0, 0.1); }
+
+.button-signout, .button-add {
   background-color: #ADA267;
   position: fixed;
   bottom: 1.5rem;
-  right: 1.5rem; }
-
-.button-add:before {
-  content: "+";
-  line-height: 4.4rem;
-  font-size: 2.5rem; }
+  right: 1.5rem;
+  font-size: 2rem !important; }
 
 .button-huge-middle {
   left: 50% !important;
@@ -1479,19 +1496,19 @@ textarea {
       justify-content: space-around;
   font-size: 5rem; }
   .social-icons > .icon {
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out; }
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out; }
   .social-icons > .icon:active, .social-icons .icon:focus {
     color: #2C7FA6 !important; }
 
 .ion-social-twitter:hover, .ion-social-twitter:focus {
-  color: #4099FF; }
+  color: #0071f3; }
 
 .ion-social-facebook:hover, .ion-social-facebook:focus {
   color: #3b5998; }
 
 .ion-social-google:hover, .ion-social-google:focus {
-  color: #F90101; }
+  color: #ad0101; }
 
 .icon-social {
   color: rgba(0, 0, 0, 0.5);
@@ -1795,6 +1812,20 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
     cursor: pointer; }
   #bottom-nav-menu .nav-button:last-child {
     border: 0; }
+
+.campaigns-link, .characters-link {
+  background-color: green;
+  display: block;
+  position: relative;
+  background-image: url("http://placekitten.com/500/201");
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 1rem; }
+  .campaigns-link button, .characters-link button {
+    position: absolute;
+    bottom: 0;
+    margin: 0; }
 
 .animated {
   -webkit-animation-duration: 1s;

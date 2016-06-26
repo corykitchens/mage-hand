@@ -3,7 +3,9 @@
   <h2 class="section-header">Campaigns</h2>
   <h2 class="section-header header-sticky u-opacity0">Campaigns</h2>
 
-  <button class="button-circle button-add" id="new-campaign"></button>
+  <button class="button-circle button-add" id="new-campaign">
+    <i class="icon ion-plus-round"></i>
+  </button>
 
   <section id="vue-campaigns">
     <div v-for="campaign in campaigns" class="campaign u-full-width" id="{{ campaign.key }}">

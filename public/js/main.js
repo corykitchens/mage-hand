@@ -44,15 +44,19 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	__webpack_require__(19);
+
 	// var $ = require('jquery');
 	var Vue = __webpack_require__(1);
 	var fb = __webpack_require__(3).database();
 	var hideOverlay = __webpack_require__(6).hideOverlay;
 	var hideDetailPane = __webpack_require__(6).hideDetailPane;
 	var routeUser = __webpack_require__(7).routeUser;
+
 	//var showOverlay = require('./globals').showOverlay;
 	//var showDetailPane = require('./globals').showDetailPane;
 	//require("./styles/core.scss");
+
 
 	// Initialize on every page load
 	function init(){
@@ -129,6 +133,17 @@
 	      })
 	    }, 200)
 	  });
+
+	  // Mobile nav square icon
+	  $("#mobile-nav-toggle").on('click', function(){
+	    $('#mobile-nav-icons').toggleClass('show');
+	  });
+
+	  // Social explanation on login page
+	  $("#social").on('click', function(){
+	    $("#social-explanation").toggle();
+	  });
+
 	};
 
 
@@ -12086,6 +12101,7 @@
 	          } else { // Else, transform & show data
 	            // Push each campaign to the campaigns array so that vue can draw them afterwards
 	            var cc = campaign_snap.val();
+	            cc.game_type = gameMeta(cc.game_type).short_name; // Transform game type to readable format
 	            cc.key = campaign_id;
 	            campaigns.push(cc);
 	          };
@@ -12327,7 +12343,6 @@
 	var fb_data = __webpack_require__(3).database();
 	var revealPage = __webpack_require__(6).revealPage;
 
-
 	var removeUser = function(){
 	  var uid = window.currentUser.uid;
 	  var userPath = "users/" + uid;
@@ -12403,6 +12418,11 @@
 	              console.log('Great choice');
 	            }
 	          },
+	          signOut: function(){
+	            firebase.auth().signOut().then(function(){
+	              window.location.replace('/');
+	            });
+	          },
 	        }
 	      });
 
@@ -12411,6 +12431,12 @@
 	  });
 	};
 
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

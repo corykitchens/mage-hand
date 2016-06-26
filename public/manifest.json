@@ -6,11 +6,10 @@
   "description": "Manage your tabletop games in real-time.",
   "icons": {...},
   "theme_color": "#ADA267",
-  "background_color": "#83968D",
+  "background_color": "#424b47",
   "author": "spenser.xyz",
 
   "homepage_url": "/",
   "start_url": "/",
-
 
 }
