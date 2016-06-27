@@ -44,18 +44,24 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(19);
+	__webpack_require__(1);
 
 	// var $ = require('jquery');
-	var Vue = __webpack_require__(1);
-	var fb = __webpack_require__(3).database();
-	var hideOverlay = __webpack_require__(6).hideOverlay;
-	var hideDetailPane = __webpack_require__(6).hideDetailPane;
-	var routeUser = __webpack_require__(7).routeUser;
+	var Vue = __webpack_require__(3);
+	var fb = __webpack_require__(5).database();
+	var hideOverlay = __webpack_require__(8).hideOverlay;
+	var hideDetailPane = __webpack_require__(8).hideDetailPane;
+	var routeUser = __webpack_require__(9).routeUser;
 
 	//var showOverlay = require('./globals').showOverlay;
 	//var showDetailPane = require('./globals').showDetailPane;
 	//require("./styles/core.scss");
+
+	var loadingMessages = [
+	  "Farming spiderlings...",
+	  "Brewing ale...",
+	  "Whittling wands...",
+	];
 
 
 	// Initialize on every page load
@@ -65,9 +71,9 @@
 	  if (Vue.config.debug == true) console.log('!vue debug is on');
 
 	  // TODO offline content
-	  if (navigator.serviceWorker) {
-	    navigator.serviceWorker.register('/offline.js');
-	  }
+	  // if (navigator.serviceWorker) {
+	  //   navigator.serviceWorker.register('/offline.js');
+	  // }
 	  // https://www.youtube.com/watch?v=qDJAz3IIq18
 
 	  // When app is loaded, route user
@@ -78,7 +84,7 @@
 
 	function setGlobals(){
 	  window.revealed = false;
-	  $("#loading-text").text("Don't trust the rogue."); //TODO make this random
+	  $("#loading-text").text(loadingMessages[Math.floor(Math.random()*loadingMessages.length)]);
 	};
 
 
@@ -136,7 +142,7 @@
 
 	  // Mobile nav square icon
 	  $("#mobile-nav-toggle").on('click', function(){
-	    $('#mobile-nav-icons').toggleClass('show');
+	    if (window.currentUser) { $('#mobile-nav-icons').toggleClass('show') };
 	  });
 
 	  // Social explanation on login page
@@ -158,6 +164,13 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 2 */,
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {/*!
@@ -10083,10 +10096,10 @@
 	}, 0);
 
 	module.exports = Vue;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(4)))
 
 /***/ },
-/* 2 */
+/* 4 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -10183,10 +10196,10 @@
 
 
 /***/ },
-/* 3 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var firebase = __webpack_require__(4);
+	var firebase = __webpack_require__(6);
 
 	var config = {
 	  apiKey: "AIzaSyAUsSroV5NV89p9H-Qm9_LazNxCtrw374c",
@@ -10200,7 +10213,7 @@
 
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10210,12 +10223,12 @@
 	 *
 	 *   firebase = require('firebase');
 	 */
-	__webpack_require__(5);
+	__webpack_require__(7);
 	module.exports = firebase;
 
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.0.2
@@ -10874,7 +10887,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	// Global helpers
@@ -10942,19 +10955,19 @@
 
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var requiresAuth = __webpack_require__(8).requiresAuth;
-	var charactersPage = __webpack_require__(9).charactersPage;
-	var characterPage = __webpack_require__(13).characterPage;
-	var campaignsPage = __webpack_require__(14).campaignsPage;
-	var campaignPage = __webpack_require__(16).campaignPage;
-	var joinPage = __webpack_require__(17).joinPage;
-	var profilePage = __webpack_require__(18).profilePage;
+	var requiresAuth = __webpack_require__(10).requiresAuth;
+	var charactersPage = __webpack_require__(11).charactersPage;
+	var characterPage = __webpack_require__(15).characterPage;
+	var campaignsPage = __webpack_require__(16).campaignsPage;
+	var campaignPage = __webpack_require__(18).campaignPage;
+	var joinPage = __webpack_require__(19).joinPage;
+	var profilePage = __webpack_require__(20).profilePage;
 
-	var twitterAuth = __webpack_require__(8).twitterAuth;
-	var revealPage = __webpack_require__(6).revealPage;
+	var twitterAuth = __webpack_require__(10).twitterAuth;
+	var revealPage = __webpack_require__(8).revealPage;
 
 	// ROUTER
 	// For routing the user around depending on their state
@@ -10963,7 +10976,10 @@
 	  firebase.auth().onAuthStateChanged(function(user) {
 
 	    // If user is logged in, set global
-	    if (user){ window.currentUser = firebase.auth().currentUser; }
+	    if (user){
+	      window.currentUser = firebase.auth().currentUser;
+	      $("#mobile-nav-toggle").show();
+	     }
 
 	    if (window.location.pathname === "/"){
 	      if (window.currentUser == undefined){ // If user is logged OUT
@@ -11009,15 +11025,15 @@
 
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// AUTH - - - -
 	// Contains functions related to authentication
 
-	var firebase = __webpack_require__(3);
-	var fb_auth = __webpack_require__(3).auth;
-	var fb_data = __webpack_require__(3).database();
+	var firebase = __webpack_require__(5);
+	var fb_auth = __webpack_require__(5).auth;
+	var fb_data = __webpack_require__(5).database();
 
 
 	// Only let authorized users into these pages
@@ -11043,16 +11059,16 @@
 
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Defines functions applicable to the /characters list page
 
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(4).database();
-	var revealPage = __webpack_require__(6).revealPage;
-	var gameTypes = __webpack_require__(10).gameTypes;
-	var gameMeta = __webpack_require__(10).gameMeta;
+	var Vue = __webpack_require__(3);
+	var fb_data = __webpack_require__(6).database();
+	var revealPage = __webpack_require__(8).revealPage;
+	var gameTypes = __webpack_require__(12).gameTypes;
+	var gameMeta = __webpack_require__(12).gameMeta;
 
 	module.exports.charactersPage = function charactersPage(){
 	  var userUid = window.currentUser.uid;
@@ -11144,7 +11160,7 @@
 
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -11172,7 +11188,7 @@
 	// Arguments(game_key) [String] - eg. 'dnd_5e'
 	// Returns gameMeta Object
 	module.exports.gameMeta = function(game_key){
-	  var game_meta = __webpack_require__(11)("./" + game_key).gameMeta();
+	  var game_meta = __webpack_require__(13)("./" + game_key).gameMeta();
 	  return game_meta;
 	};
 
@@ -11182,7 +11198,7 @@
 	// Returns and array of objects containing a pruned subset of information about a given game type
 	// (key, long_name, short_name) - This can be expanded later if needed
 	module.exports.gameTypes = function(){
-	  var gameMeta = __webpack_require__(10).gameMeta;
+	  var gameMeta = __webpack_require__(12).gameMeta;
 	  var game_list = ['dnd_5e']; // Harded coded list of string matching meta filename
 	  var game_type_data = {};
 
@@ -11202,14 +11218,14 @@
 
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./dnd_5e": 12,
-		"./dnd_5e.js": 12,
-		"./meta": 10,
-		"./meta.js": 10
+		"./dnd_5e": 14,
+		"./dnd_5e.js": 14,
+		"./meta": 12,
+		"./meta.js": 12
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -11222,11 +11238,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 11;
+	webpackContext.id = 13;
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports) {
 
 	
@@ -11786,21 +11802,21 @@
 
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Defines functions applicable to an individual /campaign page
 
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(6).revealPage;
-	var gameMeta = __webpack_require__(10).gameMeta;
-	var getUrlParam = __webpack_require__(6).getUrlParam;
+	var Vue = __webpack_require__(3);
+	var fb_data = __webpack_require__(5).database();
+	var revealPage = __webpack_require__(8).revealPage;
+	var gameMeta = __webpack_require__(12).gameMeta;
+	var getUrlParam = __webpack_require__(8).getUrlParam;
 
-	var showOverlay = __webpack_require__(6).showOverlay;
-	var hideOverlay = __webpack_require__(6).hideOverlay;
-	var showDetailPane = __webpack_require__(6).showDetailPane;
-	var hideDetailPane = __webpack_require__(6).hideDetailPane;
+	var showOverlay = __webpack_require__(8).showOverlay;
+	var hideOverlay = __webpack_require__(8).hideOverlay;
+	var showDetailPane = __webpack_require__(8).showDetailPane;
+	var hideDetailPane = __webpack_require__(8).hideDetailPane;
 
 
 
@@ -12072,17 +12088,17 @@
 
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Defines functions applicable to the /campaigns list page
 
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(4).database();
-	var revealPage = __webpack_require__(6).revealPage;
-	var gameTypes = __webpack_require__(10).gameTypes;
-	var gameMeta = __webpack_require__(10).gameMeta;
-	var campaignKeyGenerator = __webpack_require__(15).campaignKeyGenerator;
+	var Vue = __webpack_require__(3);
+	var fb_data = __webpack_require__(6).database();
+	var revealPage = __webpack_require__(8).revealPage;
+	var gameTypes = __webpack_require__(12).gameTypes;
+	var gameMeta = __webpack_require__(12).gameMeta;
+	var campaignKeyGenerator = __webpack_require__(17).campaignKeyGenerator;
 
 	module.exports.campaignsPage = function campaignsPage(){
 	  var userUid = window.currentUser.uid;
@@ -12205,10 +12221,10 @@
 
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var fb_data = __webpack_require__(4).database();
+	var fb_data = __webpack_require__(6).database();
 
 	// Generates a random campaign key for other users to join to campaigns
 
@@ -12232,16 +12248,16 @@
 
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Defines functions applicable to an individual /campaign page
 
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(6).revealPage;
-	var gameMeta = __webpack_require__(10).gameMeta; //TODO do we need this? (see below)
-	var showOverlay = __webpack_require__(6).showOverlay;
+	var Vue = __webpack_require__(3);
+	var fb_data = __webpack_require__(5).database();
+	var revealPage = __webpack_require__(8).revealPage;
+	var gameMeta = __webpack_require__(12).gameMeta; //TODO do we need this? (see below)
+	var showOverlay = __webpack_require__(8).showOverlay;
 
 	module.exports.campaignPage = function campaignPage(){
 	  var campaign_id = window.location.search.replace("?id=", "");
@@ -12340,12 +12356,12 @@
 
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(6).revealPage;
+	var Vue = __webpack_require__(3);
+	var fb_data = __webpack_require__(5).database();
+	var revealPage = __webpack_require__(8).revealPage;
 
 	module.exports.joinPage = function joinPage(){
 	  console.log('loller');
@@ -12354,12 +12370,12 @@
 
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(1);
-	var fb_data = __webpack_require__(3).database();
-	var revealPage = __webpack_require__(6).revealPage;
+	var Vue = __webpack_require__(3);
+	var fb_data = __webpack_require__(5).database();
+	var revealPage = __webpack_require__(8).revealPage;
 
 	var removeUser = function(){
 	  var uid = window.currentUser.uid;
@@ -12449,12 +12465,6 @@
 	  });
 	};
 
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

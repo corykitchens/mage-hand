@@ -14,11 +14,11 @@ http://fireball-179561.nitrousapp.com/
 - Leaving a campaign doesn't update live
 - Can't update stats in Firefox
 - Deleting user account has weird session error
+- Manifest may not be working?
 
 ## TODO
 - Be able to delete characters + campaigns
 - !Campaign game type + character/campaign type validation
-- Graphic links
 - Authenticate character views
 - Add security rules
 - Saving throws
@@ -26,11 +26,12 @@ http://fireball-179561.nitrousapp.com/
 - Add all spells
 - Raw stats to bonus slider
 - Desktop view
-- Have multiple providers on one account?
 - Add facebook auth
 - Add google auth
+- Have multiple providers on one account?
 - Add icons to social logins
 - Add desktop/manifest stuff
+- Landing gifs
 - Tests
 
 ### Security rules

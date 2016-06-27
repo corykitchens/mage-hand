@@ -55,7 +55,10 @@ textarea {
 	}
 }
 
-#mobile-nav-toggle { cursor: pointer; }
+#mobile-nav-toggle {
+	cursor: pointer;
+	display: none; //shown on router.js
+}
 #mobile-nav-icons {
 	pointer-events: none; // So you can't click on invisible icons
 	position: absolute;
@@ -455,26 +458,37 @@ $box-field--vertical-height: 30px;
 	.nav-button:last-child { border: 0; }
 }
 
-
+// Landing / Index
 .campaigns-link,
 .characters-link {
-	background-color: green;
 	display: block;
 	position: relative;
-	background-image:url('http://placekitten.com/500/201');
-	height: 140px;
-	background-size: cover;
+	height: 180px;
+	background-size: contain;
 	background-position: center;
-	margin-bottom: 1rem;
+	background-repeat: no-repeat;
+
 	button {
 		position: absolute;
 		bottom: 0;
 		margin: 0;
 	}
 }
-
-
-
+.characters-link {
+	background-image:url('/images/character-angel.png');
+}
+.campaigns-link {
+	background-image:url('/images/mountains.png');
+}
+.landing-white {
+	margin-top: 2rem;
+	background-color: rgba(255, 255, 255, 0.5);
+	width: 100%;
+	min-height: 500px;
+	color: #35403b;
+	padding: 2rem;
+	font-size: 2.4rem;
+}
 
 // Animations
 .animated {

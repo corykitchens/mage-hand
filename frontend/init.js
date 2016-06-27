@@ -11,6 +11,12 @@ var routeUser = require('./router').routeUser;
 //var showDetailPane = require('./globals').showDetailPane;
 //require("./styles/core.scss");
 
+var loadingMessages = [
+  "Farming spiderlings...",
+  "Brewing ale...",
+  "Whittling wands...",
+];
+
 
 // Initialize on every page load
 function init(){
@@ -19,9 +25,9 @@ function init(){
   if (Vue.config.debug == true) console.log('!vue debug is on');
 
   // TODO offline content
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker.register('/offline.js');
-  }
+  // if (navigator.serviceWorker) {
+  //   navigator.serviceWorker.register('/offline.js');
+  // }
   // https://www.youtube.com/watch?v=qDJAz3IIq18
 
   // When app is loaded, route user
@@ -32,7 +38,7 @@ function init(){
 
 function setGlobals(){
   window.revealed = false;
-  $("#loading-text").text("Don't trust the rogue."); //TODO make this random
+  $("#loading-text").text(loadingMessages[Math.floor(Math.random()*loadingMessages.length)]);
 };
 
 
@@ -90,7 +96,7 @@ function initHandlers(){
 
   // Mobile nav square icon
   $("#mobile-nav-toggle").on('click', function(){
-    $('#mobile-nav-icons').toggleClass('show');
+    if (window.currentUser) { $('#mobile-nav-icons').toggleClass('show') };
   });
 
   // Social explanation on login page

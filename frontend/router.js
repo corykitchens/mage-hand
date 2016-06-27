@@ -16,7 +16,10 @@ module.exports.routeUser = function(){
   firebase.auth().onAuthStateChanged(function(user) {
 
     // If user is logged in, set global
-    if (user){ window.currentUser = firebase.auth().currentUser; }
+    if (user){
+      window.currentUser = firebase.auth().currentUser;
+      $("#mobile-nav-toggle").show();
+     }
 
     if (window.location.pathname === "/"){
       if (window.currentUser == undefined){ // If user is logged OUT

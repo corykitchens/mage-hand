@@ -65,7 +65,20 @@ button, input, optgroup, select, textarea {
 * http://www.opensource.org/licenses/mit-license.php
 * 12/29/2014
 */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+
 /* For devices larger than 400px */
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; } }
+
 /* Base Styles */
 /* NOTE
 html is set to 62.5% so that all the REM measurements throughout Skeleton
@@ -254,7 +267,7 @@ hr {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
   border-width: 0;
-  border-top: 1px solid #E1E1E1; }
+  border-top: 1px solid rgba(0, 0, 0, 0.2); }
 
 /* Clearing */
 /* Self Clearing Goodness */
@@ -1308,6 +1321,10 @@ there.
 .u-hide {
   display: none; }
 
+@media (max-width: 500px) {
+  .u-xs-hide {
+    display: none !important; } }
+
 .u-noscroll {
   overflow: hidden !important; }
 
@@ -1395,7 +1412,8 @@ textarea {
     margin-bottom: 0.5rem; }
 
 #mobile-nav-toggle {
-  cursor: pointer; }
+  cursor: pointer;
+  display: none; }
 
 #mobile-nav-icons {
   pointer-events: none;
@@ -1817,18 +1835,31 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
     border: 0; }
 
 .campaigns-link, .characters-link {
-  background-color: green;
   display: block;
   position: relative;
-  background-image: url("http://placekitten.com/500/201");
-  height: 140px;
-  background-size: cover;
+  height: 180px;
+  background-size: contain;
   background-position: center;
-  margin-bottom: 1rem; }
+  background-repeat: no-repeat; }
   .campaigns-link button, .characters-link button {
     position: absolute;
     bottom: 0;
     margin: 0; }
+
+.characters-link {
+  background-image: url("/images/character-angel.png"); }
+
+.campaigns-link {
+  background-image: url("/images/mountains.png"); }
+
+.landing-white {
+  margin-top: 2rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  min-height: 500px;
+  color: #35403b;
+  padding: 2rem;
+  font-size: 2.4rem; }
 
 .animated {
   -webkit-animation-duration: 1s;

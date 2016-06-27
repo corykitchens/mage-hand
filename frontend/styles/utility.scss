@@ -83,6 +83,12 @@
 
 
 .u-hide { display: none; }
+@media (max-width: 500px) {
+	.u-xs-hide {
+		display: none !important;
+	}
+}
+
 
 .u-noscroll { overflow: hidden !important; }
 
