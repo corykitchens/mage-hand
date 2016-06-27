@@ -1602,7 +1602,7 @@ ul.detail-tabs {
     color: #3E3E3E;
     font-size: 1.2rem;
     padding: 0;
-    height: 1.4rem; }
+    height: 1.8rem; }
 
 .detail-panes--full {
   padding-top: 10px; }
@@ -2100,7 +2100,7 @@ label[for=character-prof-bonus] {
   width: 100%;
   cursor: pointer; }
   .invite-info h3 {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     margin-bottom: 0; }
   .invite-info .invite-show {
     display: none;

@@ -18,7 +18,7 @@ http://fireball-179561.nitrousapp.com/
 ## TODO
 - Be able to delete characters + campaigns
 - !Campaign game type + character/campaign type validation
-- Make /join do something
+- Graphic links
 - Authenticate character views
 - Add security rules
 - Saving throws
@@ -30,6 +30,7 @@ http://fireball-179561.nitrousapp.com/
 - Add facebook auth
 - Add google auth
 - Add icons to social logins
+- Add desktop/manifest stuff
 - Tests
 
 ### Security rules

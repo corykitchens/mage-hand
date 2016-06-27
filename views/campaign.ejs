@@ -144,42 +144,42 @@
               </ul>
             </div>
             <!-- Wealth -->
-            <div class="xs-mt4" v-if="character.wealth">
+            <div v-if="character.wealth">
               <label>Wealth</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.wealth">
             </div>
             <!-- Launguages -->
-            <div class="xs-mt2" v-if="character.background.languages">
+            <div v-if="character.background.languages">
               <label >Languages</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.languages">
             </div>
             <!-- Background - Background -->
-            <div class="xs-mt2" v-if="character.background.background">
+            <div v-if="character.background.background">
               <label >Background</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.general">
             </div>
             <!-- Background - Personality Traits -->
-            <div class="xs-mt2" v-if="character.background.personality_traits">
+            <div v-if="character.background.personality_traits">
               <label >Personality Traits</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.personality_traits">
             </div>
             <!-- Background - Ideals -->
-            <div class="xs-mt2" v-if="character.background.ideals">
+            <div v-if="character.background.ideals">
               <label >Ideals</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.ideals">
             </div>
             <!-- Background - Bonds -->
-            <div class="xs-mt2" v-if="character.background.bonds">
+            <div v-if="character.background.bonds">
               <label >Bonds</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.bonds">
             </div>
             <!-- Background - Flaws -->
-            <div class="xs-mt2" v-if="character.background.flaws">
+            <div v-if="character.background.flaws">
               <label >Flaws</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.flaws">
             </div>
             <!-- Background - Notes -->
-            <div class="xs-mt2" v-if="character.background.notes">
+            <div v-if="character.background.notes">
               <label >Notes</label>
               <input disabled type="text" class="input-detail-plain" v-model="character.background.notes">
             </div>
@@ -249,8 +249,8 @@
     <!-- Invite info -->
     <div class="invite-info">
       <div class="invite-instructions">
-        <h3>Invite other to join!</h3>
-        Go to <b>magehand.xyz/join</b> and use code
+        <h3>Invite others to join!</h3>
+        To join this campaign, use campaign code:
       </div>
       <div class="invite-code">{{ campaign.campaign_key }}</div>
       <div class="invite-hide"><i class="icon ion-minus-circled"></i></div>
