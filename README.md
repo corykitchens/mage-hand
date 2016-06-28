@@ -26,13 +26,11 @@ http://fireball-179561.nitrousapp.com/
 - Add all spells
 - Raw stats to bonus slider
 - Desktop view
-- Add facebook auth
-- Add google auth
 - Have multiple providers on one account?
-- Add icons to social logins
 - Add desktop/manifest stuff
 - Landing gifs
 - Tests
+- Turn vue.js debug off
 
 ### Security rules
 - Don't let id references be updated ever?

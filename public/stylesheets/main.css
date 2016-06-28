@@ -1387,6 +1387,7 @@ textarea {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  min-height: 48px;
   color: white;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
   .nav a {
@@ -1410,6 +1411,19 @@ textarea {
     font-size: 3rem;
     margin-left: 1rem;
     margin-bottom: 0.5rem; }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px; }
+  .footer a {
+    color: rgba(255, 255, 255, 0.7); }
 
 #mobile-nav-toggle {
   cursor: pointer;
@@ -1833,33 +1847,6 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
     cursor: pointer; }
   #bottom-nav-menu .nav-button:last-child {
     border: 0; }
-
-.campaigns-link, .characters-link {
-  display: block;
-  position: relative;
-  height: 180px;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat; }
-  .campaigns-link button, .characters-link button {
-    position: absolute;
-    bottom: 0;
-    margin: 0; }
-
-.characters-link {
-  background-image: url("/images/character-angel.png"); }
-
-.campaigns-link {
-  background-image: url("/images/mountains.png"); }
-
-.landing-white {
-  margin-top: 2rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  width: 100%;
-  min-height: 500px;
-  color: #35403b;
-  padding: 2rem;
-  font-size: 2.4rem; }
 
 .animated {
   -webkit-animation-duration: 1s;

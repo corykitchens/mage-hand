@@ -36,8 +36,8 @@ module.exports.charactersPage = function charactersPage(){
       el: '#vue-characters',
       data: { characters: characters }
     });
-    attachClickHandlers();
 
+    attachClickHandlers();
   });
 };
 

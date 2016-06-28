@@ -6,6 +6,6 @@ var config = {
   databaseURL: "https://magicmissile.firebaseio.com",
   storageBucket: "project-7942438947355521096.appspot.com",
 };
-firebase.initializeApp(config);
 
+firebase.initializeApp(config);
 module.exports = firebase;

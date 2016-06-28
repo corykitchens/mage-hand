@@ -33,16 +33,15 @@ router.get('/characters', function(req, res, next) {
   res.render('characters', { title: 'Characters' });
 });
 
-/* GET join */
-router.get('/join', function(req, res, next) {
-  res.render('join', { title: 'Join a Campaign' });
-});
-
 /* GET profile */
 router.get('/profile', function(req, res, next) {
   res.render('profile', { title: 'Profile' });
 });
 
+/* GET Logout */
+router.get('/logout', function(req, res, next) {
+  res.render('logout');
+});
 
 
 module.exports = router;

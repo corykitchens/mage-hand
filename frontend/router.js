@@ -3,10 +3,12 @@ var charactersPage = require('./characters').charactersPage;
 var characterPage = require('./character').characterPage;
 var campaignsPage = require('./campaigns').campaignsPage;
 var campaignPage = require('./campaign').campaignPage;
-var joinPage = require('./join').joinPage;
 var profilePage = require('./profile').profilePage;
 
+var signOut = require('./auth').signOut;
 var twitterAuth = require('./auth').twitterAuth;
+var googleAuth = require('./auth').googleAuth;
+var facebookAuth = require('./auth').facebookAuth;
 var revealPage = require('./globals').revealPage;
 
 // ROUTER
@@ -39,6 +41,8 @@ module.exports.routeUser = function(){
       }
       // Enable login click handlers (Might not really belong here but whatevs #YOLO)
       $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
+      $('.ion-social-facebook').on('click',function(){ facebookAuth(); });
+      $('.ion-social-google').on('click',function(){ googleAuth(); });
     }
 
     else if (window.location.pathname === "/character"){ // Specific character
@@ -46,9 +50,6 @@ module.exports.routeUser = function(){
     }
     else if (window.location.pathname === "/characters"){ // List of characters
       requiresAuth(charactersPage);
-    }
-    else if (window.location.pathname === "/join"){ // Join a campaign
-      requiresAuth(joinPage); // TODO make this unique page to explain why to sign up?
     }
     else if (window.location.pathname === "/campaign"){ // Specific campaign
       requiresAuth(campaignPage);
@@ -59,6 +60,8 @@ module.exports.routeUser = function(){
     else if (window.location.pathname === "/profile"){ // List of campaigns
       requiresAuth(profilePage);
     }
-
+    else if (window.location.pathname === "/logout"){ // List of campaigns
+      signOut();
+    }
   });
 };

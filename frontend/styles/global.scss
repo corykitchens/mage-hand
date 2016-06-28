@@ -33,6 +33,7 @@ textarea {
 	width: 100%;
 	display: flex;
 	align-items: center;
+	min-height: 48px;
 	color: white;
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 
@@ -52,6 +53,20 @@ textarea {
 		font-size: 3rem;
 		margin-left: 1rem;
 		margin-bottom: 0.5rem;
+	}
+}
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	padding: 0.5rem 1rem;
+	background-color: rgba(0, 0, 0, 0.1);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	font-size: 12px;
+	a {
+		color: rgba(255, 255, 255, 0.7);
 	}
 }
 
@@ -458,37 +473,7 @@ $box-field--vertical-height: 30px;
 	.nav-button:last-child { border: 0; }
 }
 
-// Landing / Index
-.campaigns-link,
-.characters-link {
-	display: block;
-	position: relative;
-	height: 180px;
-	background-size: contain;
-	background-position: center;
-	background-repeat: no-repeat;
 
-	button {
-		position: absolute;
-		bottom: 0;
-		margin: 0;
-	}
-}
-.characters-link {
-	background-image:url('/images/character-angel.png');
-}
-.campaigns-link {
-	background-image:url('/images/mountains.png');
-}
-.landing-white {
-	margin-top: 2rem;
-	background-color: rgba(255, 255, 255, 0.5);
-	width: 100%;
-	min-height: 500px;
-	color: #35403b;
-	padding: 2rem;
-	font-size: 2.4rem;
-}
 
 // Animations
 .animated {

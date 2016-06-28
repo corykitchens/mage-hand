@@ -55,8 +55,3 @@ module.exports.hideDetailPane = function(){
   $(".detail-panes").addClass("off-screen"); // Hide detail panes
   hideOverlay();
 };
-
-
-// String.prototype.capitalize = function() { // TODO I think this isn't used
-//   return this.charAt(0).toUpperCase() + this.slice(1);
-// };

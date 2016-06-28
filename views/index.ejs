@@ -1,8 +1,8 @@
 <div class="landing-page">
 
-  <div class="logged-out u-full-width xs-mt6 xs-p4 xs-text-center">
-    <div class="u-flex u-flex--center">
-      <img class="u-xs-hide" src="images/golem.png" />
+  <div class="logged-out u-full-width xs-p4 xs-text-center">
+    <section class="u-flex u-flex--center xs-p10">
+      <img class="u-xs-hide" src="images/ill/golem.png" />
       <div>
         <h2 class="xs-mt4 xs-mb4" style="max-width: 600px;">
           <span class="logo">magehand</span> lets you manage your tabletop goods in style.
@@ -11,37 +11,40 @@
           <button class="button-primary xs-mt4">Get rolling</button>
         </a>
       </div>
-    </div>
+    </section>
+
+    <section class="xs-mt6">
+      <div class="container xs-text-center">
+        <div class="u-flex xs-p4" style="justify-content: space-around;">
+          <img src="http://placehold.it/250x400" />
+          <img src="http://placehold.it/250x400" />
+          <img src="http://placehold.it/250x400" />
+        </div>
+      </div>
+    </section>
   </div>
 
 
   <div class="logged-in u-full-width xs-pr1 xs-pl1">
-    <a href="/characters" class="xs-mt4" style="display: block;">
-      <div class="characters-link"></div>
-      <h4 class="section-header u-full-width xs-text-center"
-        style="border: 0; background-color: transparent; color: #241200; font-size: 1.4rem;">
-        Characters
+    <a href="/characters" class="xs-mt8 xs-mb8" style="display: block;">
+      <h2 class="u-full-width xs-text-center" style="color: white;">
+        <i class="icon ion-ios-body"></i> Characters
       </h4>
     </a>
-    <hr/>
     <a href="/campaigns" class="xs-mt4" style="display: block;">
-      <div class="campaigns-link"></div>
-      <h4 class="section-header u-full-width xs-text-center"
-        style="border: 0; background-color: transparent; color: #241200; font-size: 1.4rem;">
-        Campaigns
+      <h2 class="u-full-width xs-text-center" style="color: white;">
+        <i class="icon ion-map"></i> Campaigns
       </h4>
     </a>
+    <h4>TODO: Make this page prettier</h4>
   </div>
-  <section class="landing-white">
-    <div class="container xs-text-center">
-      Share your character data in real time.
-      <div class="u-flex xs-p4" style="justify-content: space-around;">
-        <img src="http://placehold.it/250x400" />
-        <img src="http://placehold.it/250x400" />
-        <img src="http://placehold.it/250x400" />
-      </div>
-    </div>
-  </section>
 
-  <section class="footer">About - Source</section>
+
+  <section class="footer">
+    About
+    &nbsp;•&nbsp;
+    <a href="https://github.com/bananatron/mage-hand/issues" target="_blank">Issues</a>
+    &nbsp;•&nbsp;
+    <a href="/logout">Logout</a>
+  </section>
 </div>

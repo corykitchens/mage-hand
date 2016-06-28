@@ -15,7 +15,6 @@ module.exports.requiresAuth = function requiresAuth(callback){
   }
 };
 
-// Twitter authentication
 module.exports.twitterAuth = function(){
   var provider = new firebase.auth.TwitterAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -24,5 +23,29 @@ module.exports.twitterAuth = function(){
     var errorCode = error.code;
     console.log("An error happened during login lol", error);
     alert(error.message)
+  });
+};
+
+module.exports.googleAuth = function(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    window.currentUser = result.user;
+  }).catch(function(error){
+    var errorCode = error.code;
+    console.log("An error happened during login lol", error);
+    alert(error.message)
+  });
+};
+
+module.exports.facebookAuth = function(){
+  var provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithRedirect(provider).then(function(result) {
+    window.currentUser = result.user;
+  });
+};
+
+module.exports.signOut = function(){
+  firebase.auth().signOut().then(function(){
+    window.location.replace('/');
   });
 };

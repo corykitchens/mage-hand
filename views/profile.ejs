@@ -6,9 +6,28 @@
   <input type="email" class="field-large" v-model="user.email" v-on:change="updateStore"/>
 
   <!-- This button does nothing, save is on keyup -->
-  <button class="button button-primary u-full-width xs-mt2">Save</button>
+  <button class="button button-primary u-full-width xs-mt2 xs-mb6">Save</button>
 
-  <button class="button-secondary u-full-width xs-mt6" v-on:click="deleteUser">Delete Account</button>
+
+  <!-- https://firebase.google.com/docs/auth/web/account-linking#link-auth-provider-credentials-to-a-user-account -->
+  <!-- <label>Add other login methods</label>
+  <p class="xs-mb2" style="font-size:12px;">
+    Adding another sign-in method to your account will link the account, making it possible to sign
+    through multiple providers
+  </p>
+  <div class="u-flex xs-mb4">
+    <h2 class="icon ion-social-google xs-mr4"></h2>
+    <h2 class="icon ion-social-twitter xs-mr4"></h2>
+    <h2 class="icon ion-social-facebook"></h2>
+  </div> -->
+
+
+  <label>Delete Account</label>
+  <p class="xs-mb2" style="font-size:12px;">
+    Deleting your account will remove all character, campaigns, and traces of your existence.
+  </p>
+
+  <button class="button-secondary xs-mt2" v-on:click="deleteUser">Delete Account</button>
 
 
   <button class="button button-primary button-circle button-signout" v-on:click="signOut">

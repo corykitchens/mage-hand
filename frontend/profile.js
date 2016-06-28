@@ -1,6 +1,7 @@
 var Vue = require('vue');
 var fb_data = require('./fb').database();
 var revealPage = require('./globals').revealPage;
+var signOut = require('./auth').signOut;
 
 var removeUser = function(){
   var uid = window.currentUser.uid;
@@ -78,9 +79,7 @@ module.exports.profilePage = function profilePage(){
             }
           },
           signOut: function(){
-            firebase.auth().signOut().then(function(){
-              window.location.replace('/');
-            });
+            signOut();
           },
         }
       });

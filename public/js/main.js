@@ -155,11 +155,11 @@
 
 
 	// #Notice
-	// var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
-	// console.log("%cmagehand.xyz ✋", "color: black; font-family: 'Doris', monospace; font-size: 2rem; font-weight: 800;");
-	// console.log('%cHey hombre! Feel free to poke around for any bugs and report them to', console_style);
-	// console.log('%chttps://github.com/bananatron/mage-hand/issues', console_style + 'font-size: 18px; color: #A77A7A; font-family:monospace;');
-	// console.log("%c\n\nLive adventurously.", console_style);
+	var console_style = "font-size: 14px; color:#7AA790; font-family:'Lato', monospace;"
+	console.log("%cmagehand.xyz ✋", "color: black; font-family: 'Doris', monospace; font-size: 2rem; font-weight: 800;");
+	console.log('%cHey hombre! Feel free to poke around for any bugs and report them to', console_style);
+	console.log('%chttps://github.com/bananatron/mage-hand/issues', console_style + 'font-size: 18px; color: #A77A7A; font-family:monospace;');
+	console.log("%c\n\nLive adventurously.", console_style);
 
 
 /***/ },
@@ -10207,8 +10207,8 @@
 	  databaseURL: "https://magicmissile.firebaseio.com",
 	  storageBucket: "project-7942438947355521096.appspot.com",
 	};
-	firebase.initializeApp(config);
 
+	firebase.initializeApp(config);
 	module.exports = firebase;
 
 
@@ -10949,11 +10949,6 @@
 	};
 
 
-	// String.prototype.capitalize = function() { // TODO I think this isn't used
-	//   return this.charAt(0).toUpperCase() + this.slice(1);
-	// };
-
-
 /***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
@@ -10963,10 +10958,12 @@
 	var characterPage = __webpack_require__(15).characterPage;
 	var campaignsPage = __webpack_require__(16).campaignsPage;
 	var campaignPage = __webpack_require__(18).campaignPage;
-	var joinPage = __webpack_require__(19).joinPage;
 	var profilePage = __webpack_require__(20).profilePage;
 
+	var signOut = __webpack_require__(10).signOut;
 	var twitterAuth = __webpack_require__(10).twitterAuth;
+	var googleAuth = __webpack_require__(10).googleAuth;
+	var facebookAuth = __webpack_require__(10).facebookAuth;
 	var revealPage = __webpack_require__(8).revealPage;
 
 	// ROUTER
@@ -10999,6 +10996,8 @@
 	      }
 	      // Enable login click handlers (Might not really belong here but whatevs #YOLO)
 	      $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
+	      $('.ion-social-facebook').on('click',function(){ facebookAuth(); });
+	      $('.ion-social-google').on('click',function(){ googleAuth(); });
 	    }
 
 	    else if (window.location.pathname === "/character"){ // Specific character
@@ -11006,9 +11005,6 @@
 	    }
 	    else if (window.location.pathname === "/characters"){ // List of characters
 	      requiresAuth(charactersPage);
-	    }
-	    else if (window.location.pathname === "/join"){ // Join a campaign
-	      requiresAuth(joinPage); // TODO make this unique page to explain why to sign up?
 	    }
 	    else if (window.location.pathname === "/campaign"){ // Specific campaign
 	      requiresAuth(campaignPage);
@@ -11019,7 +11015,9 @@
 	    else if (window.location.pathname === "/profile"){ // List of campaigns
 	      requiresAuth(profilePage);
 	    }
-
+	    else if (window.location.pathname === "/logout"){ // List of campaigns
+	      signOut();
+	    }
 	  });
 	};
 
@@ -11045,7 +11043,6 @@
 	  }
 	};
 
-	// Twitter authentication
 	module.exports.twitterAuth = function(){
 	  var provider = new firebase.auth.TwitterAuthProvider();
 	  firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -11054,6 +11051,30 @@
 	    var errorCode = error.code;
 	    console.log("An error happened during login lol", error);
 	    alert(error.message)
+	  });
+	};
+
+	module.exports.googleAuth = function(){
+	  var provider = new firebase.auth.GoogleAuthProvider();
+	  firebase.auth().signInWithPopup(provider).then(function(result) {
+	    window.currentUser = result.user;
+	  }).catch(function(error){
+	    var errorCode = error.code;
+	    console.log("An error happened during login lol", error);
+	    alert(error.message)
+	  });
+	};
+
+	module.exports.facebookAuth = function(){
+	  var provider = new firebase.auth.FacebookAuthProvider();
+	  firebase.auth().signInWithRedirect(provider).then(function(result) {
+	    window.currentUser = result.user;
+	  });
+	};
+
+	module.exports.signOut = function(){
+	  firebase.auth().signOut().then(function(){
+	    window.location.replace('/');
 	  });
 	};
 
@@ -11100,8 +11121,8 @@
 	      el: '#vue-characters',
 	      data: { characters: characters }
 	    });
-	    attachClickHandlers();
 
+	    attachClickHandlers();
 	  });
 	};
 
@@ -12227,7 +12248,6 @@
 	var fb_data = __webpack_require__(6).database();
 
 	// Generates a random campaign key for other users to join to campaigns
-
 	module.exports.campaignKeyGenerator = function campaignKeyGenerator(){
 	  var words = [ "acid", "blade", "lights", "fire", "bolt", "light", "mending", "poison",
 	    "trap", "minor", "ray", "sacred", "flame", "pooky", "duck", "vicious", "mockery", "lime",
@@ -12239,6 +12259,7 @@
 	    "dungeon", "priest", "skull", "mage", "cult", "bugbear", "evil", "noble", "team", "helm",
 	    "potion", "alchemy", "boots", "sword", "flying", "wand", "spark", "musical", "bard", "treasure",
 	    "dark", "ghoul", "undead", "war", "ruffian", "ambush", "pit", "tree", "forest", "cake", "ale",
+	    "bat", "wolf", "cat", "throbbing", "saucy", "lemon", "tomato", "mask"
 	  ];
 
 	  var w1 = words[Math.floor(Math.random()*words.length)];
@@ -12356,26 +12377,14 @@
 
 
 /***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Vue = __webpack_require__(3);
-	var fb_data = __webpack_require__(5).database();
-	var revealPage = __webpack_require__(8).revealPage;
-
-	module.exports.joinPage = function joinPage(){
-	  console.log('loller');
-	  revealPage();
-	};
-
-
-/***/ },
+/* 19 */,
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Vue = __webpack_require__(3);
 	var fb_data = __webpack_require__(5).database();
 	var revealPage = __webpack_require__(8).revealPage;
+	var signOut = __webpack_require__(10).signOut;
 
 	var removeUser = function(){
 	  var uid = window.currentUser.uid;
@@ -12453,9 +12462,7 @@
 	            }
 	          },
 	          signOut: function(){
-	            firebase.auth().signOut().then(function(){
-	              window.location.replace('/');
-	            });
+	            signOut();
 	          },
 	        }
 	      });

@@ -1,7 +1,6 @@
 var fb_data = require('firebase').database();
 
 // Generates a random campaign key for other users to join to campaigns
-
 module.exports.campaignKeyGenerator = function campaignKeyGenerator(){
   var words = [ "acid", "blade", "lights", "fire", "bolt", "light", "mending", "poison",
     "trap", "minor", "ray", "sacred", "flame", "pooky", "duck", "vicious", "mockery", "lime",
@@ -13,6 +12,7 @@ module.exports.campaignKeyGenerator = function campaignKeyGenerator(){
     "dungeon", "priest", "skull", "mage", "cult", "bugbear", "evil", "noble", "team", "helm",
     "potion", "alchemy", "boots", "sword", "flying", "wand", "spark", "musical", "bard", "treasure",
     "dark", "ghoul", "undead", "war", "ruffian", "ambush", "pit", "tree", "forest", "cake", "ale",
+    "bat", "wolf", "cat", "throbbing", "saucy", "lemon", "tomato", "mask"
   ];
 
   var w1 = words[Math.floor(Math.random()*words.length)];
