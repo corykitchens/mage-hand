@@ -1,6 +1,6 @@
 <div class="landing-page">
 
-  <div class="logged-out u-full-width xs-p4 xs-text-center">
+  <div class="logged-out u-full-width sm-p4 xs-text-center">
     <section class="u-flex u-flex--center xs-p10">
       <img class="u-xs-hide" src="images/ill/golem.png" />
       <div>
@@ -13,7 +13,7 @@
       </div>
     </section>
 
-    <section class="xs-mt6">
+    <section class="xs-mt6 u-xs-hide">
       <div class="container xs-text-center">
         <div class="u-flex xs-p4" style="justify-content: space-around;">
           <img src="http://placehold.it/250x400" />
@@ -26,21 +26,30 @@
 
 
   <div class="logged-in u-full-width xs-pr1 xs-pl1">
-    <a href="/characters" class="xs-mt8 xs-mb8" style="display: block;">
-      <h2 class="u-full-width xs-text-center" style="color: white;">
-        <i class="icon ion-ios-body"></i> Characters
-      </h4>
-    </a>
-    <a href="/campaigns" class="xs-mt4" style="display: block;">
-      <h2 class="u-full-width xs-text-center" style="color: white;">
-        <i class="icon ion-map"></i> Campaigns
-      </h4>
-    </a>
-    <h4>TODO: Make this page prettier</h4>
+    <div class="u-flex u-flex--center u-flex--wrap xs-mt8">
+      <a href="/characters" class="xs-m4" style="display: block; text-align: center; color: white;">
+        <h2 class="u-full-width xs-text-center">
+          <i class="icon ion-ios-body"></i>
+        </h2>
+        <label>Characters</label>
+      </a>
+      <a href="/campaigns" class="xs-m4" style="display: block; text-align: center; color: white;">
+        <h2 class="u-full-width xs-text-center">
+          <i class="icon ion-map"></i>
+        </h4>
+        <label>Campaigns</label>
+      </a>
+      <a href="/campaigns" class="xs-m4" style="display: block; text-align: center; color: white;">
+        <h2 class="u-full-width xs-text-center">
+          <i class="icon ion-android-options"></i>
+        </h4>
+        <label>Settings</label>
+      </a>
+    </div>
   </div>
 
 
-  <section class="footer">
+  <section class="footer u-xs-hide">
     About
     &nbsp;•&nbsp;
     <a href="https://github.com/bananatron/mage-hand/issues" target="_blank">Issues</a>

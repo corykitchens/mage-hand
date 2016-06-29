@@ -10958,7 +10958,7 @@
 	var characterPage = __webpack_require__(15).characterPage;
 	var campaignsPage = __webpack_require__(16).campaignsPage;
 	var campaignPage = __webpack_require__(18).campaignPage;
-	var profilePage = __webpack_require__(20).profilePage;
+	var profilePage = __webpack_require__(19).profilePage;
 
 	var signOut = __webpack_require__(10).signOut;
 	var twitterAuth = __webpack_require__(10).twitterAuth;
@@ -12377,8 +12377,7 @@
 
 
 /***/ },
-/* 19 */,
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Vue = __webpack_require__(3);

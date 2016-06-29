@@ -56,6 +56,9 @@ textarea {
 	}
 }
 .footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -175,10 +178,9 @@ textarea {
 
 //Social icons
 .social-icons {
-	display: flex;
-	justify-content: space-around;
+	text-align: center;
 	font-size: 5rem;
-	& > .icon { transition: all $transition-fast ease-in-out; }
+	& > .icon { transition: all $transition-fast ease-in-out; margin: 0 1.5rem; }
 	& > .icon:active, .icon:focus {
 		color: $color-tertiary !important;
 	}
@@ -424,13 +426,18 @@ $box-field--vertical-height: 30px;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+	.game-info-name {
+		white-space: nowrap;
+		overflow: hidden; 
+		text-overflow: ellipsis;
+	}
   .game-type {
     padding: 0.5rem;
     background-color: rgba(255, 255, 255, 0.2);
     font-size: 12px;
-    right: 5px; top: 5px;
-    position: absolute;
     letter-spacing: 0px;
+		min-width: 60px;
+		margin-left: 1rem;
     @include flex-center;
   }
 }

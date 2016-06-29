@@ -27,7 +27,6 @@ http://fireball-179561.nitrousapp.com/
 - Raw stats to bonus slider
 - Desktop view
 - Have multiple providers on one account?
-- Add desktop/manifest stuff
 - Landing gifs
 - Tests
 - Turn vue.js debug off

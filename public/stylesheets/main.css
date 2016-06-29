@@ -1413,6 +1413,15 @@ textarea {
     margin-bottom: 0.5rem; }
 
 .footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -1524,15 +1533,12 @@ textarea {
   border-color: #DEDEDE !important; }
 
 .social-icons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  text-align: center;
   font-size: 5rem; }
   .social-icons > .icon {
     -webkit-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out; }
+    transition: all 0.1s ease-in-out;
+    margin: 0 1.5rem; }
   .social-icons > .icon:active, .social-icons .icon:focus {
     color: #2C7FA6 !important; }
 
@@ -1786,14 +1792,17 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; }
+  .character .game-info-name, .campaign .game-info-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .character .game-type, .campaign .game-type {
     padding: 0.5rem;
     background-color: rgba(255, 255, 255, 0.2);
     font-size: 12px;
-    right: 5px;
-    top: 5px;
-    position: absolute;
     letter-spacing: 0px;
+    min-width: 60px;
+    margin-left: 1rem;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

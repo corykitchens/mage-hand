@@ -10,7 +10,10 @@
   <section id="vue-characters">
     <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
 
-      <div class="name">{{ character.name }} <span class="game-type">{{ character.game_type }}</span></div>
+      <div class="name u-flex u-flex--center">
+        <span class="game-info-name u-flex--grow">{{ character.name }}</span>
+        <span class="game-type">{{ character.game_type }}</span>
+      </div>
       <label class="info">
         Level {{ character.level }} {{ character.class }}
       </label>
