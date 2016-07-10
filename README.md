@@ -4,7 +4,7 @@ A real-time campaign and character management tool for table-top roleplaying gam
 ## Usage
 - Install: `npm install`
 - Step 1: Start server with `DEBUG=myapp:* npm start`
-- Step 2: Also have `webpack --watch` running
+- Step 2: Also have `webpack -w` running
 - Step 3: Profit?
 
 http://fireball-179561.nitrousapp.com/
@@ -27,7 +27,6 @@ http://fireball-179561.nitrousapp.com/
 - Raw stats to bonus slider
 - Desktop view
 - Have multiple providers on one account?
-- Landing gifs
 - Tests
 - Turn vue.js debug off
 

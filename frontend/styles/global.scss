@@ -1,15 +1,18 @@
 *, *:before, *:after { box-sizing: inherit; }
+
 html, body {
 	width: 100%;
 	margin: 0; padding: 0;
 	box-sizing: border-box;
 }
+
 body {
 	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	background-color: $color-green;
 }
+
 .body-content {
 	transition: opacity 0.15s ease-in-out;
 	opacity: 0;
@@ -114,6 +117,17 @@ textarea {
 	font-family: 'Dosis', sans-serif;
 	letter-spacing: 0.5px;
 }
+.loading-image {
+	background-image:url('/images/ill/orc_loading.gif');
+	width: 80%;
+	height: 80%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	max-width: 324px;
+	max-height: 324px;
+}
+
 
 .button-disabled {
 	pointer-events: none;
@@ -428,7 +442,7 @@ $box-field--vertical-height: 30px;
   }
 	.game-info-name {
 		white-space: nowrap;
-		overflow: hidden; 
+		overflow: hidden;
 		text-overflow: ellipsis;
 	}
   .game-type {
@@ -479,7 +493,6 @@ $box-field--vertical-height: 30px;
 	}
 	.nav-button:last-child { border: 0; }
 }
-
 
 
 // Animations

@@ -57,11 +57,6 @@
 	//var showDetailPane = require('./globals').showDetailPane;
 	//require("./styles/core.scss");
 
-	var loadingMessages = [
-	  "Farming spiderlings...",
-	  "Brewing ale...",
-	  "Whittling wands...",
-	];
 
 
 	// Initialize on every page load
@@ -84,7 +79,6 @@
 
 	function setGlobals(){
 	  window.revealed = false;
-	  $("#loading-text").text(loadingMessages[Math.floor(Math.random()*loadingMessages.length)]);
 	};
 
 
@@ -10910,7 +10904,7 @@
 
 	module.exports.revealPage = function(){
 	  if (window.revealed == false){
-	    $(".loading-message").hide();
+	    $(".loading-message, .loading-image").hide();
 	    $(".body-content").addClass("u-opacity1");
 	  };
 	};

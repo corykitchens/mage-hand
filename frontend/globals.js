@@ -18,7 +18,7 @@ var hideOverlay = function(){ // So that it's accesible to other functions here
 
 module.exports.revealPage = function(){
   if (window.revealed == false){
-    $(".loading-message").hide();
+    $(".loading-message, .loading-image").hide();
     $(".body-content").addClass("u-opacity1");
   };
 };

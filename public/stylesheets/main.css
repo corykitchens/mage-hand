@@ -1479,6 +1479,16 @@ textarea {
   font-family: 'Dosis', sans-serif;
   letter-spacing: 0.5px; }
 
+.loading-image {
+  background-image: url("/images/ill/orc_loading.gif");
+  width: 80%;
+  height: 80%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  max-width: 324px;
+  max-height: 324px; }
+
 .button-disabled {
   pointer-events: none; }
 
