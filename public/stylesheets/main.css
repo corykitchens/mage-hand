@@ -1271,13 +1271,11 @@ there.
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
-              -ms-grid-row-align: center;
           align-items: center; }
 
 .u-flex--align-center {
   -webkit-box-align: center;
       -ms-flex-align: center;
-              -ms-grid-row-align: center;
           align-items: center; }
 
 .u-flex--column {
@@ -1903,6 +1901,7 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
   color: rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
   -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
       align-self: center;
   min-width: 20px;
   text-align: center;

@@ -1,3 +1,4 @@
+var firebase = require('./fb');
 var requiresAuth = require('./auth').requiresAuth;
 var charactersPage = require('./characters').charactersPage;
 var characterPage = require('./character').characterPage;
