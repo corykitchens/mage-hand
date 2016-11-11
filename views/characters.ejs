@@ -9,7 +9,7 @@
 
   <section id="vue-characters">
     <div v-if="characters.length == 0">
-      <h2 class="u-full-width u-text-center">Get started with your first character</h2>
+      <h2 class="u-full-width u-text-center" style="margin-top: 3rem;">Get started with your first character</h2>
     </div>
     <div v-else>
       <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
