@@ -12459,6 +12459,7 @@
 	    //TODO add focus to form on modal
 	    $(".join-overlay").show();
 	    $(".join-modal").show();
+	    $(".campaign-code-input").focus();
 	  })
 	  // Close join campaign overlay by clicking outside of modal
 	  $(".join-overlay").on("click", function(){
