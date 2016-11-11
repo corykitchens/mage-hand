@@ -1,4 +1,5 @@
 var Vue = require('vue');
+var firebase = require('./fb');
 var fb_data = require('./fb').database();
 var revealPage = require('./globals').revealPage;
 var signOut = require('./auth').signOut;
@@ -33,7 +34,8 @@ var removeUser = function(){
     fb_data.ref(userPath).remove();
 
   }).then(function(){
-    firebase.auth().currentUser.delete().then(function() {
+    var user = firebase.auth().currentUser;
+    user.delete().then(function() {
       window.location.replace("/");
     }, function(error) {
       console.log(error);

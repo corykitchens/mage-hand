@@ -23,11 +23,10 @@
 
 
   <label>Delete Account</label>
+  <button class="button-secondary xs-mt2 u-full-width" v-on:click="deleteUser">Delete Account</button>
   <p class="xs-mb2" style="font-size:12px;">
     Deleting your account will remove all character, campaigns, and traces of your existence.
   </p>
-
-  <button class="button-secondary xs-mt2" v-on:click="deleteUser">Delete Account</button>
 
 
   <button class="button button-primary button-circle button-signout" v-on:click="signOut">

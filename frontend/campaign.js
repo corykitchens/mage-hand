@@ -24,13 +24,13 @@ module.exports.campaignPage = function campaignPage(){
         data: {
           campaign: campaign_data, // Stores campaign data and character references
           characters: {}, // Stores expanded character data
-          gameMeta: gameMeta( campaign_data.game_type ),
+          gameMeta: gameMeta(campaign_data.game_type),
         },
         methods: {
           updateStore: function(){
             fb_data.ref(campaignPath).update(this.campaign);
           },
-          toggleInfo: function(ee){   // Toggle long information for abilities and spells
+          toggleInfo: function(ee){ // Toggle long information for abilities and spells
             $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
           },
           addNpc: function(){
@@ -41,6 +41,19 @@ module.exports.campaignPage = function campaignPage(){
             console.log(npc_id, npcsPath + '/npc_id')
             fb_data.ref(npcsPath + '/' + npc_id).remove();
           },
+          deleteCampaign: function(ee){
+            // Deletes campaigns from campaign owner and global store
+            // This doesn't delete campaigns from character profiles - instead
+            // when a campaign list is polled by a character, it will be removed from their
+            // list if no data is found
+            if (window.confirm("Permanently delete this campaign?")) { 
+              fb_data.ref(campaignPath).remove().then(function(){ // Remove from global campaigns
+                fb_data.ref('users/' + window.currentUser.uid + '/campaigns/' + campaign_id).remove().then(function(){
+                  window.location.replace('/campaigns');
+                })
+              });
+            };
+          }
         }
       });
 
@@ -81,13 +94,11 @@ var updateCharacters = function(campaign_id){
 
 
 var attachClickHandlers = function(){
-
   // Invite/code drawer at bottom of page
   $(".invite-info").on("click", function(ee){
     $inviteInfo = $(ee.currentTarget);
     $inviteInfo.toggleClass("shrink");
   });
-
 };
 
 var attachCharacterClickHandler = function(character_id){

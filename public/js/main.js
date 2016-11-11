@@ -12351,7 +12351,7 @@
 	            $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
 	          },
 	          deleteCharacter: function(ee){
-	            if (window.confirm("Permanently delete this character?")) { 
+	            if (window.confirm("Permanently delete this character?")) {
 	              fb_data.ref(characterPath).remove().then(function(){ // Remove from global characters
 	                fb_data.ref('users/' + window.currentUser.uid + '/characters/' + character_id).remove().then(function(){
 	                  window.location.replace('/characters');
@@ -12369,13 +12369,13 @@
 	      window.character.$set("character", character_data);
 	    };
 
-	    getCampaigns(snap.val()); // Go fetch campaign data whether it's init or update
+	    getCampaigns(snap.val(), character_id); // Go fetch campaign data whether it's init or update
 	  });
 	};
 
 
 	// Fetch campaign data from character snap and push it into our character vue object to render
-	var getCampaigns = function(character_snap){
+	var getCampaigns = function(character_snap, character_id){
 	  // Reset campaign data to {} (for updates)
 	  // ^ If this isn't done deletes won't update because we're just setting existing keys
 	  window.character.$set("campaigns", {});
@@ -12386,11 +12386,16 @@
 	      // Set listener off before we do anything to ensure ther aren't multiple listers attached
 	      // A better way to do this is prob listen to child_added on the campaign reference list on
 	      // character, and then set on and off based on that
+
 	      fb_data.ref("campaigns/" + campaignId).off();
 	      fb_data.ref("campaigns/" + campaignId).on("value", function(campaign_snap){
-	        Vue.set(window.character.campaigns, campaignId, campaign_snap.val());
-	        $("#campaign-join-warning").hide(); // Hide join campaign prompt
-	        $(".join-campaign-home").hide(); // Hide join campaign button on main page
+	        if (campaign_snap.val()){ // If the campaign still exists
+	          Vue.set(window.character.campaigns, campaignId, campaign_snap.val());
+	          $("#campaign-join-warning").hide(); // Hide join campaign prompt
+	          $(".join-campaign-home").hide(); // Hide join campaign button on main page
+	        } else { // Remove it from character's campaign list
+	          fb_data.ref("characters/" + character_id + '/campaigns/' + campaignId).remove();
+	        }
 	      });
 	    });
 	  } else {
@@ -12731,13 +12736,13 @@
 	        data: {
 	          campaign: campaign_data, // Stores campaign data and character references
 	          characters: {}, // Stores expanded character data
-	          gameMeta: gameMeta( campaign_data.game_type ),
+	          gameMeta: gameMeta(campaign_data.game_type),
 	        },
 	        methods: {
 	          updateStore: function(){
 	            fb_data.ref(campaignPath).update(this.campaign);
 	          },
-	          toggleInfo: function(ee){   // Toggle long information for abilities and spells
+	          toggleInfo: function(ee){ // Toggle long information for abilities and spells
 	            $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
 	          },
 	          addNpc: function(){
@@ -12748,6 +12753,19 @@
 	            console.log(npc_id, npcsPath + '/npc_id')
 	            fb_data.ref(npcsPath + '/' + npc_id).remove();
 	          },
+	          deleteCampaign: function(ee){
+	            // Deletes campaigns from campaign owner and global store
+	            // This doesn't delete campaigns from character profiles - instead
+	            // when a campaign list is polled by a character, it will be removed from their
+	            // list if no data is found
+	            if (window.confirm("Permanently delete this campaign?")) { 
+	              fb_data.ref(campaignPath).remove().then(function(){ // Remove from global campaigns
+	                fb_data.ref('users/' + window.currentUser.uid + '/campaigns/' + campaign_id).remove().then(function(){
+	                  window.location.replace('/campaigns');
+	                })
+	              });
+	            };
+	          }
 	        }
 	      });
 
@@ -12788,13 +12806,11 @@
 
 
 	var attachClickHandlers = function(){
-
 	  // Invite/code drawer at bottom of page
 	  $(".invite-info").on("click", function(ee){
 	    $inviteInfo = $(ee.currentTarget);
 	    $inviteInfo.toggleClass("shrink");
 	  });
-
 	};
 
 	var attachCharacterClickHandler = function(character_id){
@@ -12814,6 +12830,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Vue = __webpack_require__(3);
+	var firebase = __webpack_require__(5);
 	var fb_data = __webpack_require__(5).database();
 	var revealPage = __webpack_require__(12).revealPage;
 	var signOut = __webpack_require__(14).signOut;
@@ -12848,7 +12865,8 @@
 	    fb_data.ref(userPath).remove();
 
 	  }).then(function(){
-	    firebase.auth().currentUser.delete().then(function() {
+	    var user = firebase.auth().currentUser;
+	    user.delete().then(function() {
 	      window.location.replace("/");
 	    }, function(error) {
 	      console.log(error);

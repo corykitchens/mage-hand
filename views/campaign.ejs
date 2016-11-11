@@ -7,10 +7,12 @@
     <!-- # # # # # # # # #  # # # # # -->
     <form class="slidable-form" id="campaign-character-vitals">
 
-      <input type="text" class="field-large page-header" v-model="campaign.name"
+      <div class="u-flex u-flex--center">
+        <input type="text" class="field-large page-header" v-model="campaign.name"
              v-on:keyup="updateStore" v-on:change="updateStore">
-
-      <div v-if="characters" v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
+         <h2 class="icon ion-trash-a u-text-center" style="min-width: 10%; cursor: pointer;" v-on:click="deleteCampaign"></h2>
+      </div>
+      <div v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
         <label class="xs-mb0">{{character.name}}</label>
         <div class="u-flex">
           <div class="box-field xs-mr1">
@@ -188,7 +190,7 @@
         </section>
 
       </div>
-      <div v-else class="u-text-center">
+      <div v-if="!campaign.characters" class="u-text-center">
         <h4 style="margin-top: 3rem;">
           Once characters join, they'll show up here
         </h4>

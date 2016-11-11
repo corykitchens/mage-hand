@@ -100,7 +100,7 @@ module.exports.characterPage = function characterPage(){
             $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
           },
           deleteCharacter: function(ee){
-            if (window.confirm("Permanently delete this character?")) { 
+            if (window.confirm("Permanently delete this character?")) {
               fb_data.ref(characterPath).remove().then(function(){ // Remove from global characters
                 fb_data.ref('users/' + window.currentUser.uid + '/characters/' + character_id).remove().then(function(){
                   window.location.replace('/characters');
@@ -118,13 +118,13 @@ module.exports.characterPage = function characterPage(){
       window.character.$set("character", character_data);
     };
 
-    getCampaigns(snap.val()); // Go fetch campaign data whether it's init or update
+    getCampaigns(snap.val(), character_id); // Go fetch campaign data whether it's init or update
   });
 };
 
 
 // Fetch campaign data from character snap and push it into our character vue object to render
-var getCampaigns = function(character_snap){
+var getCampaigns = function(character_snap, character_id){
   // Reset campaign data to {} (for updates)
   // ^ If this isn't done deletes won't update because we're just setting existing keys
   window.character.$set("campaigns", {});
@@ -135,11 +135,16 @@ var getCampaigns = function(character_snap){
       // Set listener off before we do anything to ensure ther aren't multiple listers attached
       // A better way to do this is prob listen to child_added on the campaign reference list on
       // character, and then set on and off based on that
+
       fb_data.ref("campaigns/" + campaignId).off();
       fb_data.ref("campaigns/" + campaignId).on("value", function(campaign_snap){
-        Vue.set(window.character.campaigns, campaignId, campaign_snap.val());
-        $("#campaign-join-warning").hide(); // Hide join campaign prompt
-        $(".join-campaign-home").hide(); // Hide join campaign button on main page
+        if (campaign_snap.val()){ // If the campaign still exists
+          Vue.set(window.character.campaigns, campaignId, campaign_snap.val());
+          $("#campaign-join-warning").hide(); // Hide join campaign prompt
+          $(".join-campaign-home").hide(); // Hide join campaign button on main page
+        } else { // Remove it from character's campaign list
+          fb_data.ref("characters/" + character_id + '/campaigns/' + campaignId).remove();
+        }
       });
     });
   } else {
