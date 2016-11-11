@@ -99,6 +99,15 @@ module.exports.characterPage = function characterPage(){
           toggleInfo: function(ee){ // Toggle long information for abilities and spells
             $(ee.currentTarget).closest(".ability-item").find(".long-description").toggle();
           },
+          deleteCharacter: function(ee){
+            if (window.confirm("Permanently delete this character?")) { 
+              fb_data.ref(characterPath).remove().then(function(){ // Remove from global characters
+                fb_data.ref('users/' + window.currentUser.uid + '/characters/' + character_id).remove().then(function(){
+                  window.location.replace('/characters');
+                })
+              });
+            };
+          }
         }
       });
 

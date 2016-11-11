@@ -8,16 +8,20 @@
   </button>
 
   <section id="vue-characters">
-    <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
+    <div v-if="characters.length == 0">
+      <h2 class="u-full-width u-text-center">Get started with your first character</h2>
+    </div>
+    <div v-else>
+      <div v-for="character in characters" class="character u-full-width" id="{{ character.key }}">
 
-      <div class="name u-flex u-flex--center">
-        <span class="game-info-name u-flex--grow">{{ character.name }}</span>
-        <span class="game-type">{{ character.game_type }}</span>
+        <div class="name u-flex u-flex--center">
+          <span class="game-info-name u-flex--grow">{{ character.name }}</span>
+          <span class="game-type">{{ character.game_type }}</span>
+        </div>
+        <label class="info">
+          Level {{ character.level }} {{ character.class }}
+        </label>
       </div>
-      <label class="info">
-        Level {{ character.level }} {{ character.class }}
-      </label>
-
     </div>
   </section>
 
@@ -32,7 +36,6 @@
             New {{ game.short_name }} Character
           </li>
         </ul>
-
       </section>
     </div>
   </div>

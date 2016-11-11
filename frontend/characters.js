@@ -12,13 +12,12 @@ module.exports.charactersPage = function charactersPage(){
   var characters = []; // Used to render all characters on page through vue
 
   fb_data.ref(charactersPath).once('value').then(function(snap){
+    console.log(charactersPath);
     if (snap.val() == null){ // If no characters exist yet
-
       $(".button-add").addClass("button-huge-middle");
-      // TODO maybe show some instruction on adding first character?
-
     } else { // Else, display each character user has
 
+      // This can probably be queried or sped up w/ new Firebase
       Object.keys(snap.val()).forEach(function(character_id){
         fb_data.ref("characters/" + character_id).once('value', function(character_snap){
           // Push each character to the characters array so that vue can draw them afterwards
@@ -34,10 +33,11 @@ module.exports.charactersPage = function charactersPage(){
     revealPage();
     new Vue({ // Draw all the characters pulled from firebase above
       el: '#vue-characters',
-      data: { characters: characters }
+      data: { 
+        characters: characters
+      }
     });
-
-    attachClickHandlers();
+    attachClickHandlers(); // Vue should probably handle these?
   });
 };
 

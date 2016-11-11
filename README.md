@@ -17,7 +17,7 @@ http://fireball-179561.nitrousapp.com/
 - Manifest may not be working?
 
 ## TODO
-- Be able to delete characters + campaigns
+- Be able to delete campaigns
 - !Campaign game type + character/campaign type validation
 - Authenticate character views
 - Add security rules
