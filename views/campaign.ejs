@@ -10,7 +10,7 @@
       <div class="u-flex u-flex--center">
         <input type="text" class="field-large page-header" v-model="campaign.name"
              v-on:keyup="updateStore" v-on:change="updateStore">
-         <h2 class="icon ion-trash-a u-text-center" style="min-width: 10%; cursor: pointer;" v-on:click="deleteCampaign"></h2>
+         <h2 class="icon ion-trash-a u-text-center action-icon" style="min-width: 10%;" v-on:click="deleteCampaign"></h2>
       </div>
       <div v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
         <label class="xs-mb0">{{character.name}}</label>
