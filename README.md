@@ -29,6 +29,7 @@ A real-time campaign and character management tool for table-top roleplaying gam
 
 
 ### Rad possible features
+- Have lock change bg color
 - Private character notes
 - Add NPC stats
 - Join link vs. join code (or both)
