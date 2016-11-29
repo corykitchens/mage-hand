@@ -11441,6 +11441,9 @@
 	    else if (window.location.pathname === "/logout"){ // List of campaigns
 	      signOut();
 	    }
+	    else if (window.location.pathname === "/about"){
+	      revealPage();
+	    }
 	  });
 	};
 

@@ -42,10 +42,10 @@ textarea {
 
 	a { color: white; }
 	h1 { flex-grow: 1; font-weight: 100; }
-	h1, .icon {
-		padding: 0 1rem;
-	}
-	.icon { font-size: 3rem; }
+	.icon { 
+    font-size: 3rem;
+    padding: 0 1rem;
+  }
 	.logo {
 		margin-top: -0.2rem;
 		font-family: 'Dosis', sans-serif;
@@ -54,7 +54,6 @@ textarea {
 	}
 	.logo--nav {
 		font-size: 3rem;
-		margin-left: 1rem;
 		margin-bottom: 0.5rem;
 	}
 }
@@ -494,10 +493,18 @@ $box-field--vertical-height: 30px;
 	.nav-button:last-child { border: 0; }
 }
 
-.action-icon {
-  cursor: pointer;
-}
+.action-icon { cursor: pointer; }
 
+
+// Card section (about page currently)
+
+.card {
+  background-color: white;
+  margin: 2rem 0rem;
+  padding: 1.5rem 3rem;
+  color: $color-offblack;
+  border-radius: 3px;
+}
 
 // Animations
 .animated {
