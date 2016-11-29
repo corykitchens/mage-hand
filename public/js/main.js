@@ -11418,9 +11418,9 @@
 	        revealPage();
 	      }
 	      // Enable login click handlers (Might not really belong here but whatevs #YOLO)
-	      $('.ion-social-twitter').on('click',function(){ twitterAuth(); });
-	      $('.ion-social-facebook').on('click',function(){ facebookAuth(); });
-	      $('.ion-social-google').on('click',function(){ googleAuth(); });
+	      $('.button-twitter').on('click',function(){ twitterAuth(); });
+	      $('.button-facebook').on('click',function(){ facebookAuth(); });
+	      $('.button-google').on('click',function(){ googleAuth(); });
 	    }
 
 	    else if (window.location.pathname === "/character"){ // Specific character

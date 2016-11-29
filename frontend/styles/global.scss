@@ -67,12 +67,12 @@ textarea {
 	text-align: center;
 	padding: 0.5rem 1rem;
 	background-color: rgba(0, 0, 0, 0.1);
-	text-transform: uppercase;
 	letter-spacing: 0.5px;
-	font-size: 12px;
-	a {
-		color: rgba(255, 255, 255, 0.7);
-	}
+	font-size: 1.3rem;
+	a { color: rgba(255, 255, 255, 0.7); }
+  & > * {
+    margin: 0 2rem;
+  }
 }
 
 #mobile-nav-toggle {
@@ -132,6 +132,24 @@ textarea {
 	pointer-events: none;
 }
 
+.button-social {
+  background-color: white;
+  color: white;
+  border-color: white;
+}
+.button-google {
+  background-color: darken($color-google, 25%);
+  &:hover { background-color: darken($color-google, 15%); }
+}
+.button-facebook {
+  background-color: darken($color-facebook, 25%);
+  &:hover { background-color: darken($color-facebook, 15%); }
+}
+.button-twitter {
+  background-color: darken($color-twitter, 25%);
+  &:hover { background-color: darken($color-twitter, 15%); }
+}
+
 .button-circle {
 	padding: 0; margin: 0;
 	height: 50px !important;
@@ -162,6 +180,14 @@ textarea {
 	left: 50% !important;
 	top: 50% !important;
 	transform: translateX(-50%) translateY(-50%) scale(2);
+}
+
+.get-rolling {
+  border-radius: 3px;
+  height: 60px;
+  font-size: 2rem !important;
+  height: 60px;
+  letter-spacing: 2px;
 }
 
 .button-small {

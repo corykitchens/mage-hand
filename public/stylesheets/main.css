@@ -1438,11 +1438,12 @@ textarea {
   text-align: center;
   padding: 0.5rem 1rem;
   background-color: rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 12px; }
+  font-size: 1.3rem; }
   .footer a {
     color: rgba(255, 255, 255, 0.7); }
+  .footer > * {
+    margin: 0 2rem; }
 
 #mobile-nav-toggle {
   cursor: pointer;
@@ -1502,6 +1503,26 @@ textarea {
 .button-disabled {
   pointer-events: none; }
 
+.button-social {
+  background-color: white;
+  color: white;
+  border-color: white; }
+
+.button-google {
+  background-color: #7a0000; }
+  .button-google:hover {
+    background-color: #ad0101; }
+
+.button-facebook {
+  background-color: #17233c; }
+  .button-facebook:hover {
+    background-color: #263961; }
+
+.button-twitter {
+  background-color: #0059c0; }
+  .button-twitter:hover {
+    background-color: #0071f3; }
+
 .button-circle {
   padding: 0;
   margin: 0;
@@ -1531,6 +1552,13 @@ textarea {
   top: 50% !important;
   -webkit-transform: translateX(-50%) translateY(-50%) scale(2);
           transform: translateX(-50%) translateY(-50%) scale(2); }
+
+.get-rolling {
+  border-radius: 3px;
+  height: 60px;
+  font-size: 2rem !important;
+  height: 60px;
+  letter-spacing: 2px; }
 
 .button-small {
   height: 22px !important;
