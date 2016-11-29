@@ -7,12 +7,9 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Step 2: Also have `webpack -w` running
 - Step 3: Profit?
 
-http://fireball-179561.nitrousapp.com/
-
 
 ## Bugs
 - Leaving a campaign doesn't update live
-- Deleting user account has weird session error
 
 ## TODO
 - !Campaign game type + character/campaign type validation
