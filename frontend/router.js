@@ -14,7 +14,14 @@ var revealPage = require('./globals').revealPage;
 
 // ROUTER
 // For routing the user around depending on their state
+// NOTE: This is a bad idea and this should use Vue router or something.
 module.exports.routeUser = function(){
+
+  // Let root through early
+  if (window.location.pathname === "/") {
+    revealPage();
+    return;
+  }
 
   firebase.auth().onAuthStateChanged(function(user) {
 
