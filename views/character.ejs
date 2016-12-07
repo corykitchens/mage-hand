@@ -468,8 +468,9 @@
 
       <ul class="campaign-listing">
         <li v-for="campaign in campaigns" class="campaign-item">
-          <div class="u-flex u-flex--center">
-            <input type="text" v-model="campaign.name" class="name u-flex--grow" disabled>
+          <div class="campaign">
+            <div class="name">{{ campaign.name }}</div>
+            <label class="info">{{ campaign.background }}</label>
             <i class="icon ion-close action-icon leave-campaign" data-campaign-id='{{ $key }}'></i>
           </div>
         </li>

@@ -14,7 +14,7 @@
       </div>
       <div v-for="character in characters" class="xs-mb2" data-show-character="{{$key}}">
         <label class="xs-mb0">{{character.name}}</label>
-        <div class="u-flex">
+        <div class="u-flex u-flex--fill">
           <div class="box-field xs-mr1">
             <label>HP</label>
             <input disabled v-model="character.current_hp" type="text" />

@@ -201,6 +201,8 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
   box-sizing: border-box; }
+  input[type="email"]:not([disabled]):hover, input[type="number"]:not([disabled]):hover, input[type="search"]:not([disabled]):hover, input[type="text"]:not([disabled]):hover, input[type="tel"]:not([disabled]):hover, input[type="url"]:not([disabled]):hover, input[type="password"]:not([disabled]):hover, textarea:not([disabled]):hover, select:not([disabled]):hover {
+    background-color: rgba(255, 255, 255, 0.1); }
 
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea {
@@ -1454,6 +1456,8 @@ textarea {
 #mobile-nav-toggle {
   cursor: pointer;
   display: none; }
+  #mobile-nav-toggle:hover {
+    color: #3E3E3E; }
 
 #mobile-nav-icons {
   pointer-events: none;
@@ -1476,6 +1480,13 @@ textarea {
     color: inherit !important; }
   #mobile-nav-icons.show {
     pointer-events: all; }
+  #mobile-nav-icons > a {
+    text-align: center;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1; }
+    #mobile-nav-icons > a:hover {
+      background-color: #52615a; }
 
 .page-header {
   font-size: 20px;
@@ -1822,14 +1833,16 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
   top: 0;
   left: 0;
   -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out; }
+  transition: all 0.3s ease-in-out;
+  cursor: pointer; }
   .overlay.show {
     display: block !important; }
 
 .character, .campaign {
+  position: relative;
   cursor: pointer;
   border-radius: 0px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: 1rem; }
   .character .name, .campaign .name {
@@ -1908,6 +1921,8 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
     font-size: 2.5rem;
     border-right: 2px solid #83968D;
     cursor: pointer; }
+    #bottom-nav-menu .nav-button:hover {
+      background-color: #5e6f67; }
   #bottom-nav-menu .nav-button:last-child {
     border: 0; }
 
@@ -2114,7 +2129,7 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
     letter-spacing: 1px; }
   .character-stat > input {
     width: 100%;
-    font-weight: 100;
+    font-weight: 300;
     color: white;
     font-size: 3rem;
     padding: 0;
@@ -2149,9 +2164,12 @@ label[for=character-prof-bonus] {
   border-radius: 2px;
   padding: 0.5rem;
   margin-top: 0.5rem; }
+  .equip-item .campaign, .ability-item .campaign, .campaign-item .campaign {
+    margin-bottom: initial; }
   .equip-item .name, .ability-item .name, .campaign-item .name {
     height: 3rem;
     font-size: 1.2rem;
+    line-height: 2.2rem;
     font-weight: 600;
     text-transform: uppercase;
     width: 100%;
@@ -2180,6 +2198,10 @@ label[for=character-prof-bonus] {
     padding: 0 1rem;
     background-color: #83968D;
     color: rgba(255, 255, 255, 0.4); }
+  .equip-item .leave-campaign, .ability-item .leave-campaign, .campaign-item .leave-campaign {
+    position: absolute;
+    top: 0;
+    right: 0; }
 
 .join-modal {
   top: 20%;
@@ -2277,7 +2299,14 @@ label[for=character-prof-bonus] {
 [data-show-character] {
   border: 4px solid rgba(255, 255, 255, 0.1);
   padding: 0.25rem 1rem 1rem 1rem;
-  border-radius: 3px; }
+  border-radius: 3px;
+  cursor: pointer;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out; }
+  [data-show-character] input, [data-show-character] label {
+    cursor: pointer; }
+  [data-show-character]:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
 
 li.character-skill-list {
   font-size: 1.2rem;

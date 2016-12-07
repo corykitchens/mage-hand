@@ -84,6 +84,9 @@ textarea {
 #mobile-nav-toggle {
 	cursor: pointer;
 	display: none; //shown on router.js
+  &:hover {
+    color: $color-offblack;
+  }
 }
 #mobile-nav-icons {
 	pointer-events: none; // So you can't click on invisible icons
@@ -100,6 +103,13 @@ textarea {
 	transition: opacity 0.1s ease-in-out;
 	a { color: inherit !important; }
 	&.show { pointer-events: all; }
+  & > a {
+    text-align: center; 
+    flex-grow: 1;
+    &:hover {
+      background-color: darken($color-green, 20%);
+    }
+  }
 }
 
 .page-header {
@@ -449,13 +459,15 @@ $box-field--vertical-height: 30px;
 	background-color: rgba(0, 0, 0, 0.7);
 	top: 0; left: 0;
 	transition: all $transition-slow ease-in-out;
+  cursor: pointer;
 }
 
 .character,
 .campaign {
+  position: relative;
 	cursor: pointer;
 	border-radius: $radius;
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: $trans-white;
 	color: $light;
 	margin-bottom: 1rem;
   .name {
@@ -521,6 +533,9 @@ $box-field--vertical-height: 30px;
 		font-size: 2.5rem;
 		border-right: 2px solid $color-green;
 		cursor: pointer;
+    &:hover {
+      background-color: darken($color-green, 15%);
+    }
 	}
 	.nav-button:last-child { border: 0; }
 }

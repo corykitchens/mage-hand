@@ -169,7 +169,7 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  //background-color: $color-green;
+  // background-color: $lightest;
 }
 
 .button-primary,
@@ -215,7 +215,11 @@ select {
   border-radius: $radius;
   box-shadow: none;
   transition: all $transition-fast ease-in-out;
-  box-sizing: border-box; }
+  box-sizing: border-box; 
+  &:not([disabled]):hover {
+    background-color: $trans-white;
+  }
+}
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"],
 input[type="number"],
