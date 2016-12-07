@@ -1401,7 +1401,10 @@ textarea {
           align-items: center;
   min-height: 48px;
   color: white;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
   .nav a {
     color: white; }
   .nav h1 {
@@ -1437,11 +1440,14 @@ textarea {
   width: 100%;
   text-align: center;
   padding: 0.5rem 1rem;
-  background-color: rgba(0, 0, 0, 0.1);
+  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.1), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
   letter-spacing: 0.5px;
   font-size: 1.3rem; }
   .footer a {
     color: rgba(255, 255, 255, 0.7); }
+    .footer a:hover {
+      color: white; }
   .footer > * {
     margin: 0 2rem; }
 
@@ -1905,6 +1911,15 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
   #bottom-nav-menu .nav-button:last-child {
     border: 0; }
 
+.magehand-logo-white {
+  margin-left: 1rem;
+  display: inline-block;
+  background: url("/images/logos/logo_trans_white.png");
+  height: 41px;
+  width: 41px;
+  background-size: contain;
+  background-repeat: no-repeat; }
+
 .action-icon {
   cursor: pointer; }
 
@@ -1914,6 +1929,17 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
   padding: 1.5rem 3rem;
   color: #3E3E3E;
   border-radius: 3px; }
+
+.card--homelink {
+  border-bottom: 6px solid #5e6f67;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; }
+  .card--homelink i {
+    color: #5e6f67; }
+  .card--homelink:hover {
+    box-shadow: 0px 10px 50px 2px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translateY(-2px);
+            transform: translateY(-2px); }
 
 .animated {
   -webkit-animation-duration: 1s;
@@ -1946,6 +1972,36 @@ input[type="text"]:disabled, input[type="email"]:disabled, input[type="number"]:
 .shake {
   -webkit-animation-name: shake;
           animation-name: shake; }
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1); }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1); }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+.pulse {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: pulse;
+          animation-name: pulse;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite; }
 
 .character-lock-fields {
   color: rgba(0, 0, 0, 0.5);
