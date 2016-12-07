@@ -11391,8 +11391,9 @@
 
 	// ROUTER
 	// For routing the user around depending on their state
+	// NOTE: This is a bad idea and this should use Vue router or something.
 	module.exports.routeUser = function(){
-
+	  
 	  firebase.auth().onAuthStateChanged(function(user) {
 
 	    // If user is logged in, set global
