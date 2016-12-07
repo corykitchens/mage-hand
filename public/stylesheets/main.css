@@ -202,7 +202,7 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
   transition: all 0.1s ease-in-out;
   box-sizing: border-box; }
   input[type="email"]:not([disabled]):hover, input[type="number"]:not([disabled]):hover, input[type="search"]:not([disabled]):hover, input[type="text"]:not([disabled]):hover, input[type="tel"]:not([disabled]):hover, input[type="url"]:not([disabled]):hover, input[type="password"]:not([disabled]):hover, textarea:not([disabled]):hover, select:not([disabled]):hover {
-    background-color: rgba(255, 255, 255, 0.1); }
+    border: 1px solid rgba(0, 0, 0, 0.3); }
 
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea {
@@ -1634,7 +1634,7 @@ textarea {
 
 ul.detail-tabs {
   z-index: 3;
-  overflow-x: scroll;
+  overflow-x: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1670,6 +1670,10 @@ ul.detail-tabs {
         -ms-flex-pack: center;
             justify-content: center;
     border-right: 2px solid #57665f; }
+    @media (min-width: 750px) {
+      ul.detail-tabs li.character-detail-tab {
+        min-width: inherit;
+        overflow: auto; } }
   ul.detail-tabs li.selected {
     background-color: #46534d; }
 
@@ -1688,7 +1692,11 @@ ul.detail-tabs {
   padding-bottom: 60px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  z-index: 2; }
+  z-index: 2;
+  /* Larger than tablet */ }
+  @media (min-width: 750px) {
+    .detail-panes {
+      padding-top: 70px; } }
   .detail-panes.off-screen {
     left: 101vw !important; }
   .detail-panes ul {

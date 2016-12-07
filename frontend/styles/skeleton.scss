@@ -217,7 +217,7 @@ select {
   transition: all $transition-fast ease-in-out;
   box-sizing: border-box; 
   &:not([disabled]):hover {
-    background-color: $trans-white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
   }
 }
 /* Removes awkward default styles on some inputs for iOS */

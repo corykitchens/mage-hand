@@ -261,7 +261,7 @@ $tab-height: 50px;
 
 ul.detail-tabs {
 	z-index: 3;
-	overflow-x: scroll; // TODO Mobile only
+	overflow-x: auto;
 	display: flex;
 	position: fixed;
 	top: 0;
@@ -285,6 +285,11 @@ ul.detail-tabs {
 		background-color: darken($color-green, 15%);
 		@include flex-center;
 		border-right: 2px solid darken($color-green, 18%);
+
+    @media (min-width: 750px) {
+      min-width: inherit; // Desktop tabs don't need to be as large
+      overflow: auto;
+    }
 	}
 	li.selected { background-color: darken($color-green, 25%); }
 }
@@ -302,6 +307,11 @@ ul.detail-tabs {
 	padding-bottom: 60px; // Size of bottom nav bar (#character-bottom-nav-menu)
 	transition: all $transition-normal ease-in-out;
 	z-index: 2;
+/* Larger than tablet */
+  @media (min-width: 750px) {
+    padding-top: $tab-height + 20px; //Account for scrollbar on desktop
+  }
+  
 
 	&.off-screen { left: 101vw !important; } // Off screen to the right (default state)
 
