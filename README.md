@@ -18,8 +18,8 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Saving throws
 - Allow skills to be selectable from class chooser pane
 - Add all spells
-- Raw stats to bonus slider
-- Desktop view
+- Raw stats to bonus toggle
+- Make more desktop friendly
 - Have multiple providers on one account?
 - Tests
 - Turn vue.js debug off
