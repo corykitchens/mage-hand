@@ -1523,7 +1523,7 @@ textarea {
 .button-social {
   background-color: white;
   color: white;
-  border-color: white; }
+  border: 0; }
 
 .button-google {
   background-color: #7a0000; }
@@ -1648,6 +1648,8 @@ ul.detail-tabs {
   transition: all 0.2s ease-in-out; }
   ul.detail-tabs.off-screen {
     top: -100px !important; }
+  ul.detail-tabs li.selected {
+    background-color: #46534d; }
   ul.detail-tabs li.character-detail-tab {
     margin-bottom: 0;
     min-width: 28%;
@@ -1660,6 +1662,7 @@ ul.detail-tabs {
         -ms-flex-positive: 1;
             flex-grow: 1;
     background-color: #5e6f67;
+    border-right: 2px solid #57665f;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1668,14 +1671,11 @@ ul.detail-tabs {
             align-items: center;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
-            justify-content: center;
-    border-right: 2px solid #57665f; }
+            justify-content: center; }
     @media (min-width: 750px) {
       ul.detail-tabs li.character-detail-tab {
         min-width: inherit;
         overflow: auto; } }
-  ul.detail-tabs li.selected {
-    background-color: #46534d; }
 
 .detail-panes {
   position: fixed;

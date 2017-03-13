@@ -145,13 +145,13 @@ textarea {
 
 
 .button-disabled {
-	pointer-events: none;
+    pointer-events: none;
 }
 
 .button-social {
   background-color: white;
   color: white;
-  border-color: white;
+  border: 0;
 }
 .button-google {
   background-color: darken($color-google, 25%);
@@ -273,45 +273,44 @@ ul.detail-tabs {
 
 	&.off-screen { top: -$tab-height*2 !important; } // Default state
 
-	li.character-detail-tab {
-		margin-bottom: 0;
-		min-width: 28%; // TODO Mobile only
-		font-size: 1.2rem;
-		font-weight: bold;
-		letter-spacing: 0.5px;
-		height: $tab-height;
-		text-align: center;
-		flex-grow: 1;
-		background-color: darken($color-green, 15%);
-		@include flex-center;
-		border-right: 2px solid darken($color-green, 18%);
+    li.selected { background-color: darken($color-green, 25%); }
+    li.character-detail-tab {
+        margin-bottom: 0;
+        min-width: 28%; // TODO Mobile only
+        font-size: 1.2rem;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        height: $tab-height;
+        text-align: center;
+        flex-grow: 1;
+        background-color: darken($color-green, 15%);
+        border-right: 2px solid darken($color-green, 18%);
 
-    @media (min-width: 750px) {
-      min-width: inherit; // Desktop tabs don't need to be as large
-      overflow: auto;
+        @include flex-center;
+        @media (min-width: 750px) {
+          min-width: inherit; // Desktop tabs don't need to be as large
+          overflow: auto;
+        }
     }
-	}
-	li.selected { background-color: darken($color-green, 25%); }
 }
 
 
 .detail-panes {
-	position: fixed;
-	top: 0; right: 0; bottom: 0; left: 20vw;
-	width: 80vw;
-	overflow: scroll; // Be scrollable when body is not
-	background-color: $color-offwhite;
-	color: $color-offblack;
-	padding: 0.5rem;
-	padding-top: $tab-height + 5px; //Match height of .character-race-tabs
-	padding-bottom: 60px; // Size of bottom nav bar (#character-bottom-nav-menu)
-	transition: all $transition-normal ease-in-out;
-	z-index: 2;
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 20vw;
+    width: 80vw;
+    overflow: scroll; // Be scrollable when body is not
+    background-color: $color-offwhite;
+    color: $color-offblack;
+    padding: 0.5rem;
+    padding-top: $tab-height + 5px; //Match height of .character-race-tabs
+    padding-bottom: 60px; // Size of bottom nav bar (#character-bottom-nav-menu)
+    transition: all $transition-normal ease-in-out;
+    z-index: 2;
 /* Larger than tablet */
   @media (min-width: 750px) {
     padding-top: $tab-height + 20px; //Account for scrollbar on desktop
   }
-  
 
 	&.off-screen { left: 101vw !important; } // Off screen to the right (default state)
 
@@ -493,18 +492,18 @@ $box-field--vertical-height: 30px;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-	.game-info-name {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+    .game-info-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
   .game-type {
     padding: 0.5rem;
     background-color: rgba(255, 255, 255, 0.2);
     font-size: 12px;
     letter-spacing: 0px;
-		min-width: 60px;
-		margin-left: 1rem;
+        min-width: 60px;
+        margin-left: 1rem;
     @include flex-center;
   }
 }
@@ -512,17 +511,17 @@ $box-field--vertical-height: 30px;
 
 
 .section-header {
-	text-transform: uppercase;
-	font-size: 1.2rem;
-	letter-spacing: 0.5px;
-	margin: 0;
-	padding: 0.5rem 2rem;
-	background-color: rgba(0, 0, 0, 0.5);
-	color: white;
-	font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+    padding: 0.5rem 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-weight: bold;
 }
 .section-header--red {
-	background-color: $color-red !important;
+    background-color: $color-red !important;
 }
 
 #bottom-nav-menu {
