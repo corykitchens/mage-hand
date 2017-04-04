@@ -26,11 +26,10 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Add NPC stats
 - Join link vs. join code (or both)
 - Hide nav menu when keyboard is up
-- Swipe to dismiss drawers
 - Initiative roll/track thing
 - Quick build characters
 - Racial name suggestions
 - Accurate level up mechanism
 - Alignment slider
 - Adventure / dungeon / npc / loot generator
-- Random session (generates random characters for everyone (would require adventure gen?))
+- Swipe to dismiss drawers
