@@ -12442,16 +12442,16 @@
 	  });
 
 	  // Tabs inside detail panes (rogue, human, etc.)
-	  $("body").on("click", ".character-detail-tab", function(e){
-	    var _this = $(e.currentTarget) // this tab
+	  $(".character-detail-tab").on("click", function(ee){
+	    var _this = $(ee.currentTarget) // this tab
 	    var selectorType = _this.closest("[data-selector]").data('selector'); // 'race' or 'class' from parent selector
-	    showDetailPane(selectorType, _this.data("lookup") );
+	    showDetailPane(selectorType, _this.data("lookup"));
 	  });
 
 	  // When they choose a race or class
-	  $("[data-detail-select]").on("click", function(e){
-	    var _this = $(e.currentTarget);
-	    var detailSelect = $(e.currentTarget).data('detail-select');
+	  $("[data-detail-select]").on("click", function(ee){
+	    var _this = $(ee.currentTarget);
+	    var detailSelect = $(ee.currentTarget).data('detail-select');
 
 	    if (_this.data('lookup') === 'race'){
 	      $("#character-race").val(detailSelect); // Set input
@@ -12467,7 +12467,6 @@
 
 	  // Join campaign button
 	  $(".join-campaign").on("click", function(){
-	    //TODO add focus to form on modal
 	    $(".join-overlay").show();
 	    $(".join-modal").show();
 	    $(".campaign-code-input").focus();

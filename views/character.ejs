@@ -231,8 +231,7 @@
                class="field-small" id="character-race" tabindex="-1">
       </div>
 
-      <!-- Section for selecting and viewing race details (starts off screen) -->
-      <section>
+      <!-- Selecting and viewing race details (starts off screen) -->
         <section class="nav-tabs detail-tabs off-screen" data-selector="race">
           <a class="character-detail-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-lookup="{{$key}}">
             {{$key}}
@@ -268,7 +267,6 @@
                  v-on:keyup="updateStore" v-on:change="updateStore"
                  id="character-other-race" style="color: black;">
         </div>
-      </section>
 
       <!-- Class display on page -->
       <div class="box-field box-field--vertical detail-change-click" data-field="class">
@@ -279,13 +277,13 @@
       </div>
 
       <!-- Character class detail tabs selectable to view more about that class (hidden on load) -->
-      <section>
         <ul class="nav-tabs detail-tabs off-screen" data-selector="class">
           <li class="character-detail-tab" id="{{$key}}-tab" v-for="class in gameMeta.character_structure.classes" data-lookup="{{$key}}">
             {{$key}}
           </li>
           <li class="character-detail-tab" id="other-class-tab" data-lookup="other-class">Other</li>
         </ul>
+
         <!-- Character detail panes that show details about a class (viewable after you select a tab) -->
         <div id="{{$key}}-info" class="detail-panes off-screen" v-for="class in gameMeta.character_structure.classes">
           <div class="class-details">
@@ -325,7 +323,6 @@
                  v-on:keyup="updateStore" v-on:change="updateStore"
                  id="character-other-class" style="color: black;">
         </div>
-      </section>
 
 
       <label for="character-languages" class="xs-mt2 u-full-width">Languages</label>
