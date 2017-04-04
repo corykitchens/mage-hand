@@ -1,15 +1,20 @@
-#Magehand
+# Magehand
 A real-time campaign and character management tool for table-top roleplaying games.
 
-## Usage
+## Setup
 - Install: `npm install`
 - Step 1: Start server with `DEBUG=myapp:* npm start`
 - Step 2: Also have `webpack -w` running
-- Step 3: Profit?
+
+When running the app locally, you are using on live Firebase data. Security rules are in place to prevent tampering with unathenticated data, but nothing is stopping you from messing up your data/schema for your campaigns & characters.
+
+## Deployment
+Deployment is done through heroku manually. Once CI is in place, this will be done automatically through their git integration.
 
 
 
 ## TODO
+These will be moved to github projects and/or issues.
 - !Campaign game type + character/campaign type validation
 - Allow skills to be selectable from class chooser pane
 - Add all spells
@@ -21,6 +26,7 @@ A real-time campaign and character management tool for table-top roleplaying gam
 
 
 ### Rad possible features
+These will be moved to github projects and/or issues.
 - Have lock change bg color
 - Private character notes
 - Add NPC stats
