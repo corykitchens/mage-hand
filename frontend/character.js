@@ -27,8 +27,12 @@ module.exports.characterPage = function characterPage(){
   fb_data.ref("characters/" + character_id).on("value", function(snap){
     var character_data = snap.val();
 
+    if (!character_data) {
+      console.log("No character found");
+      window.location.href = "/characters";
+    }
+
     if (!window.character){ // If we don't have character, make vue
-      console.log(gameMeta('dnd_5e'))
       window.character = new Vue({
         el: '#vue-character',
         data: {

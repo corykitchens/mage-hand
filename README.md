@@ -8,24 +8,16 @@ A real-time campaign and character management tool for table-top roleplaying gam
 - Step 3: Profit?
 
 
-## Bugs
-- Leaving a campaign doesn't update live
 
 ## TODO
 - !Campaign game type + character/campaign type validation
-- Authenticate character views
-- Add security rules
-- Saving throws
 - Allow skills to be selectable from class chooser pane
 - Add all spells
 - Raw stats to bonus toggle
 - Make more desktop friendly
-- Have multiple providers on one account?
+- Have multiple social providers on one account
 - Tests
 - Turn vue.js debug off
-
-### Security rules
-- Don't let id references be updated ever?
 
 
 ### Rad possible features

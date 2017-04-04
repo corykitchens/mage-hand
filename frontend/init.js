@@ -93,11 +93,6 @@ function initHandlers(){
     if (window.currentUser) { $('#mobile-nav-icons').toggleClass('show') };
   });
 
-  // Social explanation on login page
-  $("#social").on('click', function(){
-    $("#social-explanation").toggle();
-  });
-
 };
 
 

@@ -12,10 +12,10 @@ module.exports.campaignKeyGenerator = function campaignKeyGenerator(){
     "dungeon", "priest", "skull", "mage", "cult", "bugbear", "evil", "noble", "team", "helm",
     "potion", "alchemy", "boots", "sword", "flying", "wand", "spark", "musical", "bard", "treasure",
     "dark", "ghoul", "undead", "war", "ruffian", "ambush", "pit", "tree", "forest", "cake", "ale",
-    "bat", "wolf", "cat", "throbbing", "saucy", "lemon", "tomato", "mask"
+    "bat", "wolf", "cat", "throbbing", "saucy", "lemon", "tomato", "mask", "goat", "silly"
   ];
 
   var w1 = words[Math.floor(Math.random()*words.length)];
   var w2 = words[Math.floor(Math.random()*words.length)];
-  return (w1 + "-" + w2 + Math.floor(Math.random()*999)).toString();
+  return (w1 + w2 + Math.floor(Math.random()*999)).toString();
 };

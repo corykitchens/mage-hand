@@ -106,33 +106,27 @@
       <section class="character-stats">
         <div class="character-stat">
           <label for="character-str" class="xs-mb0">Str</label>
-          <input type="number" v-model="character.stats.str" v-on:keyup="updateStore"
-                 v-on:change="updateStore" id="character-str">
+          <input type="number" v-model="character.stats.str" v-on:keyup="updateStore" v-on:change="updateStore" id="character-str">
         </div>
         <div class="character-stat">
           <label for="character-dex" class="xs-mb0">Dex</label>
-          <input type="number" v-model="character.stats.dex" v-on:keyup="updateStore"
-                 v-on:change="updateStore" id="character-dex">
+          <input type="number" v-model="character.stats.dex" v-on:keyup="updateStore" v-on:change="updateStore" id="character-dex">
         </div>
         <div class="character-stat">
           <label for="character-con" class="xs-mb0">Con</label>
-          <input type="number" v-model="character.stats.con" v-on:keyup="updateStore"
-                 v-on:change="updateStore" id="character-con">
+          <input type="number" v-model="character.stats.con" v-on:keyup="updateStore" v-on:change="updateStore" id="character-con">
         </div>
         <div class="character-stat">
           <label for="character-int" class="xs-mb0">Int</label>
-          <input type="number" v-model="character.stats.int" v-on:keyup="updateStore"
-                 v-on:change="updateStore" id="character-int">
+          <input type="number" v-model="character.stats.int" v-on:keyup="updateStore" v-on:change="updateStore" id="character-int">
         </div>
         <div class="character-stat">
           <label for="character-wis" class="xs-mb0">Wis</label>
-          <input type="number" v-model="character.stats.wis" v-on:keyup="updateStore"
-                 v-on:change="updateStore" id="character-wis">
+          <input type="number" v-model="character.stats.wis" v-on:keyup="updateStore" v-on:change="updateStore" id="character-wis">
         </div>
         <div class="character-stat">
           <label for="character-cha" class="xs-mb0">Cha</label>
-          <input type="number" v-model="character.stats.cha" v-on:keyup="updateStore"
-                 v-on:change="updateStore" id="character-cha">
+          <input type="number" v-model="character.stats.cha" v-on:keyup="updateStore" v-on:change="updateStore" id="character-cha">
         </div>
       </section>
 
@@ -155,6 +149,26 @@
         <input type="text"  class="field-small" id="character-prof-bonus"
                v-model="character.proficiency_bonus" v-on:keyup="updateStore" v-on:change="updateStore" >
       </div>
+
+      <!-- Saving Throws -->
+      <label class="xs-mt4 u-flex--grow">Saving Throws</label>
+
+      <section class="saving-throws">
+        
+        <input id="saving-throw-str" type="checkbox" v-model="character.stats.saving_throw_str" v-on:keyup="updateStore" v-on:change="updateStore">
+        <label for="saving-throw-str">Str</label>
+        <input id="saving-throw-dex" type="checkbox" v-model="character.stats.saving_throw_dex" v-on:keyup="updateStore" v-on:change="updateStore">
+        <label for="saving-throw-dex">Dex</label>
+        <input id="saving-throw-con" type="checkbox" v-model="character.stats.saving_throw_con" v-on:keyup="updateStore" v-on:change="updateStore">
+        <label for="saving-throw-con">Con</label>
+        <input id="saving-throw-int" type="checkbox" v-model="character.stats.saving_throw_int" v-on:keyup="updateStore" v-on:change="updateStore">
+        <label for="saving-throw-int">Int</label>
+        <input id="saving-throw-wis" type="checkbox" v-model="character.stats.saving_throw_wis" v-on:keyup="updateStore" v-on:change="updateStore">
+        <label for="saving-throw-wis">Wisdom</label>
+        <input id="saving-throw-cha" type="checkbox" v-model="character.stats.saving_throw_cha" v-on:keyup="updateStore" v-on:change="updateStore">
+      <label for="saving-throw-cha">Cha</label>
+      </section>
+
 
       <!-- Skill Proficiencies -->
       <label class="xs-mt4 u-flex--grow">Skill Proficiencies</label>
@@ -219,12 +233,12 @@
 
       <!-- Section for selecting and viewing race details (starts off screen) -->
       <section>
-        <ul class="nav-tabs detail-tabs off-screen" data-selector="race">
-          <li class="character-detail-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-lookup="{{$key}}">
+        <section class="nav-tabs detail-tabs off-screen" data-selector="race">
+          <a class="character-detail-tab" id="{{$key}}-tab" v-for="race in gameMeta.character_structure.races" data-lookup="{{$key}}">
             {{$key}}
-          </li>
-          <li class="character-detail-tab" id="other-race-tab" data-lookup="other-race">Other</li>
-        </ul>
+          </a>
+          <a class="character-detail-tab" id="other-race-tab" data-lookup="other-race">Other</a>
+        </section>
 
         <!-- Character detail panes that show details about a race (viewable after you select a tab) -->
         <div id="{{$key}}-info" class="detail-panes off-screen" v-for="race in gameMeta.character_structure.races">
