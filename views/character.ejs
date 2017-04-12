@@ -154,19 +154,37 @@
       <label class="xs-mt4 u-flex--grow">Saving Throws</label>
 
       <section class="saving-throws">
-        
-        <input id="saving-throw-str" type="checkbox" v-model="character.stats.saving_throw_str" v-on:keyup="updateStore" v-on:change="updateStore">
-        <label for="saving-throw-str">Str</label>
-        <input id="saving-throw-dex" type="checkbox" v-model="character.stats.saving_throw_dex" v-on:keyup="updateStore" v-on:change="updateStore">
-        <label for="saving-throw-dex">Dex</label>
-        <input id="saving-throw-con" type="checkbox" v-model="character.stats.saving_throw_con" v-on:keyup="updateStore" v-on:change="updateStore">
-        <label for="saving-throw-con">Con</label>
-        <input id="saving-throw-int" type="checkbox" v-model="character.stats.saving_throw_int" v-on:keyup="updateStore" v-on:change="updateStore">
-        <label for="saving-throw-int">Int</label>
-        <input id="saving-throw-wis" type="checkbox" v-model="character.stats.saving_throw_wis" v-on:keyup="updateStore" v-on:change="updateStore">
-        <label for="saving-throw-wis">Wisdom</label>
-        <input id="saving-throw-cha" type="checkbox" v-model="character.stats.saving_throw_cha" v-on:keyup="updateStore" v-on:change="updateStore">
-      <label for="saving-throw-cha">Cha</label>
+        <div class="saving-throw-container">
+          <input id="saving-throw-str" type="checkbox" v-model="character.stats.saving_throw_str" v-on:keyup="updateStore" v-on:change="updateStore">
+          <label for="saving-throw-str">Str</label>
+          <input id="saving-throw-str-value" type="number" v-model="character.stats.saving_throw_str_value" v-on:keyup="updateStore" v-on:change="updateStore">
+        </div>
+
+        <div class="saving-throw-container">
+          <input id="saving-throw-dex" type="checkbox" v-model="character.stats.saving_throw_dex" v-on:keyup="updateStore" v-on:change="updateStore">
+          <label for="saving-throw-dex">Dex</label>
+          <input id="saving-throw-dex-value" type="number" v-model="character.stats.saving_throw_dex_value" v-on:keyup="updateStore" v-on:change="updateStore">
+        </div>
+        <div class="saving-throw-container">
+          <input id="saving-throw-con" type="checkbox" v-model="character.stats.saving_throw_con" v-on:keyup="updateStore" v-on:change="updateStore">
+          <label for="saving-throw-con">Con</label>
+          <input id="saving-throw-con-value" type="number" v-model="character.stats.saving_throw_con_value" v-on:keyup="updateStore" v-on:change="updateStore">
+        </div>
+        <div class="saving-throw-container">
+          <input id="saving-throw-int" type="checkbox" v-model="character.stats.saving_throw_int" v-on:keyup="updateStore" v-on:change="updateStore">
+          <label for="saving-throw-int">Int</label>
+          <input id="saving-throw-int-value" type="number" v-model="character.stats.saving_throw_int_value" v-on:keyup="updateStore" v-on:change="updateStore">
+        </div>
+        <div class="saving-throw-container">
+          <input id="saving-throw-wis" type="checkbox" v-model="character.stats.saving_throw_wis" v-on:keyup="updateStore" v-on:change="updateStore">
+          <label for="saving-throw-wis">Wisdom</label>
+          <input id="saving-throw-wis-value" type="number" v-model="character.stats.saving_throw_wis_value" v-on:keyup="updateStore" v-on:change="updateStore">
+        </div>
+        <div class="saving-throw-container">
+          <input id="saving-throw-cha" type="checkbox" v-model="character.stats.saving_throw_cha" v-on:keyup="updateStore" v-on:change="updateStore">
+          <label for="saving-throw-cha">Cha</label>
+          <input id="saving-throw-cha-value" type="number" v-model="character.stats.saving_throw_cha_value" v-on:keyup="updateStore" v-on:change="updateStore">
+        </div>
       </section>
 
 

@@ -68,14 +68,13 @@ textarea {
 	text-align: center;
 	padding: 0.5rem 1rem;
 	letter-spacing: 0.5px;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: #5e6f67;
 	font-size: 1.3rem;
-	a { 
-    color: rgba(255, 255, 255, 0.7); 
-    &:hover {
-      color: white;
+	a {
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      &:hover { color: white; }
     }
-  }
   & > * {
     margin: 0 2rem;
   }
@@ -84,7 +83,8 @@ textarea {
 #mobile-nav-toggle {
 	cursor: pointer;
 	display: none; //shown on router.js
-  &:hover {
+  &:hover,
+  &:focus {
     color: $color-offblack;
   }
 }

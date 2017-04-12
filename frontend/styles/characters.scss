@@ -251,19 +251,36 @@ label[for=character-prof-bonus]{
 .saving-throws {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
 	max-width: 600px; // Desktop
 
-	label {
-		margin-right: 2px;
-		padding: 5px 10px;
-		color: rgba(0, 0, 0, 0.25);
+	.saving-throw-container {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
 	}
-	input {
+
+	label {
+		margin: 0;
+		padding: 5px 8px;
+		color: rgba(0, 0, 0, 0.25);
+		height: 38px;
+		line-height: 3rem;
+	}
+	input[type='checkbox'] { // Saving throw selection
 		display: none;
 		&:checked + label {
 			background-color: rgba(0, 0, 0, 0.1);
 			color: rgba(0, 0, 0, 0.65);
 		}
+		&:checked + label + input[type='number'] { // Show modifier
+			display: block;
+		}
+	}
+	input[type='number'] { // Modifier value
+		display: none;
+		border: 0;
+		background-color: rgba(255, 255, 255, 0.2);
+		max-width: 50px;
+		margin-right: 10px;
 	}
 }
