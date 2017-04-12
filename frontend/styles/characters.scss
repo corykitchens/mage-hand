@@ -23,7 +23,7 @@
 }
 #race-change-click, #class-change-click {
 	cursor: pointer;
-	& > label { pointer-events: none; } //So cursor pointers applies
+	& > label { pointer-events: none; } // So cursor pointers applies
 }
 
 

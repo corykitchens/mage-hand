@@ -204,6 +204,12 @@ textarea {
   font-size: 2rem !important;
   height: 60px;
   letter-spacing: 2px;
+
+  &:hover {
+    animation-play-state: paused;
+    background-color: $dark;
+    border-color: $dark;
+  }
 }
 
 .button-small {
@@ -555,7 +561,7 @@ $box-field--vertical-height: 30px;
 .action-icon { cursor: pointer; }
 
 .card {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
   margin: 2rem 0rem;
   padding: 1.5rem 3rem;
   color: $color-offblack;
@@ -613,4 +619,3 @@ $box-field--vertical-height: 30px;
 	border: 4px solid rgba(0, 0, 0, 0.1);
 	margin-bottom: 20px;
 }
-
