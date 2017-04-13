@@ -72,7 +72,6 @@ textarea {
 	font-size: 1.3rem;
 	a {
       color: rgba(255, 255, 255, 0.5);
-      text-transform: uppercase;
       &:hover { color: white; }
     }
   & > * {
@@ -83,8 +82,7 @@ textarea {
 #mobile-nav-toggle {
 	cursor: pointer;
 	display: none; //shown on router.js
-  &:hover,
-  &:focus {
+  &:hover {
     color: $color-offblack;
   }
 }

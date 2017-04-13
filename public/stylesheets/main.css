@@ -1446,8 +1446,7 @@ textarea {
   background-color: #5e6f67;
   font-size: 1.3rem; }
   .footer a {
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase; }
+    color: rgba(255, 255, 255, 0.5); }
     .footer a:hover {
       color: white; }
   .footer > * {
@@ -1456,7 +1455,7 @@ textarea {
 #mobile-nav-toggle {
   cursor: pointer;
   display: none; }
-  #mobile-nav-toggle:hover, #mobile-nav-toggle:focus {
+  #mobile-nav-toggle:hover {
     color: #3E3E3E; }
 
 #mobile-nav-icons {
