@@ -62,8 +62,8 @@
 	// Initialize on every page load
 	function init(){
 
-	  Vue.config.debug = true;  // TODO
-	  if (Vue.config.debug == true) console.log('!vue debug is on');
+	  // Vue.config.debug = true;
+	  // if (Vue.config.debug == true) console.log('!vue debug is on');
 
 	  // TODO offline content
 	  // if (navigator.serviceWorker) {
