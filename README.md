@@ -19,29 +19,6 @@ Magehand is a Node app running on heroku, using Firebase 🔥 as the data store 
 *Also*, I started this project long ago and have grown a lot as a developer since then. I would change a lot of things if I was building this today, but incremental improvements can be made in the meantime.
 
 
-## TODO
-These will be moved to github projects and/or issues.
-- !Campaign game type + character/campaign type validation
-- Allow skills to be selectable from class chooser pane
-- Add all spells
-- Raw stats to bonus toggle
-- Make more desktop friendly
-- Have multiple social providers on one account
-- Tests
-- Turn vue.js debug off
+## Contribution
 
-
-### Rad possible features
-These will be moved to github projects and/or issues.
-- Have lock change bg color
-- Private character notes
-- Add NPC stats
-- Join link vs. join code (or both)
-- Hide nav menu when keyboard is up
-- Initiative roll/track thing
-- Quick build characters
-- Racial name suggestions
-- Accurate level up mechanism
-- Alignment slider
-- Adventure / dungeon / npc / loot generator
-- Swipe to dismiss drawers
+There's a list of new features and fixes in [github projects](https://github.com/bananatron/mage-hand/projects/1). Feel free to make a PR and we'll test it and get it up and running. 👍
